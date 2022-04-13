@@ -51,6 +51,7 @@ Model Aspas_M;
 Model ArmaKND_M;
 Model CasaLorax_M;
 Model Dado_M;
+Model SimioArcoiris_M;
 
 Skybox skybox;
 
@@ -134,7 +135,7 @@ int main()
 	CreateShaders();
 
 	//camera = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 5.0f, 0.5f);
-	camera = Camera(glm::vec3(0.0f, 0.25f, -10.0f), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 5.0f, 0.5f);
+	camera = Camera(glm::vec3(0.0f, 0.25f, -10.0f), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 0.1f, 0.5f);
 
 	//Aqui se importan texturas
 	brickTexture = Texture("Textures/brick.png");
@@ -169,6 +170,9 @@ int main()
 
 	CasaLorax_M = Model();
 	CasaLorax_M.LoadModel("Models/casa_Lorax.obj");
+
+	SimioArcoiris_M = Model();
+	SimioArcoiris_M.LoadModel("Models/SimioArcoiris_obj_Texture.obj");
 
 	std::vector<std::string> skyboxFaces;
 	//Texturas de skyboard
@@ -231,17 +235,72 @@ int main()
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 
 		pisoTexture.UseTexture();
-		//meshList[2]->RenderMesh();
+		meshList[2]->RenderMesh();
 
-		//	
+		//	Simio Arcoiris
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(0.0f, 5.0f, -1.0));
+		model = glm::translate(model, glm::vec3(0.0f, 5.0f, 0.0));
 		modelaux = model;
-		//model = glm::scale(model, glm::vec3(0.3f, 0.3f, 0.3f));
-		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		//Blackhawk_M.RenderModel();
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		SimioArcoiris_M.RenderModel();
 	
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(1.5f, 0.0f, 0.0));
+		modelaux = model;
+		color = glm::vec3(1.0f, 0.0f, 0.0f);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		SimioArcoiris_M.RenderModel();
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(1.5f, 0.0f, 0.0));
+		modelaux = model;
+		color = glm::vec3(1.0f, 0.5f, 0.0f);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		SimioArcoiris_M.RenderModel();
+		
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(1.5f, 0.0f, 0.0));
+		modelaux = model;
+		color = glm::vec3(1.0f, 1.0f, 0.0f);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		SimioArcoiris_M.RenderModel();
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(1.5f, 0.0f, 0.0));
+		modelaux = model;
+		color = glm::vec3(0.0f, 1.0f, 0.0f);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		SimioArcoiris_M.RenderModel();
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(1.5f, 0.0f, 0.0));
+		modelaux = model;
+		color = glm::vec3(0.0f, 1.0f, 1.0f);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		SimioArcoiris_M.RenderModel();
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(1.5f, 0.0f, 0.0));
+		modelaux = model;
+		color = glm::vec3(0.5f, 0.0f, 0.5f);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		SimioArcoiris_M.RenderModel();
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(1.5f, 0.0f, 0.0));
+		modelaux = model;
+		color = glm::vec3(0.0f, 0.0f, 0.0f);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		SimioArcoiris_M.RenderModel();
 
 		glUseProgram(0);
 
