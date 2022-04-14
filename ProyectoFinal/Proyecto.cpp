@@ -52,6 +52,13 @@ Model ArmaKND_M;
 Model CasaLorax_M;
 Model Dado_M;
 
+//CORTADORA DE ARBOLES
+Model Cortadora_M;
+Model Rueda_M;
+Model Hacha_M;
+Model Chimenea_M;
+Model Ruedita_M;
+
 Skybox skybox;
 
 //Sphere cabeza = Sphere(0.5, 20, 20);
@@ -170,6 +177,27 @@ int main()
 	CasaLorax_M = Model();
 	CasaLorax_M.LoadModel("Models/casa_Lorax.obj");
 
+	/*Model Cortadora_M;
+Model Rueda_M;
+Model Hacha_M;
+Model Chimenea_M;
+Model Ruedita_M;*/
+
+	Cortadora_M = Model();
+	Cortadora_M.LoadModel("Models/cortadora_opt.obj");
+
+	Rueda_M = Model();
+	Rueda_M.LoadModel("Models/rueda.obj");
+
+	Hacha_M = Model();
+	Hacha_M.LoadModel("Models/hacha_opt.obj");
+
+	Chimenea_M = Model();
+	Chimenea_M.LoadModel("Models/chimenea_opt.obj");
+
+	Ruedita_M = Model();
+	Ruedita_M.LoadModel("Models/tire-tx.obj");
+
 	std::vector<std::string> skyboxFaces;
 	//Texturas de skyboard
 	/*skyboxFaces.push_back("Textures/Skybox/desert_bk.tga"); //bk
@@ -222,6 +250,7 @@ int main()
 
 		glm::mat4 model(1.0);
 		glm::mat4 modelaux(1.0);
+		glm::mat4 cortadora_aux(1.0);
 		glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f);
 
 		model = glm::mat4(1.0);
@@ -233,15 +262,80 @@ int main()
 		pisoTexture.UseTexture();
 		//meshList[2]->RenderMesh();
 
-		//	
+		/*
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(0.0f, 5.0f, -1.0));
 		modelaux = model;
 		//model = glm::scale(model, glm::vec3(0.3f, 0.3f, 0.3f));
 		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Cortadora_M.RenderModel();
 		//Blackhawk_M.RenderModel();
-	
+		*/
+
+		//CORTADORA DE ARBOLES
+		//Se hace una jerarquización partiendo del cuerpo de la cortadora
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(0.0f, 5.0f, -1.0));
+		cortadora_aux = model;
+		//model = glm::scale(model, glm::vec3(0.3f, 0.3f, 0.3f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Cortadora_M.RenderModel();
+
+
+		model = cortadora_aux;
+		model = glm::translate(model, glm::vec3(0.0f, 3.0f, 0.0));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Chimenea_M.RenderModel();
+
+		model = cortadora_aux;
+		model = glm::translate(model, glm::vec3(-3.0f, -1.0f, -3.0f));
+		//model = glm::scale(model, glm::vec3(0.3f, 0.3f, 0.3f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Rueda_M.RenderModel();
+
+		model = cortadora_aux;
+		model = glm::translate(model, glm::vec3(-3.0f, -1.0f, 3.0f));
+		model = glm::rotate(model, -180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Rueda_M.RenderModel();
+
+		model = cortadora_aux;
+		model = glm::translate(model, glm::vec3(1.0f, -2.0f, -3.0f));
+		model = glm::scale(model, glm::vec3(0.7f, 0.7f, 0.7f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Rueda_M.RenderModel();
+
+		model = cortadora_aux;
+		model = glm::translate(model, glm::vec3(1.0f, -2.0f, 3.0f));
+		model = glm::scale(model, glm::vec3(0.7f, 0.7f, 0.7f));
+		model = glm::rotate(model, -180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Rueda_M.RenderModel();
+
+		model = cortadora_aux;
+		model = glm::translate(model, glm::vec3(6.8f, 0.0f, 6.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Hacha_M.RenderModel();
+		//////////////////////////////////////////////////////////////////////////////
+		model = cortadora_aux;
+		model = glm::translate(model, glm::vec3(9.4f, 0.0f, -6.0f));
+		model = glm::rotate(model, -180 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Hacha_M.RenderModel();
+
+		model = cortadora_aux;
+		model = glm::translate(model, glm::vec3(13.3f, 0.0f, 6.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Hacha_M.RenderModel();
+		/////////////////////////////////////////////////////////////////////////////
+		
+		model = cortadora_aux;
+		model = glm::translate(model, glm::vec3(17.0f, 0.0f, -6.0f));
+		model = glm::rotate(model, -180 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Hacha_M.RenderModel();
 
 		glUseProgram(0);
 
