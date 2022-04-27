@@ -49,18 +49,19 @@ Texture dirtTexture;
 Texture plainTexture;
 Texture pisoTexture;
 Texture cuatroTexture;
-
+Texture caminoTexture;
 
 Model Kitt_M;
 Model Llanta_M;
-Model Camino_M;
 Model Blackhawk_M;
 Model Aspas_M;
 Model ArmaKND_M;
 Model CasaLorax_M;
 Model SimioArcoiris_M;
 Model Cuatro_M;
-
+//BASE
+Model Camino_M;
+Model Pasto_M;
 //CORTADORA DE ARBOLES
 Model Cortadora_M;
 Model Rueda_M;
@@ -523,7 +524,7 @@ int main()
 
 
 	//camera = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 5.0f, 0.5f);
-	camera = Camera(glm::vec3(0.0f, 0.25f, -10.0f), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 0.1f, 0.5f);
+	camera = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 1.0f, 0.5f);
 
 	//Aqui se importan texturas
 	brickTexture = Texture("Textures/brick.png");
@@ -537,6 +538,11 @@ int main()
 
 	cuatroTexture = Texture("Textures/cuatro_Texturas.tga");
 	cuatroTexture.LoadTextureA();
+
+	caminoTexture = Texture("Texture/camino.png");
+	caminoTexture.LoadTexture();
+
+	
 
 	Kitt_M = Model();
 	//Kitt_M.LoadModel("Models/kitt_optimizado.obj");
@@ -553,9 +559,7 @@ int main()
 	Camino_M = Model();
 	Camino_M.LoadModel("Models/railroad track.obj");
 
-	Aspas_M = Model();
-	Aspas_M.LoadModel("Models/Black Hawk uh-60_Aspas.obj");
-
+	
 	ArmaKND_M = Model();
 	ArmaKND_M.LoadModel("Models/KNDSPANKLER.obj");
 
@@ -569,22 +573,28 @@ Model Chimenea_M;
 Model Ruedita_M;*/
 
 	Cortadora_M = Model();
-	Cortadora_M.LoadModel("Models/cortadora_opt.obj");
+	//Cortadora_M.LoadModel("Models/cortadora_opt.obj");
 
 	Rueda_M = Model();
-	Rueda_M.LoadModel("Models/rueda.obj");
+	//Rueda_M.LoadModel("Models/rueda.obj");
 
 	Hacha_M = Model();
-	Hacha_M.LoadModel("Models/hacha_opt.obj");
+	//Hacha_M.LoadModel("Models/hacha_opt.obj");
 
 	Chimenea_M = Model();
-	Chimenea_M.LoadModel("Models/chimenea_opt.obj");
+	//Chimenea_M.LoadModel("Models/chimenea_opt.obj");
 
 	Ruedita_M = Model();
-	Ruedita_M.LoadModel("Models/tire-tx.obj");
+	//Ruedita_M.LoadModel("Models/tire-tx.obj");
 
 	SimioArcoiris_M = Model();
 	SimioArcoiris_M.LoadModel("Models/SimioArcoiris_obj_Texture.obj");
+
+	Camino_M = Model();
+	Camino_M.LoadModel("Models/camino.obj");
+
+	Pasto_M = Model();
+	Pasto_M.LoadModel("Models/pasto.obj");
 
 	std::vector<std::string> skyboxFaces;
 	//Texturas de skyboard
@@ -680,24 +690,73 @@ Model Ruedita_M;*/
 		glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f);
 
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(0.0f, -2.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(30.0f, 1.0f, 30.0f));
+		model = glm::translate(model, glm::vec3(0.0f, -1.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(10.0f, 1.0f, 10.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 
-		pisoTexture.UseTexture();
-		meshList[2]->RenderMesh();
+		//pisoTexture.UseTexture();
+		//meshList[2]->RenderMesh();
+		//PISO
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(0.0f, -1.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(1.0f, 0.2f, 1.0f));
+		modelaux = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pasto_M.RenderModel();
 
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-12.6f, 0.0f, 12.6f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pasto_M.RenderModel();
 
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-12.6f, 0.0f, -12.6f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pasto_M.RenderModel();
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(12.6f, 0.0f, 12.6f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pasto_M.RenderModel();
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(12.6f, 0.0f, -12.6f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pasto_M.RenderModel();
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 12.6f));
+		model = glm::rotate(model, 90*toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Camino_M.RenderModel();
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -12.6f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Camino_M.RenderModel();
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(12.6f, 0.0f, 0.0f));
+		//model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Camino_M.RenderModel();
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-12.6f, 0.0f, 0.0f));
+		//model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Camino_M.RenderModel();
 	
 		//	Simio Arcoiris
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(0.0f, 5.0f, 0.0));
-		modelaux = model;
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0));
+
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 
-		Cortadora_M.RenderModel();
+		//Cortadora_M.RenderModel();
 		//Blackhawk_M.RenderModel();
 	
 
@@ -709,70 +768,70 @@ Model Ruedita_M;*/
 		//model = glm::scale(model, glm::vec3(0.3f, 0.3f, 0.3f));
 		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Cortadora_M.RenderModel();
+		//Cortadora_M.RenderModel();
 
 
 		model = cortadora_aux;
 		model = glm::translate(model, glm::vec3(0.0f, 3.0f, 0.0));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Chimenea_M.RenderModel();
+		//Chimenea_M.RenderModel();
 
 		model = cortadora_aux;
 		model = glm::translate(model, glm::vec3(-3.0f, -1.0f, -3.0f));
 		//model = glm::scale(model, glm::vec3(0.3f, 0.3f, 0.3f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Rueda_M.RenderModel();
+		//Rueda_M.RenderModel();
 
 		model = cortadora_aux;
 		model = glm::translate(model, glm::vec3(-3.0f, -1.0f, 3.0f));
 		model = glm::rotate(model, -180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Rueda_M.RenderModel();
+		//Rueda_M.RenderModel();
 
 		model = cortadora_aux;
 		model = glm::translate(model, glm::vec3(1.0f, -2.0f, -3.0f));
 		model = glm::scale(model, glm::vec3(0.7f, 0.7f, 0.7f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Rueda_M.RenderModel();
+		//Rueda_M.RenderModel();
 
 		model = cortadora_aux;
 		model = glm::translate(model, glm::vec3(1.0f, -2.0f, 3.0f));
 		model = glm::scale(model, glm::vec3(0.7f, 0.7f, 0.7f));
 		model = glm::rotate(model, -180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Rueda_M.RenderModel();
+		//Rueda_M.RenderModel();
 
 		model = cortadora_aux;
 		model = glm::translate(model, glm::vec3(6.8f, 0.0f, 6.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Hacha_M.RenderModel();
+		//Hacha_M.RenderModel();
 		//////////////////////////////////////////////////////////////////////////////
 		model = cortadora_aux;
 		model = glm::translate(model, glm::vec3(9.4f, 0.0f, -6.0f));
 		model = glm::rotate(model, -180 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Hacha_M.RenderModel();
+		//Hacha_M.RenderModel();
 
 		model = cortadora_aux;
 		model = glm::translate(model, glm::vec3(13.3f, 0.0f, 6.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Hacha_M.RenderModel();
+		//Hacha_M.RenderModel();
 		/////////////////////////////////////////////////////////////////////////////
 		
 		model = cortadora_aux;
 		model = glm::translate(model, glm::vec3(17.0f, 0.0f, -6.0f));
 		model = glm::rotate(model, -180 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Hacha_M.RenderModel();
+		//Hacha_M.RenderModel();
 
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		SimioArcoiris_M.RenderModel();
+		//SimioArcoiris_M.RenderModel();
 	
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(5.0f, 5.0f, 0.0));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		cuatroTexture.UseTexture();
-		meshList[3]->RenderMesh();
+		//cuatroTexture.UseTexture();
+		//meshList[3]->RenderMesh();
 		
 
 		glUseProgram(0);
