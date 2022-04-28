@@ -61,6 +61,16 @@ Model CasaLorax_M;
 Model SimioArcoiris_M;
 Model Cuatro_M;
 
+//PEZ QUE JUEGA POQUER
+Model cuerpo_pez;
+Model hombro_pez;
+Model brazo_der_pez;
+Model conejo_izq_pez;
+Model mano_izq_pez;
+Model pie_izq;
+Model pie_der;
+
+
 //CORTADORA DE ARBOLES
 Model Cortadora_M;
 Model Rueda_M;
@@ -562,6 +572,24 @@ int main()
 	CasaLorax_M = Model();
 	CasaLorax_M.LoadModel("Models/casa_Lorax.obj");
 
+	//////PROYECTO FINAL
+
+	cuerpo_pez = Model();
+	cuerpo_pez.LoadModel("Models/cuerpo_pez.obj");
+	hombro_pez = Model();
+	hombro_pez.LoadModel("Models/hombro_pez.obj");
+	brazo_der_pez = Model();
+	brazo_der_pez.LoadModel("Models/brazo_der_pez.obj");
+	conejo_izq_pez = Model();
+	conejo_izq_pez.LoadModel("Models/conejo_izq_pez.obj");
+	mano_izq_pez = Model();
+	mano_izq_pez.LoadModel("Models/mano_izq_pez.obj");
+	pie_izq = Model();
+	pie_izq.LoadModel("Models/pie_izq_pez.obj");
+	pie_der = Model();
+	pie_der.LoadModel("Models/pie_der_pez.obj");
+
+
 	/*Model Cortadora_M;
 Model Rueda_M;
 Model Hacha_M;
@@ -678,6 +706,9 @@ Model Ruedita_M;*/
 		glm::mat4 modelaux(1.0);
 		glm::mat4 cortadora_aux(1.0);
 		glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f);
+		glm::mat4 pezpoq_aux(1.0);
+		glm::mat4 pezpoq_aux_2(1.0);
+		glm::mat4 pezpoq_aux_3(1.0);
 
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(0.0f, -2.0f, 0.0f));
@@ -687,6 +718,76 @@ Model Ruedita_M;*/
 
 		pisoTexture.UseTexture();
 		meshList[2]->RenderMesh();
+
+		//PEZ POK
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(40.0f, 5.0f, 5.0));
+		pezpoq_aux = model; // se guarda el centro del pez
+		pezpoq_aux_3 = model;
+		//model = glm::scale(model, glm::vec3(0.3f, 0.3f, 0.3f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		cuerpo_pez.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = pezpoq_aux;
+		model = glm::translate(model, glm::vec3(1.3f, 0.32f, -0.21f));
+		pezpoq_aux_2 = model;
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		hombro_pez.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = pezpoq_aux;
+		model = glm::translate(model, glm::vec3(-1.2f, 0.32f, 0.11f));
+		pezpoq_aux = model;
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		hombro_pez.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = pezpoq_aux;
+		model = glm::translate(model, glm::vec3(-0.3f, 0.0f, 0.1f));
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		brazo_der_pez.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = pezpoq_aux_2;
+		model = glm::translate(model, glm::vec3(0.2f, -0.1f, 0.4f));
+		pezpoq_aux_2 = model;
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		conejo_izq_pez.RenderModel();
+
+		//es el codo va aaqui
+
+		model = glm::mat4(1.0);
+		model = pezpoq_aux_2;
+		model = glm::translate(model, glm::vec3(-0.1f, 0.2f, 0.6f));
+		pezpoq_aux_2 = model;
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		mano_izq_pez.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = pezpoq_aux_3;
+		model = glm::translate(model, glm::vec3(-0.2f, -2.6f, -0.2f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		pie_izq.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = pezpoq_aux_3;
+		model = glm::translate(model, glm::vec3(0.23f, -2.5f, -0.2f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		pie_der.RenderModel();
 
 
 	
