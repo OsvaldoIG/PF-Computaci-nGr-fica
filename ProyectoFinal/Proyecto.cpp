@@ -1,6 +1,6 @@
 /*
 Semestre 2022-2
-Pr谩ctica 5: Carga de Modelos
+Pr脙隆ctica 5: Carga de Modelos
 */
 //para cargar imagen
 #define STB_IMAGE_IMPLEMENTATION
@@ -29,7 +29,7 @@ Pr谩ctica 5: Carga de Modelos
 #include"Model.h"
 #include "Skybox.h"
 
-//para iluminaci髇
+//para iluminaci贸n
 #include "CommonValues.h"
 #include "DirectionalLight.h"
 #include "PointLight.h"
@@ -59,9 +59,22 @@ Model ArmaKND_M;
 Model CasaLorax_M;
 Model SimioArcoiris_M;
 Model Cuatro_M;
+
+//PEZ QUE JUEGA POQUER
+Model cuerpo_pez;
+Model hombro_pez;
+Model brazo_der_pez;
+Model conejo_izq_pez;
+Model mano_izq_pez;
+Model pie_izq;
+Model pie_der;
+
+
+
 //BASE
 Model Camino_M;
 Model Pasto_M;
+
 //CORTADORA DE ARBOLES
 Model Cortadora_M;
 Model Rueda_M;
@@ -566,6 +579,24 @@ int main()
 	CasaLorax_M = Model();
 	CasaLorax_M.LoadModel("Models/casa_Lorax.obj");
 
+	//////PROYECTO FINAL
+
+	cuerpo_pez = Model();
+	cuerpo_pez.LoadModel("Models/cuerpo_pez.obj");
+	hombro_pez = Model();
+	hombro_pez.LoadModel("Models/hombro_pez.obj");
+	brazo_der_pez = Model();
+	brazo_der_pez.LoadModel("Models/brazo_der_pez.obj");
+	conejo_izq_pez = Model();
+	conejo_izq_pez.LoadModel("Models/conejo_izq_pez.obj");
+	mano_izq_pez = Model();
+	mano_izq_pez.LoadModel("Models/mano_izq_pez.obj");
+	pie_izq = Model();
+	pie_izq.LoadModel("Models/pie_izq_pez.obj");
+	pie_der = Model();
+	pie_der.LoadModel("Models/pie_der_pez.obj");
+
+
 	/*Model Cortadora_M;
 Model Rueda_M;
 Model Hacha_M;
@@ -619,13 +650,13 @@ Model Ruedita_M;*/
 	//Material_opaco = Material(0.3f, 4);
 
 
-	//luz direccional, s髄o 1 y siempre debe de existir
+	//luz direccional, s贸lo 1 y siempre debe de existir
 	mainLight = DirectionalLight(1.0f, 1.0f, 1.0f,
 		0.3f, 0.3f,
 		0.0f, 0.0f, -1.0f);
 	//contador de luces puntuales
 	unsigned int pointLightCount = 0;
-	//Declaraci髇 de primer luz puntual
+	//Declaraci贸n de primer luz puntual
 	
 
 	unsigned int spotLightCount = 0;
@@ -666,7 +697,7 @@ Model Ruedita_M;*/
 		uniformEyePosition = shaderList[0].GetEyePositionLocation();
 		uniformColor = shaderList[0].getColorLocation();
 
-		//informaci髇 en el shader de intensidad especular y brillo
+		//informaci贸n en el shader de intensidad especular y brillo
 		uniformSpecularIntensity = shaderList[0].GetSpecularIntensityLocation();
 		uniformShininess = shaderList[0].GetShininessLocation();
 
@@ -674,12 +705,12 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(camera.calculateViewMatrix()));
 		glUniform3f(uniformEyePosition, camera.getCameraPosition().x, camera.getCameraPosition().y, camera.getCameraPosition().z);
 
-		// luz ligada a la c醡ara de tipo flash
+		// luz ligada a la c谩mara de tipo flash
 		glm::vec3 lowerLight = camera.getCameraPosition();
 		lowerLight.y -= 0.3f;
 		spotLights[0].SetFlash(lowerLight, camera.getCameraDirection());
 
-		//informaci髇 al shader de fuentes de iluminaci髇
+		//informaci贸n al shader de fuentes de iluminaci贸n
 		shaderList[0].SetDirectionalLight(&mainLight);
 		shaderList[0].SetPointLights(pointLights, pointLightCount);
 		shaderList[0].SetSpotLights(spotLights, spotLightCount);
@@ -688,6 +719,9 @@ Model Ruedita_M;*/
 		glm::mat4 modelaux(1.0);
 		glm::mat4 cortadora_aux(1.0);
 		glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f);
+		glm::mat4 pezpoq_aux(1.0);
+		glm::mat4 pezpoq_aux_2(1.0);
+		glm::mat4 pezpoq_aux_3(1.0);
 
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(0.0f, -1.0f, 0.0f));
@@ -705,11 +739,82 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Pasto_M.RenderModel();
 
+		//PEZ POK
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(40.0f, 5.0f, 5.0));
+		pezpoq_aux = model; // se guarda el centro del pez
+		pezpoq_aux_3 = model;
+		//model = glm::scale(model, glm::vec3(0.3f, 0.3f, 0.3f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		cuerpo_pez.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = pezpoq_aux;
+		model = glm::translate(model, glm::vec3(1.3f, 0.32f, -0.21f));
+		pezpoq_aux_2 = model;
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		hombro_pez.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = pezpoq_aux;
+		model = glm::translate(model, glm::vec3(-1.2f, 0.32f, 0.11f));
+		pezpoq_aux = model;
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		hombro_pez.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = pezpoq_aux;
+		model = glm::translate(model, glm::vec3(-0.3f, 0.0f, 0.1f));
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		brazo_der_pez.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = pezpoq_aux_2;
+		model = glm::translate(model, glm::vec3(0.2f, -0.1f, 0.4f));
+		pezpoq_aux_2 = model;
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		conejo_izq_pez.RenderModel();
+
+		//es el codo va aaqui
+
+		model = glm::mat4(1.0);
+		model = pezpoq_aux_2;
+		model = glm::translate(model, glm::vec3(-0.1f, 0.2f, 0.6f));
+		pezpoq_aux_2 = model;
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		mano_izq_pez.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = pezpoq_aux_3;
+		model = glm::translate(model, glm::vec3(-0.2f, -2.6f, -0.2f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		pie_izq.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = pezpoq_aux_3;
+		model = glm::translate(model, glm::vec3(0.23f, -2.5f, -0.2f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		pie_der.RenderModel();
+
+
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(-12.6f, 0.0f, 12.6f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Pasto_M.RenderModel();
-
+    
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(-12.6f, 0.0f, -12.6f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
@@ -761,7 +866,7 @@ Model Ruedita_M;*/
 	
 
 		//CORTADORA DE ARBOLES
-		//Se hace una jerarquizaci贸n partiendo del cuerpo de la cortadora
+		//Se hace una jerarquizaci脙鲁n partiendo del cuerpo de la cortadora
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(0.0f, 5.0f, -1.0));
 		cortadora_aux = model;
