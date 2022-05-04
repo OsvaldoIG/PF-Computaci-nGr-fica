@@ -50,6 +50,7 @@ Texture plainTexture;
 Texture pisoTexture;
 Texture cuatroTexture;
 Texture caminoTexture;
+Texture loraxTexture;
 
 Model Kitt_M;
 Model Llanta_M;
@@ -68,6 +69,7 @@ Model conejo_izq_pez;
 Model mano_izq_pez;
 Model pie_izq;
 Model pie_der;
+Model antorcha;
 
 
 
@@ -526,6 +528,357 @@ void CrearCuatro()
 
 }
 
+void CrearLorax() {
+
+	unsigned int indices[] = {
+		0, 1, 2,
+		2, 3, 0,
+
+		4, 5, 6,
+		6, 7, 4,
+
+		8, 9, 10,
+		10, 11, 8,
+
+		12, 13, 14,
+		14, 15, 12,
+
+		16, 17, 18,
+		18, 19, 16,
+
+		20, 21, 22,
+		22, 23, 20,
+		//CABEZA
+		24, 25, 26,
+		26, 27, 24,
+
+		28, 29, 30,
+		30, 31, 28,
+
+		32, 33, 34,
+		34, 35, 32,
+
+		36, 37, 38,
+		38, 39, 36,
+
+		40, 41, 42,
+		42, 43, 40,
+
+		44, 45, 46,
+		46, 47, 44,
+
+		//PIERNA IZQ
+		48, 49, 50,
+		50, 51, 48,
+
+		52, 53, 54,
+		54, 55, 52,
+
+		56, 57, 58,
+		58, 59, 56,
+
+		60, 61, 62,
+		62, 63, 60,
+
+		64, 65, 66,
+		66, 67, 64,
+
+		68, 69, 70,
+		70, 71, 68,
+
+		//PIERNA DER
+		72, 73, 74,
+		74, 75, 72,
+
+		76, 77, 78,
+		78, 79, 76,
+
+		80, 81, 82,
+		82, 83, 80,
+
+		84, 85, 86,
+		86, 87, 84,
+
+		88, 89, 90,
+		90, 91, 88,
+
+		92, 93, 94,
+		94, 95, 92,
+
+		//BRAZO IZQ
+		96, 97, 98,
+		98, 99, 96,
+
+		100, 101, 102,
+		102, 103, 100,
+
+		104, 105, 106,
+		106, 107, 104,
+
+		108, 109, 110,
+		110, 111, 108,
+
+		112, 113, 114,
+		114, 115, 112,
+
+		116, 117, 118,
+		118, 119, 116,
+
+		//BRAZO DER
+		120, 121, 122,
+		122, 123, 120,
+
+		124, 125, 126,
+		126, 127, 124,
+
+		128, 129, 130,
+		130, 131, 128,
+
+		132, 133, 134,
+		134, 135, 132,
+
+		136, 137, 138,
+		138, 139, 136,
+
+		140, 141, 142,
+		142, 143, 140,
+
+};
+//Ejercicio 1: reemplazar con sus dados de 6 caras texturizados, agregar normales
+// average normals
+GLfloat vertices[] = {
+
+	//CUERPO
+	//FRENTE
+	//X		Y		Z		S		T		NX		NY		NZ
+	-0.4f, -0.6f, 0.2f,		0.57025f,	0.71366f,		0.0f, 0.0f, -1.0f,
+	0.4f, -0.6f, 0.2f,		0.71317f,	0.71366f,		0.0f, 0.0f, -1.0f,
+	0.4f, 0.6f, 0.2f,		0.71317f,	0.85658f,		0.0f, 0.0f, -1.0f,
+	-0.4f, 0.6f, 0.2f,		0.57025f,	0.85658f,		0.0f, 0.0f, -1.0f,
+	//DERECHA
+	0.4f, -0.6f, 0.2f,		0.71317f,	0.71366f,		-1.0f, 0.0f, 0.0f,
+	0.4f, -0.6f, -0.2f,		0.8561f,	0.71366f,		-1.0f, 0.0f, 0.0f,
+	0.4f, 0.6f, -0.2f,		0.8561f,	0.85658f,		-1.0f, 0.0f, 0.0f,
+	0.4f, 0.6f, 0.2f,		0.71317f,	0.85658f,		-1.0f, 0.0f, 0.0f,
+
+	//IZQUIERDA
+	-0.4f, -0.6f, 0.2f,		0.57025f,	0.71366f,		1.0f, 0.0f, 0.0f,
+	-0.4f, -0.6f, -0.2f,	0.42684f,	0.71366f,			1.0f, 0.0f, 0.0f,
+	-0.4f, 0.6f, -0.2f,		0.42684f,	0.6875f,		1.0f, 0.0f, 0.0f,
+	-0.4f, 0.6f, 0.2f,		0.57025f,	0.6875f,	1.0f, 0.0f, 0.0f,
+
+	//ATRAS
+	-0.4f, -0.6f, -0.2f,	0.8561f,	0.71366f,			0.0f, 0.0f, 1.0f,
+	0.4f, -0.6f, -0.2f,		0.99903f,	0.71366f,		0.0f, 0.0f, 1.0f,
+	0.4f, 0.6f, -0.2f,		0.99903f,	0.85658f,	0.0f, 0.0f, 1.0f,
+	-0.4f, 0.6f, -0.2f,		0.8561f,	0.85658f,		0.0f, 0.0f, 1.0f,
+
+	//ARRIBA
+	0.4f, 0.6f, 0.2f,		0.71317f,	0.85658f,	0.0f, -1.0f, 0.0f,
+	0.4f, 0.6f, -0.2f,		0.71317f,	0.99903f,	0.0f, -1.0f, 0.0f,
+	-0.4f, 0.6f, -0.2f,		0.57025f,	0.99903f,	0.0f, -1.0f, 0.0f,
+	-0.4f, 0.6f, 0.2f,		0.57025f,	0.85658f,	0.0f, -1.0f, 0.0f,
+
+	//ABAJO
+	0.4f, -0.6f, -0.2f,		0.71317f,	0.71366f,	0.0f, 1.0f, 0.0f,
+	-0.4f, -0.6f, -0.2f,	0.57025f,	0.71366f,	0.0f, 1.0f, 0.0f,
+	-0.4f, -0.6f, 0.2f,		0.57025f,	0.57073f,	0.0f, 1.0f, 0.0f,
+	0.4f, -0.6f, 0.2f,		0.71317f,	0.57073f,	0.0f, 1.0f, 0.0f,
+
+	//CABEZA
+	//FRENTE
+	-0.4f, 0.6f, 0.4f,		0.11579f,	0.62839f,	0.0f, 0.0f, -1.0f,
+	0.4f, 0.6f, 0.4f,		0.24872f,	0.62839f,	0.0f, 0.0f, -1.0f,
+	0.4f, 1.4f, 0.4f,		0.24872f,	0.74273f,		0.0f, 0.0f, -1.0f,
+	-0.4f, 1.4f, 0.4f,		0.11579f,	0.74273f,		0.0f, 0.0f, -1.0f,
+
+	//DERECHA
+	0.4f, 0.6f, 0.4f,		0.24872f,	0.62839f,		-1.0f, 0.0f, 0.0f,
+	0.4f, 0.6f, -0.4f,		0.37209f,	0.62839f,		-1.0f, 0.0f, 0.0f,
+	0.4f, 1.4f, -0.4f,		0.37209f,	0.74273f,		-1.0f, 0.0f, 0.0f,
+	0.4f, 1.4f, 0.4f,		0.24872f,	0.74273f,		-1.0f, 0.0f, 0.0f,
+
+	//IZQUIERDA
+	-0.4f, 0.6f, 0.4f,		0.11579f,	0.62839f,		1.0f, 0.0f, 0.0f,
+	-0.4f, 0.6f, -0.4f,		0.0f,		0.62839f,		1.0f, 0.0f, 0.0f,
+	-0.4f, 1.4f, -0.4f,		0.0f,		0.74273f,		1.0f, 0.0f, 0.0f,
+	-0.4f, 1.4f, 0.4f,		0.11579f,	0.74273f,		1.0f, 0.0f, 0.0f,
+
+	//ATRAS
+	-0.4f, 0.6f, -0.4f,		0.11579f,	0.97189f,		0.0f, 0.0f, 1.0f,
+	0.4f, 0.6f, -0.4f,		0.24872f,	0.97189f,		0.0f, 0.0f, 1.0f,
+	0.4f, 1.4f, -0.4f,		0.24872f,	0.85755f,		0.0f, 0.0f, 1.0f,
+	-0.4f, 1.4f, -0.4f,		0.11579f,	0.85755f,		0.0f, 0.0f, 1.0f,
+
+	//ARRIBA
+	0.4f, 1.4f, 0.4f,		0.24872f, 0.74273f,		0.0f, -1.0f, 0.0f,
+	0.4f, 1.4f, -0.4f,		0.24872f, 0.85755f,		0.0f, -1.0f, 0.0f,
+	-0.4f, 1.4f, -0.4f,		0.11579f, 0.85755f,		0.0f, -1.0f, 0.0f,
+	-0.4f, 1.4f, 0.4f,		0.11579f, 0.74273f,		0.0f, -1.0f, 0.0f,
+
+	//ABAJO
+	0.4f, 0.6f, -0.4f,		0.24872f, 0.51453f,		0.0f, 1.0f, 0.0f,
+	-0.4f, 0.6f, -0.4f,		0.11579f, 0.51453f,		0.0f, 1.0f, 0.0f,
+	-0.4f, 0.6f, 0.4f,		0.11579f, 0.62839f,		0.0f, 1.0f, 0.0f,
+	0.4f, 0.6f, 0.4f,		0.24872f, 0.62839f,		0.0f, 1.0f, 0.0f,
+	/////////
+	//PIERNA IZQ
+	//FRENTE
+	-0.4f, -1.8f, 0.2f,		0.12693f, 0.05859f,		0.0f, 0.0f, -1.0f,
+	0.0f, -1.8f, 0.2f,		0.18410f, 0.05859f,		0.0f, 0.0f, -1.0f,
+	0.0f, -0.6f, 0.2f,		0.18410f, 0.22916f,	0.0f, 0.0f, -1.0f,
+	-0.4f, -0.6f, 0.2f,		0.12693f, 0.22916f,	0.0f, 0.0f, -1.0f,
+
+	//DERECHA
+	0.0f, -1.8f, 0.2f,		0.18410f, 0.05859f,		-1.0f, 0.0f, 0.0f,
+	0.0f, -1.8f, -0.2f,		0.24127f, 0.05859,		-1.0f, 0.0f, 0.0f,
+	0.0f, -0.6f, -0.2f,		0.24127f, 0.22916f,	-1.0f, 0.0f, 0.0f,
+	0.0f, -0.6f, 0.2f,		0.18410f, 0.22916f,		-1.0f, 0.0f, 0.0f,
+
+	//IZQUIERDA
+	-0.4f, -1.8f, 0.2f,		0.12693f, 0.05859f,		1.0f, 0.0f, 0.0f,
+	-0.4f, -1.8f, -0.2f,	0.06976f, 0.05859f,		1.0f, 0.0f, 0.0f,
+	-0.4f, -0.6f, -0.2f,	0.06976f, 0.22916f,		1.0f, 0.0f, 0.0f,
+	-0.4f, -0.6f, 0.2f,		0.12693f, 0.22916f,		1.0f, 0.0f, 0.0f,
+
+	//ATRAS
+	0.0f, -1.8f, -0.2f,		0.24127f, 0.05859,		0.0f, 0.0f, 1.0f,
+	-0.4f, -1.8f, -0.2f,	0.29844f, 0.05859,		0.0f, 0.0f, 1.0f,
+	-0.4f, -0.6f, -0.2f,	0.29844f, 0.22916f,		0.0f, 0.0f, 1.0f,
+	0.0f, -0.6f, -0.2f,		0.24127f, 0.22916f,		0.0f, 0.0f, 1.0f,
+
+	//ARRIBA
+	0.0f, -0.6f, 0.2f,		0.24127f, 0.22916f,		0.0f, -1.0f, 0.0f,
+	0.0f, -0.6f, -0.2f,		0.24127f, 0.28585f,		0.0f, -1.0f, 0.0f,
+	-0.4f, -0.6f, -0.2f,	0.1841f, 0.28585f,		0.0f, -1.0f, 0.0f,
+	-0.4f, -0.6f, 0.2f,		0.18410f, 0.22916f,		0.0f, -1.0f, 0.0f,
+
+	//ABAJO
+	0.0f, -1.8f, 0.2f,		0.18410f, 0.05859f,		0.0f, 1.0f, 0.0f,
+	0.0f, -1.8f, -0.2f,		0.18410f, 0.0f,			0.0f, 1.0f, 0.0f,
+	-0.4f, -1.8f, -0.2f,	0.12693f, 0.0f,		0.0f, 1.0f, 0.0f,
+	-0.4f, -1.8f, 0.2f,		0.12693f, 0.05859f,		0.0f, 1.0f, 0.0f,
+
+	//PIERNA DER
+	//FRENTE
+	0.0f, -1.8f, 0.2f,		0.12693f, 0.05859f,		0.0f, 0.0f, -1.0f,
+	0.4f, -1.8f, 0.2f,		0.18410f, 0.05859f,		0.0f, 0.0f, -1.0f,
+	0.4f, -0.6f, 0.2f,		0.18410f, 0.22916f,	0.0f, 0.0f, -1.0f,
+	0.0f, -0.6f, 0.2f,		0.12693f, 0.22916f,	0.0f, 0.0f, -1.0f,
+
+	//DERECHA
+	0.4f, -1.8f, 0.2f,		0.18410f, 0.05859f,		-1.0f, 0.0f, 0.0f,
+	0.4f, -1.8f, -0.2f,		0.24127f, 0.05859,		-1.0f, 0.0f, 0.0f,
+	0.4f, -0.6f, -0.2f,		0.24127f, 0.22916f,	-1.0f, 0.0f, 0.0f,
+	0.4f, -0.6f, 0.2f,		0.18410f, 0.22916f,		-1.0f, 0.0f, 0.0f,
+
+	//IZQUIERDA
+	0.0f, -1.8f, 0.2f,		0.12693f, 0.05859f,		1.0f, 0.0f, 0.0f,
+	0.0f, -1.8f, -0.2f,		0.06976f, 0.05859f,		1.0f, 0.0f, 0.0f,
+	0.0f, -0.6f, -0.2f,		0.06976f, 0.22916f,	1.0f, 0.0f, 0.0f,
+	0.0f, -0.6f, 0.2f,		0.12693f, 0.22916f,		1.0f, 0.0f, 0.0f,
+
+	//ATRAS
+	0.4f, -1.8f, -0.2f,		0.24127f, 0.05859,		0.0f, 0.0f, 1.0f,
+	0.0f, -1.8f, -0.2f,		0.29844f, 0.05859,		0.0f, 0.0f, 1.0f,
+	0.0f, -0.6f, -0.2f,		0.29844f, 0.22916f,		0.0f, 0.0f, 1.0f,
+	0.4f, -0.6f, -0.2f,		0.24127f, 0.22916f,		0.0f, 0.0f, 1.0f,
+
+	//ARRIBA
+	0.4f, -0.6f, 0.2f,		0.24127f, 0.22916f,	0.0f, -1.0f, 0.0f,
+	0.4f, -0.6f, -0.2f,		0.24127f, 0.28585f,	0.0f, -1.0f, 0.0f,
+	0.0f, -0.6f, -0.2f,		0.1841f, 0.28585f,		0.0f, -1.0f, 0.0f,
+	0.0f, -0.6f, 0.2f,		0.18410f, 0.22916f,		0.0f, -1.0f, 0.0f,
+
+	//ABAJO
+	0.4f, -1.8f, 0.2f,		0.18410f, 0.05859f,	0.0f, 1.0f, 0.0f,
+	0.4f, -1.8f, -0.2f,		0.18410f, 0.0f,		0.0f, 1.0f, 0.0f,
+	0.0f, -1.8f, -0.2f,		0.12693f, 0.0f,		0.0f, 1.0f, 0.0f,
+	0.0f, -1.8f, 0.2f,		0.12693f, 0.05859f,		0.0f, 1.0f, 0.0f,
+
+	//BRAZO IZQ////////////////////////////////////////////////////////////->
+	//FRENTE
+	0.4f, -0.6f, 0.2f,		0.69282f, 0.33478f,		0.0f, 0.0f, -1.0f,
+	0.8f, -0.6f, 0.2f,		0.72093f, 0.33478f,		0.0f, 0.0f, -1.0f,
+	0.8f, 0.6f, 0.2f,		0.72093f, 0.47819f,		0.0f, 0.0f, -1.0f,
+	0.4f, 0.6f, 0.2f,		0.69282f, 0.47819f,		0.0f, 0.0f, -1.0f,
+
+	//DERECHA
+	0.8f, -0.6f, 0.2f,		0.72093f, 0.33478f,		-1.0f, 0.0f, 0.0f,
+	0.8f, -0.6f, -0.2f,		0.7495f, 0.33478f,		-1.0f, 0.0f, 0.0f,
+	0.8f, 0.6f, -0.2f,		0.7495f, 0.47819f,		-1.0f, 0.0f, 0.0f,
+	0.8f, 0.6f, 0.2f,		0.72093f, 0.47819f,		-1.0f, 0.0f, 0.0f,
+
+	//IZQUIERDA
+	0.4f, -0.6f, -0.2f,		0.80668f, 0.33478f,		1.0f, 0.0f, 0.0f,
+	0.4f, -0.6f, 0.2f,		0.778585f, 0.33478f,		1.0f, 0.0f, 0.0f,
+	0.4f, 0.6f, 0.2f,		0.778585f, 0.47819f,	1.0f, 0.0f, 0.0f,
+	0.4f, 0.6f, -0.2f,		0.80668f, 0.47819f,	1.0f, 0.0f, 0.0f,
+
+	//ATRAS
+	0.8f, -0.6f, -0.2f,		0.7495f, 0.33478f,		0.0f, 0.0f, 1.0f,
+	0.4f, -0.6f, -0.2f,		0.778585f, 0.33478f,	0.0f, 0.0f, 1.0f,
+	0.4f, 0.6f, -0.2f,		0.778585f, 0.47819f,	0.0f, 0.0f, 1.0f,
+	0.8f, 0.6f, -0.2f,		0.7495f, 0.47819f,		0.0f, 0.0f, 1.0f,
+
+	//ARRIBA
+	0.4f, 0.6f, 0.2f,		0.778585f, 0.47819f,	0.0f, -1.0f, 0.0f,
+	0.8f, 0.6f, 0.2f,		0.80668f, 0.47819f,		0.0f, -1.0f, 0.0f,
+	0.8f, 0.6f, -0.2f,		0.80668f, 0.50678f,		0.0f, -1.0f, 0.0f,
+	0.4f, 0.6f, -0.2f,		0.778585f, 0.50678f,		0.0f, -1.0f, 0.0f,
+
+	//ABAJO
+	0.4f, -0.6f, -0.2f,		0.69282f, 0.3062f,	0.0f, 1.0f, 0.0f,
+	0.8f, -0.6f, -0.2f,		0.72093f, 0.3062f,	0.0f, 1.0f, 0.0f,
+	0.8f, -0.6f, 0.2f,		0.72093f, 0.33478f,		0.0f, 1.0f, 0.0f,
+	0.4f, -0.6f, 0.2f,		0.69282f, 0.33478f,		0.0f, 1.0f, 0.0f,
+
+	//BRAZO DER////////////////////////////77 - >
+	//FRENTE
+	-0.4f, -0.6f, 0.2f,		0.69282f, 0.33478f,		0.0f, 0.0f, -1.0f,
+	-0.8f, -0.6f, 0.2f,		0.72093f, 0.33478f,		0.0f, 0.0f, -1.0f,
+	-0.8f, 0.6f, 0.2f,		0.72093f, 0.47819,		0.0f, 0.0f, -1.0f,
+	-0.4f, 0.6f, 0.2f,		0.69282f, 0.47819f,	0.0f, 0.0f, -1.0f,
+
+	//DERECHA
+	-0.8f, -0.6f, 0.2f,		0.72093f, 0.33478f,		-1.0f, 0.0f, 0.0f,
+	-0.8f, -0.6f, -0.2f,	0.7495f, 0.33478f,		-1.0f, 0.0f, 0.0f,
+	-0.8f, 0.6f, -0.2f,		0.7495f, 0.47819f,		-1.0f, 0.0f, 0.0f,
+	-0.8f, 0.6f, 0.2f,		0.72093f, 0.47819f,		-1.0f, 0.0f, 0.0f,
+
+	//IZQUIERDA
+	-0.4f, -0.6f, -0.2f,	0.80668f, 0.33478f,		1.0f, 0.0f, 0.0f,
+	-0.4f, -0.6f, 0.2f,		0.778585f, 0.33478f,	1.0f, 0.0f, 0.0f,
+	-0.4f, 0.6f, 0.2f,		0.778585f, 0.47819f,	1.0f, 0.0f, 0.0f,
+	-0.4f, 0.6f, -0.2f,		0.80668f, 0.47819f,		1.0f, 0.0f, 0.0f,
+
+	//ATRAS
+	-0.8f, -0.6f, -0.2f,	0.7495f, 0.33478f,		0.0f, 0.0f, 1.0f,
+	-0.4f, -0.6f, -0.2f,	0.778585f, 0.33478f,	0.0f, 0.0f, 1.0f,
+	-0.4f, 0.6f, -0.2f,		0.778585f, 0.47819f,	0.0f, 0.0f, 1.0f,
+	-0.8f, 0.6f, -0.2f,		0.7495f, 0.47819f,		0.0f, 0.0f, 1.0f,
+
+	//ARRIBA
+	-0.4f, 0.6f, 0.2f,		0.778585f, 0.47819f,	0.0f, -1.0f, 0.0f,
+	-0.8f, 0.6f, 0.2f,		0.80668f, 0.47819f,		0.0f, -1.0f, 0.0f,
+	-0.8f, 0.6f, -0.2f,		0.80668f, 0.50678f,		0.0f, -1.0f, 0.0f,
+	-0.4f, 0.6f, -0.2f,		0.778585f, 0.50678f,		0.0f, -1.0f, 0.0f,
+
+	//ABAJO
+	-0.4f, -0.6f, -0.2f,	0.69282f, 0.3062f,		0.0f, 1.0f, 0.0f,
+	-0.8f, -0.6f, -0.2f,	0.72093f, 0.3062f,		0.0f, 1.0f, 0.0f,
+	-0.8f, -0.6f, 0.2f,		0.72093f, 0.33478f,		0.0f, 1.0f, 0.0f,
+	-0.4f, -0.6f, 0.2f,		0.69282f, 0.33478f,		0.0f, 1.0f, 0.0f,
+
+};
+
+	Mesh* lorax = new Mesh();
+	lorax->CreateMesh(vertices, indices, sizeof(vertices) / 4, sizeof(indices) / 4);
+	meshList.push_back(lorax);
+
+
+}
+
 int main()
 {
 	mainWindow = Window(1366, 768); // 1280, 1024 or 1024, 768
@@ -533,6 +886,7 @@ int main()
 
 	CreateObjects();
 	CrearCuatro();
+	CrearLorax();
 	CreateShaders();
 
 
@@ -551,6 +905,9 @@ int main()
 
 	cuatroTexture = Texture("Textures/cuatro_Texturas.tga");
 	cuatroTexture.LoadTextureA();
+
+	loraxTexture = Texture("Textures/textura_LORAX.png");
+	loraxTexture.LoadTextureA();
 
 	caminoTexture = Texture("Texture/camino.png");
 	caminoTexture.LoadTexture();
@@ -747,7 +1104,7 @@ Model Ruedita_M;*/
 		//model = glm::scale(model, glm::vec3(0.3f, 0.3f, 0.3f));
 		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		cuerpo_pez.RenderModel();
+		//cuerpo_pez.RenderModel();
 
 		model = glm::mat4(1.0);
 		model = pezpoq_aux;
@@ -756,7 +1113,7 @@ Model Ruedita_M;*/
 		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
 		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		hombro_pez.RenderModel();
+		//hombro_pez.RenderModel();
 
 		model = glm::mat4(1.0);
 		model = pezpoq_aux;
@@ -765,7 +1122,7 @@ Model Ruedita_M;*/
 		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
 		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		hombro_pez.RenderModel();
+		//hombro_pez.RenderModel();
 
 		model = glm::mat4(1.0);
 		model = pezpoq_aux;
@@ -773,7 +1130,7 @@ Model Ruedita_M;*/
 		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
 		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		brazo_der_pez.RenderModel();
+		//brazo_der_pez.RenderModel();
 
 		model = glm::mat4(1.0);
 		model = pezpoq_aux_2;
@@ -782,7 +1139,7 @@ Model Ruedita_M;*/
 		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
 		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		conejo_izq_pez.RenderModel();
+		//conejo_izq_pez.RenderModel();
 
 		//es el codo va aaqui
 
@@ -793,21 +1150,21 @@ Model Ruedita_M;*/
 		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
 		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		mano_izq_pez.RenderModel();
+		//mano_izq_pez.RenderModel();
 
 		model = glm::mat4(1.0);
 		model = pezpoq_aux_3;
 		model = glm::translate(model, glm::vec3(-0.2f, -2.6f, -0.2f));
 		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		pie_izq.RenderModel();
+		//pie_izq.RenderModel();
 
 		model = glm::mat4(1.0);
 		model = pezpoq_aux_3;
 		model = glm::translate(model, glm::vec3(0.23f, -2.5f, -0.2f));
 		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		pie_der.RenderModel();
+		//pie_der.RenderModel();
 
 
 		model = modelaux;
@@ -937,6 +1294,12 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		//cuatroTexture.UseTexture();
 		//meshList[3]->RenderMesh();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-5.0f, 5.0f, -5.0));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		loraxTexture.UseTexture();
+		meshList[4]->RenderMesh();
 		
 
 		glUseProgram(0);
