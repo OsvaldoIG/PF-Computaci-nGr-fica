@@ -14,6 +14,7 @@ Window::Window(GLint windowWidth, GLint windowHeight)
 	width = windowWidth;
 	height = windowHeight;
 	muevex = 2.0f;
+	tipoCamara = 0;
 	for (size_t i = 0; i < 1024; i++)
 	{
 		keys[i] = 0;
@@ -114,6 +115,14 @@ void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, in
 		if (theWindow->muevex >= -111)
 			theWindow-> muevex -= 1.0;
 	}
+	if (key == GLFW_KEY_C && action == GLFW_PRESS) {
+		if (theWindow->tipoCamara == 0) {
+			theWindow->tipoCamara = 1;
+		}
+		else {
+			theWindow->tipoCamara = 0;
+		}
+	}
 
 
 
@@ -122,12 +131,12 @@ void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, in
 		if (action == GLFW_PRESS)
 		{
 			theWindow->keys[key] = true;
-			printf("se presiono la tecla %d'\n", key);
+			//printf("se presiono la tecla %d'\n", key);
 		}
 		else if (action == GLFW_RELEASE)
 		{
 			theWindow->keys[key] = false;
-			printf("se solto la tecla %d'\n", key);
+			//printf("se solto la tecla %d'\n", key);
 		}
 	}
 }

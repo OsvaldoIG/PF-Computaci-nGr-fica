@@ -14,10 +14,12 @@ public:
 	Camera(glm::vec3 startPosition, glm::vec3 startUp, GLfloat startYaw, GLfloat startPitch, GLfloat startMoveSpeed, GLfloat startTurnSpeed);
 
 	void keyControl(bool* keys, GLfloat deltaTime);
-	void mouseControl(GLfloat xChange, GLfloat yChange);
+	void mouseControl(GLfloat xChange, GLfloat yChange, GLint tipo);
 
 	glm::vec3 getCameraPosition();
 	glm::vec3 getCameraDirection();
+	void setCameraPosition(glm::vec3 pos);
+	void setCameraDirection();
 	glm::mat4 calculateViewMatrix();
 
 	~Camera();
