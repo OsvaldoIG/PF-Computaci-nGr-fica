@@ -897,9 +897,9 @@ int main()
 
 
 	//camera = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 5.0f, 0.5f);
-	cameraP = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 1.0f, 0.5f);
+	cameraP = Camera(glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, 0.0f, 0.1f, 0.5f);
 
-	cameraA = Camera(glm::vec3(0.0f, 20.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 1.0f, 0.5f);
+	cameraA = Camera(glm::vec3(0.0f, 20.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 0.1f, 0.5f);
 
 	//Aqui se importan texturas
 	brickTexture = Texture("Textures/brick.png");
@@ -1060,28 +1060,19 @@ Model Ruedita_M;*/
 		//TIPO DE CAMARA
 		if (mainWindow.gettipoCamara() == 0) { //0 = PEGADA AL PISO, 1= AEREA
 			cameraP.mouseControl(mainWindow.getXChange(), mainWindow.getYChange(), mainWindow.gettipoCamara());
-			cameraP.keyControl(mainWindow.getsKeys(), deltaTime);
-			//camaraPiso = camera.getCameraPosition();
+			cameraP.keyControl(mainWindow.getsKeys(), deltaTime, mainWindow.gettipoCamara());
 			//pegada al piso
 			camera = cameraP;
 		}
 		else {
-			//camera.keyControl(mainWindow.getsKeys(), deltaTime);
-			//camera.mouseControl(0.0f, 0.0f);
-			//camera.mouseControl(mainWindow.getXChange(), mainWindow.getYChange());
-			//camera.mouseControl(-90.0f, -90.0f,mainWindow.gettipoCamara());
-			//camera.keyControl(mainWindow.getsKeys(), deltaTime);
-			//camaraAerea = camera.getCameraPosition();
-			//camera.keyControl(mainWindow.getsKeys(), deltaTime);
-			//camera = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 1.0f, 0.5f);
 			//aerea
 			cameraA.mouseControl(0.0f, -90.0f, mainWindow.gettipoCamara());
-			cameraA.keyControl(mainWindow.getsKeys(), deltaTime);
+			cameraA.keyControl(mainWindow.getsKeys(), deltaTime, mainWindow.gettipoCamara());
 			camera = cameraA;
 		}
 
-		//printf("( %f , %f , %f ) \n", camera.getCameraPosition().x, camera.getCameraPosition().y , camera.getCameraPosition().z);
-
+		printf("( %f , %f , %f ) %f \n", camera.getCameraPosition().x, camera.getCameraPosition().y , camera.getCameraPosition().z, camera.getCameraDirection());
+		//printf("%f",C)
 		// Clear the window
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -1294,12 +1285,14 @@ Model Ruedita_M;*/
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 12.6f));
 		model = glm::rotate(model, 90*toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(1.0f, 0.3f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Camino_M.RenderModel();
 
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 25.2f));
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(1.0f, 0.3f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Camino_M.RenderModel();
 
@@ -1309,12 +1302,14 @@ Model Ruedita_M;*/
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -12.6f));
 		model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(1.0f, 0.3f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Camino_M.RenderModel();
 
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -25.2f));
 		model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(1.0f, 0.3f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Camino_M.RenderModel();
 		//
@@ -1322,26 +1317,160 @@ Model Ruedita_M;*/
 		//
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(12.6f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(1.0f, 0.3f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Camino_M.RenderModel();
 
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(25.2f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(1.0f, 0.3f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Camino_M.RenderModel();
 		//
 		//
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(-12.6f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(1.0f, 0.3f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Camino_M.RenderModel();
 
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(-25.2f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(1.0f, 0.3f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Camino_M.RenderModel();
 		//
 	
+		//BORDE EXT
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-37.8f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pasto_M.RenderModel();
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-37.8f, 0.0f, 12.6f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pasto_M.RenderModel();
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-37.8f, 0.0f, -12.6f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pasto_M.RenderModel();
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-37.8f, 0.0f, 25.2f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pasto_M.RenderModel();
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-37.8f, 0.0f, -25.2f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pasto_M.RenderModel();
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-37.8f, 0.0f, 37.8f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pasto_M.RenderModel();
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-37.8f, 0.0f, -37.8f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pasto_M.RenderModel();
+		//**
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(37.8f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pasto_M.RenderModel();
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(37.8f, 0.0f, 12.6f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pasto_M.RenderModel();
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(37.8f, 0.0f, -12.6f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pasto_M.RenderModel();
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(37.8f, 0.0f, 25.2f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pasto_M.RenderModel();
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(37.8f, 0.0f, -25.2f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pasto_M.RenderModel();
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(37.8f, 0.0f, 37.8f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pasto_M.RenderModel();
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(37.8f, 0.0f, -37.8f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pasto_M.RenderModel();
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -37.8f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pasto_M.RenderModel();
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(12.6f, 0.0f, -37.8f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pasto_M.RenderModel();
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(25.2f, 0.0f, -37.8f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pasto_M.RenderModel();
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-12.6f, 0.0f, -37.8f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pasto_M.RenderModel();
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-25.2f, 0.0f, -37.8f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pasto_M.RenderModel();
+
+		//**
+		// 
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(37.8f, 0.0f, 37.8f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pasto_M.RenderModel();
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 37.8f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pasto_M.RenderModel();
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(12.6f, 0.0f, 37.8f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pasto_M.RenderModel();
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(25.2f, 0.0f, 37.8f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pasto_M.RenderModel();
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-12.6f, 0.0f, 37.8f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pasto_M.RenderModel();
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-25.2f, 0.0f, 37.8f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pasto_M.RenderModel();
+		//
+
+
 		//	Simio Arcoiris
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0));
