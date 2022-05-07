@@ -1,0 +1,22 @@
+
+newmtl StandardCCD773
+Kd  0.8 0.8431374 0.4509804
+Ks  00 00 00
+Ka  00 00 00
+d  01
+Ns  00
+illum 2
+
+
+
+
+newmtl StandardFF6785
+Kd  01 0.40392152 0.5215687
+Ks  00 00 00
+Ka  00 00 00
+d  01
+Ns  00
+illum 2
+
+
+
