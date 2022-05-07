@@ -1,0 +1,8 @@
+# MagicaVoxel @ Ephtracy
+
+newmtl palette
+illum 1
+Ka 0.000 0.000 0.000
+Kd 1.000 1.000 1.000
+Ks 0.000 0.000 0.000
+map_Kd PISTA_CARRERAS-0-10605_Slot_Car_Race_Track_v1_L3.png

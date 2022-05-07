@@ -1,6 +1,6 @@
 /*
 Semestre 2022-2
-Pr谩ctica 5: Carga de Modelos
+Pr脙隆ctica 5: Carga de Modelos
 */
 //para cargar imagen
 #define STB_IMAGE_IMPLEMENTATION
@@ -29,7 +29,7 @@ Pr谩ctica 5: Carga de Modelos
 #include"Model.h"
 #include "Skybox.h"
 
-//para iluminaci髇
+//para iluminaci贸n
 #include "CommonValues.h"
 #include "DirectionalLight.h"
 #include "PointLight.h"
@@ -52,6 +52,7 @@ Texture plainTexture;
 Texture pisoTexture;
 Texture cuatroTexture;
 Texture caminoTexture;
+Texture loraxTexture;
 
 Model Kitt_M;
 Model Llanta_M;
@@ -61,9 +62,23 @@ Model ArmaKND_M;
 Model CasaLorax_M;
 Model SimioArcoiris_M;
 Model Cuatro_M;
+
+//PEZ QUE JUEGA POQUER
+Model cuerpo_pez;
+Model hombro_pez;
+Model brazo_der_pez;
+Model conejo_izq_pez;
+Model mano_izq_pez;
+Model pie_izq;
+Model pie_der;
+Model antorcha;
+
+
+
 //BASE
 Model Camino_M;
 Model Pasto_M;
+
 //CORTADORA DE ARBOLES
 Model Cortadora_M;
 Model Rueda_M;
@@ -519,6 +534,357 @@ void CrearCuatro()
 
 }
 
+void CrearLorax() {
+
+	unsigned int indices[] = {
+		0, 1, 2,
+		2, 3, 0,
+
+		4, 5, 6,
+		6, 7, 4,
+
+		8, 9, 10,
+		10, 11, 8,
+
+		12, 13, 14,
+		14, 15, 12,
+
+		16, 17, 18,
+		18, 19, 16,
+
+		20, 21, 22,
+		22, 23, 20,
+		//CABEZA
+		24, 25, 26,
+		26, 27, 24,
+
+		28, 29, 30,
+		30, 31, 28,
+
+		32, 33, 34,
+		34, 35, 32,
+
+		36, 37, 38,
+		38, 39, 36,
+
+		40, 41, 42,
+		42, 43, 40,
+
+		44, 45, 46,
+		46, 47, 44,
+
+		//PIERNA IZQ
+		48, 49, 50,
+		50, 51, 48,
+
+		52, 53, 54,
+		54, 55, 52,
+
+		56, 57, 58,
+		58, 59, 56,
+
+		60, 61, 62,
+		62, 63, 60,
+
+		64, 65, 66,
+		66, 67, 64,
+
+		68, 69, 70,
+		70, 71, 68,
+
+		//PIERNA DER
+		72, 73, 74,
+		74, 75, 72,
+
+		76, 77, 78,
+		78, 79, 76,
+
+		80, 81, 82,
+		82, 83, 80,
+
+		84, 85, 86,
+		86, 87, 84,
+
+		88, 89, 90,
+		90, 91, 88,
+
+		92, 93, 94,
+		94, 95, 92,
+
+		//BRAZO IZQ
+		96, 97, 98,
+		98, 99, 96,
+
+		100, 101, 102,
+		102, 103, 100,
+
+		104, 105, 106,
+		106, 107, 104,
+
+		108, 109, 110,
+		110, 111, 108,
+
+		112, 113, 114,
+		114, 115, 112,
+
+		116, 117, 118,
+		118, 119, 116,
+
+		//BRAZO DER
+		120, 121, 122,
+		122, 123, 120,
+
+		124, 125, 126,
+		126, 127, 124,
+
+		128, 129, 130,
+		130, 131, 128,
+
+		132, 133, 134,
+		134, 135, 132,
+
+		136, 137, 138,
+		138, 139, 136,
+
+		140, 141, 142,
+		142, 143, 140,
+
+};
+//Ejercicio 1: reemplazar con sus dados de 6 caras texturizados, agregar normales
+// average normals
+GLfloat vertices[] = {
+
+	//CUERPO
+	//FRENTE
+	//X		Y		Z		S		T		NX		NY		NZ
+	-0.4f, -0.6f, 0.2f,		0.57025f,	0.71366f,		0.0f, 0.0f, -1.0f,
+	0.4f, -0.6f, 0.2f,		0.71317f,	0.71366f,		0.0f, 0.0f, -1.0f,
+	0.4f, 0.6f, 0.2f,		0.71317f,	0.85658f,		0.0f, 0.0f, -1.0f,
+	-0.4f, 0.6f, 0.2f,		0.57025f,	0.85658f,		0.0f, 0.0f, -1.0f,
+	//DERECHA
+	0.4f, -0.6f, 0.2f,		0.71317f,	0.71366f,		-1.0f, 0.0f, 0.0f,
+	0.4f, -0.6f, -0.2f,		0.8561f,	0.71366f,		-1.0f, 0.0f, 0.0f,
+	0.4f, 0.6f, -0.2f,		0.8561f,	0.85658f,		-1.0f, 0.0f, 0.0f,
+	0.4f, 0.6f, 0.2f,		0.71317f,	0.85658f,		-1.0f, 0.0f, 0.0f,
+
+	//IZQUIERDA
+	-0.4f, -0.6f, 0.2f,		0.57025f,	0.71366f,		1.0f, 0.0f, 0.0f,
+	-0.4f, -0.6f, -0.2f,	0.42684f,	0.71366f,			1.0f, 0.0f, 0.0f,
+	-0.4f, 0.6f, -0.2f,		0.42684f,	0.6875f,		1.0f, 0.0f, 0.0f,
+	-0.4f, 0.6f, 0.2f,		0.57025f,	0.6875f,	1.0f, 0.0f, 0.0f,
+
+	//ATRAS
+	-0.4f, -0.6f, -0.2f,	0.8561f,	0.71366f,			0.0f, 0.0f, 1.0f,
+	0.4f, -0.6f, -0.2f,		0.99903f,	0.71366f,		0.0f, 0.0f, 1.0f,
+	0.4f, 0.6f, -0.2f,		0.99903f,	0.85658f,	0.0f, 0.0f, 1.0f,
+	-0.4f, 0.6f, -0.2f,		0.8561f,	0.85658f,		0.0f, 0.0f, 1.0f,
+
+	//ARRIBA
+	0.4f, 0.6f, 0.2f,		0.71317f,	0.85658f,	0.0f, -1.0f, 0.0f,
+	0.4f, 0.6f, -0.2f,		0.71317f,	0.99903f,	0.0f, -1.0f, 0.0f,
+	-0.4f, 0.6f, -0.2f,		0.57025f,	0.99903f,	0.0f, -1.0f, 0.0f,
+	-0.4f, 0.6f, 0.2f,		0.57025f,	0.85658f,	0.0f, -1.0f, 0.0f,
+
+	//ABAJO
+	0.4f, -0.6f, -0.2f,		0.71317f,	0.71366f,	0.0f, 1.0f, 0.0f,
+	-0.4f, -0.6f, -0.2f,	0.57025f,	0.71366f,	0.0f, 1.0f, 0.0f,
+	-0.4f, -0.6f, 0.2f,		0.57025f,	0.57073f,	0.0f, 1.0f, 0.0f,
+	0.4f, -0.6f, 0.2f,		0.71317f,	0.57073f,	0.0f, 1.0f, 0.0f,
+
+	//CABEZA
+	//FRENTE
+	-0.4f, 0.6f, 0.4f,		0.11579f,	0.62839f,	0.0f, 0.0f, -1.0f,
+	0.4f, 0.6f, 0.4f,		0.24872f,	0.62839f,	0.0f, 0.0f, -1.0f,
+	0.4f, 1.4f, 0.4f,		0.24872f,	0.74273f,		0.0f, 0.0f, -1.0f,
+	-0.4f, 1.4f, 0.4f,		0.11579f,	0.74273f,		0.0f, 0.0f, -1.0f,
+
+	//DERECHA
+	0.4f, 0.6f, 0.4f,		0.24872f,	0.62839f,		-1.0f, 0.0f, 0.0f,
+	0.4f, 0.6f, -0.4f,		0.37209f,	0.62839f,		-1.0f, 0.0f, 0.0f,
+	0.4f, 1.4f, -0.4f,		0.37209f,	0.74273f,		-1.0f, 0.0f, 0.0f,
+	0.4f, 1.4f, 0.4f,		0.24872f,	0.74273f,		-1.0f, 0.0f, 0.0f,
+
+	//IZQUIERDA
+	-0.4f, 0.6f, 0.4f,		0.11579f,	0.62839f,		1.0f, 0.0f, 0.0f,
+	-0.4f, 0.6f, -0.4f,		0.0f,		0.62839f,		1.0f, 0.0f, 0.0f,
+	-0.4f, 1.4f, -0.4f,		0.0f,		0.74273f,		1.0f, 0.0f, 0.0f,
+	-0.4f, 1.4f, 0.4f,		0.11579f,	0.74273f,		1.0f, 0.0f, 0.0f,
+
+	//ATRAS
+	-0.4f, 0.6f, -0.4f,		0.11579f,	0.97189f,		0.0f, 0.0f, 1.0f,
+	0.4f, 0.6f, -0.4f,		0.24872f,	0.97189f,		0.0f, 0.0f, 1.0f,
+	0.4f, 1.4f, -0.4f,		0.24872f,	0.85755f,		0.0f, 0.0f, 1.0f,
+	-0.4f, 1.4f, -0.4f,		0.11579f,	0.85755f,		0.0f, 0.0f, 1.0f,
+
+	//ARRIBA
+	0.4f, 1.4f, 0.4f,		0.24872f, 0.74273f,		0.0f, -1.0f, 0.0f,
+	0.4f, 1.4f, -0.4f,		0.24872f, 0.85755f,		0.0f, -1.0f, 0.0f,
+	-0.4f, 1.4f, -0.4f,		0.11579f, 0.85755f,		0.0f, -1.0f, 0.0f,
+	-0.4f, 1.4f, 0.4f,		0.11579f, 0.74273f,		0.0f, -1.0f, 0.0f,
+
+	//ABAJO
+	0.4f, 0.6f, -0.4f,		0.24872f, 0.51453f,		0.0f, 1.0f, 0.0f,
+	-0.4f, 0.6f, -0.4f,		0.11579f, 0.51453f,		0.0f, 1.0f, 0.0f,
+	-0.4f, 0.6f, 0.4f,		0.11579f, 0.62839f,		0.0f, 1.0f, 0.0f,
+	0.4f, 0.6f, 0.4f,		0.24872f, 0.62839f,		0.0f, 1.0f, 0.0f,
+	/////////
+	//PIERNA IZQ
+	//FRENTE
+	-0.4f, -1.8f, 0.2f,		0.12693f, 0.05859f,		0.0f, 0.0f, -1.0f,
+	0.0f, -1.8f, 0.2f,		0.18410f, 0.05859f,		0.0f, 0.0f, -1.0f,
+	0.0f, -0.6f, 0.2f,		0.18410f, 0.22916f,	0.0f, 0.0f, -1.0f,
+	-0.4f, -0.6f, 0.2f,		0.12693f, 0.22916f,	0.0f, 0.0f, -1.0f,
+
+	//DERECHA
+	0.0f, -1.8f, 0.2f,		0.18410f, 0.05859f,		-1.0f, 0.0f, 0.0f,
+	0.0f, -1.8f, -0.2f,		0.24127f, 0.05859,		-1.0f, 0.0f, 0.0f,
+	0.0f, -0.6f, -0.2f,		0.24127f, 0.22916f,	-1.0f, 0.0f, 0.0f,
+	0.0f, -0.6f, 0.2f,		0.18410f, 0.22916f,		-1.0f, 0.0f, 0.0f,
+
+	//IZQUIERDA
+	-0.4f, -1.8f, 0.2f,		0.12693f, 0.05859f,		1.0f, 0.0f, 0.0f,
+	-0.4f, -1.8f, -0.2f,	0.06976f, 0.05859f,		1.0f, 0.0f, 0.0f,
+	-0.4f, -0.6f, -0.2f,	0.06976f, 0.22916f,		1.0f, 0.0f, 0.0f,
+	-0.4f, -0.6f, 0.2f,		0.12693f, 0.22916f,		1.0f, 0.0f, 0.0f,
+
+	//ATRAS
+	0.0f, -1.8f, -0.2f,		0.24127f, 0.05859,		0.0f, 0.0f, 1.0f,
+	-0.4f, -1.8f, -0.2f,	0.29844f, 0.05859,		0.0f, 0.0f, 1.0f,
+	-0.4f, -0.6f, -0.2f,	0.29844f, 0.22916f,		0.0f, 0.0f, 1.0f,
+	0.0f, -0.6f, -0.2f,		0.24127f, 0.22916f,		0.0f, 0.0f, 1.0f,
+
+	//ARRIBA
+	0.0f, -0.6f, 0.2f,		0.24127f, 0.22916f,		0.0f, -1.0f, 0.0f,
+	0.0f, -0.6f, -0.2f,		0.24127f, 0.28585f,		0.0f, -1.0f, 0.0f,
+	-0.4f, -0.6f, -0.2f,	0.1841f, 0.28585f,		0.0f, -1.0f, 0.0f,
+	-0.4f, -0.6f, 0.2f,		0.18410f, 0.22916f,		0.0f, -1.0f, 0.0f,
+
+	//ABAJO
+	0.0f, -1.8f, 0.2f,		0.18410f, 0.05859f,		0.0f, 1.0f, 0.0f,
+	0.0f, -1.8f, -0.2f,		0.18410f, 0.0f,			0.0f, 1.0f, 0.0f,
+	-0.4f, -1.8f, -0.2f,	0.12693f, 0.0f,		0.0f, 1.0f, 0.0f,
+	-0.4f, -1.8f, 0.2f,		0.12693f, 0.05859f,		0.0f, 1.0f, 0.0f,
+
+	//PIERNA DER
+	//FRENTE
+	0.0f, -1.8f, 0.2f,		0.12693f, 0.05859f,		0.0f, 0.0f, -1.0f,
+	0.4f, -1.8f, 0.2f,		0.18410f, 0.05859f,		0.0f, 0.0f, -1.0f,
+	0.4f, -0.6f, 0.2f,		0.18410f, 0.22916f,	0.0f, 0.0f, -1.0f,
+	0.0f, -0.6f, 0.2f,		0.12693f, 0.22916f,	0.0f, 0.0f, -1.0f,
+
+	//DERECHA
+	0.4f, -1.8f, 0.2f,		0.18410f, 0.05859f,		-1.0f, 0.0f, 0.0f,
+	0.4f, -1.8f, -0.2f,		0.24127f, 0.05859,		-1.0f, 0.0f, 0.0f,
+	0.4f, -0.6f, -0.2f,		0.24127f, 0.22916f,	-1.0f, 0.0f, 0.0f,
+	0.4f, -0.6f, 0.2f,		0.18410f, 0.22916f,		-1.0f, 0.0f, 0.0f,
+
+	//IZQUIERDA
+	0.0f, -1.8f, 0.2f,		0.12693f, 0.05859f,		1.0f, 0.0f, 0.0f,
+	0.0f, -1.8f, -0.2f,		0.06976f, 0.05859f,		1.0f, 0.0f, 0.0f,
+	0.0f, -0.6f, -0.2f,		0.06976f, 0.22916f,	1.0f, 0.0f, 0.0f,
+	0.0f, -0.6f, 0.2f,		0.12693f, 0.22916f,		1.0f, 0.0f, 0.0f,
+
+	//ATRAS
+	0.4f, -1.8f, -0.2f,		0.24127f, 0.05859,		0.0f, 0.0f, 1.0f,
+	0.0f, -1.8f, -0.2f,		0.29844f, 0.05859,		0.0f, 0.0f, 1.0f,
+	0.0f, -0.6f, -0.2f,		0.29844f, 0.22916f,		0.0f, 0.0f, 1.0f,
+	0.4f, -0.6f, -0.2f,		0.24127f, 0.22916f,		0.0f, 0.0f, 1.0f,
+
+	//ARRIBA
+	0.4f, -0.6f, 0.2f,		0.24127f, 0.22916f,	0.0f, -1.0f, 0.0f,
+	0.4f, -0.6f, -0.2f,		0.24127f, 0.28585f,	0.0f, -1.0f, 0.0f,
+	0.0f, -0.6f, -0.2f,		0.1841f, 0.28585f,		0.0f, -1.0f, 0.0f,
+	0.0f, -0.6f, 0.2f,		0.18410f, 0.22916f,		0.0f, -1.0f, 0.0f,
+
+	//ABAJO
+	0.4f, -1.8f, 0.2f,		0.18410f, 0.05859f,	0.0f, 1.0f, 0.0f,
+	0.4f, -1.8f, -0.2f,		0.18410f, 0.0f,		0.0f, 1.0f, 0.0f,
+	0.0f, -1.8f, -0.2f,		0.12693f, 0.0f,		0.0f, 1.0f, 0.0f,
+	0.0f, -1.8f, 0.2f,		0.12693f, 0.05859f,		0.0f, 1.0f, 0.0f,
+
+	//BRAZO IZQ////////////////////////////////////////////////////////////->
+	//FRENTE
+	0.4f, -0.6f, 0.2f,		0.69282f, 0.33478f,		0.0f, 0.0f, -1.0f,
+	0.8f, -0.6f, 0.2f,		0.72093f, 0.33478f,		0.0f, 0.0f, -1.0f,
+	0.8f, 0.6f, 0.2f,		0.72093f, 0.47819f,		0.0f, 0.0f, -1.0f,
+	0.4f, 0.6f, 0.2f,		0.69282f, 0.47819f,		0.0f, 0.0f, -1.0f,
+
+	//DERECHA
+	0.8f, -0.6f, 0.2f,		0.72093f, 0.33478f,		-1.0f, 0.0f, 0.0f,
+	0.8f, -0.6f, -0.2f,		0.7495f, 0.33478f,		-1.0f, 0.0f, 0.0f,
+	0.8f, 0.6f, -0.2f,		0.7495f, 0.47819f,		-1.0f, 0.0f, 0.0f,
+	0.8f, 0.6f, 0.2f,		0.72093f, 0.47819f,		-1.0f, 0.0f, 0.0f,
+
+	//IZQUIERDA
+	0.4f, -0.6f, -0.2f,		0.80668f, 0.33478f,		1.0f, 0.0f, 0.0f,
+	0.4f, -0.6f, 0.2f,		0.778585f, 0.33478f,		1.0f, 0.0f, 0.0f,
+	0.4f, 0.6f, 0.2f,		0.778585f, 0.47819f,	1.0f, 0.0f, 0.0f,
+	0.4f, 0.6f, -0.2f,		0.80668f, 0.47819f,	1.0f, 0.0f, 0.0f,
+
+	//ATRAS
+	0.8f, -0.6f, -0.2f,		0.7495f, 0.33478f,		0.0f, 0.0f, 1.0f,
+	0.4f, -0.6f, -0.2f,		0.778585f, 0.33478f,	0.0f, 0.0f, 1.0f,
+	0.4f, 0.6f, -0.2f,		0.778585f, 0.47819f,	0.0f, 0.0f, 1.0f,
+	0.8f, 0.6f, -0.2f,		0.7495f, 0.47819f,		0.0f, 0.0f, 1.0f,
+
+	//ARRIBA
+	0.4f, 0.6f, 0.2f,		0.778585f, 0.47819f,	0.0f, -1.0f, 0.0f,
+	0.8f, 0.6f, 0.2f,		0.80668f, 0.47819f,		0.0f, -1.0f, 0.0f,
+	0.8f, 0.6f, -0.2f,		0.80668f, 0.50678f,		0.0f, -1.0f, 0.0f,
+	0.4f, 0.6f, -0.2f,		0.778585f, 0.50678f,		0.0f, -1.0f, 0.0f,
+
+	//ABAJO
+	0.4f, -0.6f, -0.2f,		0.69282f, 0.3062f,	0.0f, 1.0f, 0.0f,
+	0.8f, -0.6f, -0.2f,		0.72093f, 0.3062f,	0.0f, 1.0f, 0.0f,
+	0.8f, -0.6f, 0.2f,		0.72093f, 0.33478f,		0.0f, 1.0f, 0.0f,
+	0.4f, -0.6f, 0.2f,		0.69282f, 0.33478f,		0.0f, 1.0f, 0.0f,
+
+	//BRAZO DER////////////////////////////77 - >
+	//FRENTE
+	-0.4f, -0.6f, 0.2f,		0.69282f, 0.33478f,		0.0f, 0.0f, -1.0f,
+	-0.8f, -0.6f, 0.2f,		0.72093f, 0.33478f,		0.0f, 0.0f, -1.0f,
+	-0.8f, 0.6f, 0.2f,		0.72093f, 0.47819,		0.0f, 0.0f, -1.0f,
+	-0.4f, 0.6f, 0.2f,		0.69282f, 0.47819f,	0.0f, 0.0f, -1.0f,
+
+	//DERECHA
+	-0.8f, -0.6f, 0.2f,		0.72093f, 0.33478f,		-1.0f, 0.0f, 0.0f,
+	-0.8f, -0.6f, -0.2f,	0.7495f, 0.33478f,		-1.0f, 0.0f, 0.0f,
+	-0.8f, 0.6f, -0.2f,		0.7495f, 0.47819f,		-1.0f, 0.0f, 0.0f,
+	-0.8f, 0.6f, 0.2f,		0.72093f, 0.47819f,		-1.0f, 0.0f, 0.0f,
+
+	//IZQUIERDA
+	-0.4f, -0.6f, -0.2f,	0.80668f, 0.33478f,		1.0f, 0.0f, 0.0f,
+	-0.4f, -0.6f, 0.2f,		0.778585f, 0.33478f,	1.0f, 0.0f, 0.0f,
+	-0.4f, 0.6f, 0.2f,		0.778585f, 0.47819f,	1.0f, 0.0f, 0.0f,
+	-0.4f, 0.6f, -0.2f,		0.80668f, 0.47819f,		1.0f, 0.0f, 0.0f,
+
+	//ATRAS
+	-0.8f, -0.6f, -0.2f,	0.7495f, 0.33478f,		0.0f, 0.0f, 1.0f,
+	-0.4f, -0.6f, -0.2f,	0.778585f, 0.33478f,	0.0f, 0.0f, 1.0f,
+	-0.4f, 0.6f, -0.2f,		0.778585f, 0.47819f,	0.0f, 0.0f, 1.0f,
+	-0.8f, 0.6f, -0.2f,		0.7495f, 0.47819f,		0.0f, 0.0f, 1.0f,
+
+	//ARRIBA
+	-0.4f, 0.6f, 0.2f,		0.778585f, 0.47819f,	0.0f, -1.0f, 0.0f,
+	-0.8f, 0.6f, 0.2f,		0.80668f, 0.47819f,		0.0f, -1.0f, 0.0f,
+	-0.8f, 0.6f, -0.2f,		0.80668f, 0.50678f,		0.0f, -1.0f, 0.0f,
+	-0.4f, 0.6f, -0.2f,		0.778585f, 0.50678f,		0.0f, -1.0f, 0.0f,
+
+	//ABAJO
+	-0.4f, -0.6f, -0.2f,	0.69282f, 0.3062f,		0.0f, 1.0f, 0.0f,
+	-0.8f, -0.6f, -0.2f,	0.72093f, 0.3062f,		0.0f, 1.0f, 0.0f,
+	-0.8f, -0.6f, 0.2f,		0.72093f, 0.33478f,		0.0f, 1.0f, 0.0f,
+	-0.4f, -0.6f, 0.2f,		0.69282f, 0.33478f,		0.0f, 1.0f, 0.0f,
+
+};
+
+	Mesh* lorax = new Mesh();
+	lorax->CreateMesh(vertices, indices, sizeof(vertices) / 4, sizeof(indices) / 4);
+	meshList.push_back(lorax);
+
+
+}
+
 int main()
 {
 	mainWindow = Window(1366, 768); // 1280, 1024 or 1024, 768
@@ -526,6 +892,7 @@ int main()
 
 	CreateObjects();
 	CrearCuatro();
+	CrearLorax();
 	CreateShaders();
 
 
@@ -546,6 +913,9 @@ int main()
 
 	cuatroTexture = Texture("Textures/cuatro_Texturas.tga");
 	cuatroTexture.LoadTextureA();
+
+	loraxTexture = Texture("Textures/textura_LORAX.png");
+	loraxTexture.LoadTextureA();
 
 	caminoTexture = Texture("Texture/camino.png");
 	caminoTexture.LoadTexture();
@@ -573,6 +943,24 @@ int main()
 
 	CasaLorax_M = Model();
 	CasaLorax_M.LoadModel("Models/casa_Lorax.obj");
+
+	//////PROYECTO FINAL
+
+	cuerpo_pez = Model();
+	cuerpo_pez.LoadModel("Models/cuerpo_pez.obj");
+	hombro_pez = Model();
+	hombro_pez.LoadModel("Models/hombro_pez.obj");
+	brazo_der_pez = Model();
+	brazo_der_pez.LoadModel("Models/brazo_der_pez.obj");
+	conejo_izq_pez = Model();
+	conejo_izq_pez.LoadModel("Models/conejo_izq_pez.obj");
+	mano_izq_pez = Model();
+	mano_izq_pez.LoadModel("Models/mano_izq_pez.obj");
+	pie_izq = Model();
+	pie_izq.LoadModel("Models/pie_izq_pez.obj");
+	pie_der = Model();
+	pie_der.LoadModel("Models/pie_der_pez.obj");
+
 
 	/*Model Cortadora_M;
 Model Rueda_M;
@@ -627,13 +1015,13 @@ Model Ruedita_M;*/
 	//Material_opaco = Material(0.3f, 4);
 
 
-	//luz direccional, s髄o 1 y siempre debe de existir
+	//luz direccional, s贸lo 1 y siempre debe de existir
 	mainLight = DirectionalLight(1.0f, 1.0f, 1.0f,
 		0.3f, 0.3f,
 		0.0f, 0.0f, -1.0f);
 	//contador de luces puntuales
 	unsigned int pointLightCount = 0;
-	//Declaraci髇 de primer luz puntual
+	//Declaraci贸n de primer luz puntual
 	
 
 	unsigned int spotLightCount = 0;
@@ -705,7 +1093,7 @@ Model Ruedita_M;*/
 		uniformEyePosition = shaderList[0].GetEyePositionLocation();
 		uniformColor = shaderList[0].getColorLocation();
 
-		//informaci髇 en el shader de intensidad especular y brillo
+		//informaci贸n en el shader de intensidad especular y brillo
 		uniformSpecularIntensity = shaderList[0].GetSpecularIntensityLocation();
 		uniformShininess = shaderList[0].GetShininessLocation();
 
@@ -713,12 +1101,12 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(camera.calculateViewMatrix()));
 		glUniform3f(uniformEyePosition, camera.getCameraPosition().x, camera.getCameraPosition().y, camera.getCameraPosition().z);
 
-		// luz ligada a la c醡ara de tipo flash
+		// luz ligada a la c谩mara de tipo flash
 		//glm::vec3 lowerLight = camera.getCameraPosition();
 		//lowerLight.y -= 0.3f;
 		// spotLights[0].SetFlash(lowerLight, camera.getCameraDirection());
 
-		//informaci髇 al shader de fuentes de iluminaci髇
+		//informaci贸n al shader de fuentes de iluminaci贸n
 		shaderList[0].SetDirectionalLight(&mainLight);
 		shaderList[0].SetPointLights(pointLights, pointLightCount);
 		shaderList[0].SetSpotLights(spotLights, spotLightCount);
@@ -727,6 +1115,9 @@ Model Ruedita_M;*/
 		glm::mat4 modelaux(1.0);
 		glm::mat4 cortadora_aux(1.0);
 		glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f);
+		glm::mat4 pezpoq_aux(1.0);
+		glm::mat4 pezpoq_aux_2(1.0);
+		glm::mat4 pezpoq_aux_3(1.0);
 
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(0.0f, -1.0f, 0.0f));
@@ -744,11 +1135,82 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Pasto_M.RenderModel();
 
+		//PEZ POK
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(40.0f, 5.0f, 5.0));
+		pezpoq_aux = model; // se guarda el centro del pez
+		pezpoq_aux_3 = model;
+		//model = glm::scale(model, glm::vec3(0.3f, 0.3f, 0.3f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		//cuerpo_pez.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = pezpoq_aux;
+		model = glm::translate(model, glm::vec3(1.3f, 0.32f, -0.21f));
+		pezpoq_aux_2 = model;
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		//hombro_pez.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = pezpoq_aux;
+		model = glm::translate(model, glm::vec3(-1.2f, 0.32f, 0.11f));
+		pezpoq_aux = model;
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		//hombro_pez.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = pezpoq_aux;
+		model = glm::translate(model, glm::vec3(-0.3f, 0.0f, 0.1f));
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		//brazo_der_pez.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = pezpoq_aux_2;
+		model = glm::translate(model, glm::vec3(0.2f, -0.1f, 0.4f));
+		pezpoq_aux_2 = model;
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		//conejo_izq_pez.RenderModel();
+
+		//es el codo va aaqui
+
+		model = glm::mat4(1.0);
+		model = pezpoq_aux_2;
+		model = glm::translate(model, glm::vec3(-0.1f, 0.2f, 0.6f));
+		pezpoq_aux_2 = model;
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		//mano_izq_pez.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = pezpoq_aux_3;
+		model = glm::translate(model, glm::vec3(-0.2f, -2.6f, -0.2f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		//pie_izq.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = pezpoq_aux_3;
+		model = glm::translate(model, glm::vec3(0.23f, -2.5f, -0.2f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		//pie_der.RenderModel();
+
+
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(-12.6f, 0.0f, 12.6f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Pasto_M.RenderModel();
-
+    
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(-12.6f, 0.0f, -12.6f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
@@ -892,7 +1354,7 @@ Model Ruedita_M;*/
 	
 
 		//CORTADORA DE ARBOLES
-		//Se hace una jerarquizaci贸n partiendo del cuerpo de la cortadora
+		//Se hace una jerarquizaci脙鲁n partiendo del cuerpo de la cortadora
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(0.0f, 5.0f, -1.0));
 		cortadora_aux = model;
@@ -963,6 +1425,12 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		//cuatroTexture.UseTexture();
 		//meshList[3]->RenderMesh();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-5.0f, 5.0f, -5.0));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		loraxTexture.UseTexture();
+		meshList[4]->RenderMesh();
 		
 
 		glUseProgram(0);
