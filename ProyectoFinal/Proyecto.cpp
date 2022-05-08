@@ -90,6 +90,7 @@ Model Chimenea_M;
 Model Ruedita_M;
 
 Model arbol_T;
+Model arbol_H;
 
 Skybox skybox;
 
@@ -952,7 +953,10 @@ int main()
 	//////PROYECTO FINAL
 
 	arbol_T = Model();
-	arbol_T.LoadModel("Models/the_lorax_tree.obj");
+	arbol_T.LoadModel("Models/tronco.obj");
+
+	arbol_H = Model();
+	arbol_H.LoadModel("Models/hojas.obj");
 
 	cuerpo_pez = Model();
 	cuerpo_pez.LoadModel("Models/cuerpo_pez.obj");
@@ -1132,6 +1136,8 @@ Model Ruedita_M;*/
 		glm::mat4 pezpoq_aux(1.0);
 		glm::mat4 pezpoq_aux_2(1.0);
 		glm::mat4 pezpoq_aux_3(1.0);
+		glm::mat4 arbol_aux(1.0);
+
 
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(0.0f, -1.0f, 0.0f));
@@ -1618,13 +1624,73 @@ Model Ruedita_M;*/
 		piedra.RenderModel();
 
 		//ARBOLES
+
+		//árbol rojo
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(7.0f, 10.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(-30.0f, -1.0f, -30.0f));
+		arbol_aux = model;
+		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(glm::vec3(0.5f, 0.5f, 0.5f)));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		arbol_T.RenderModel();
+
+		model = arbol_aux;
+		color = glm::vec3(1.0f, 0.2274f, 0.0001f);
+		model = glm::translate(model, glm::vec3(0.0f, 10.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
 		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
 		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		arbol_H.RenderModel();
+
+		//árbol rosa
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-30.0f, -1.0f, -28.0f));
+		model = glm::scale(model, glm::vec3(0.75f, 0.75f, 0.75f));
+		model = glm::rotate(model, 45 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));		
+		arbol_aux = model;
+		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(glm::vec3(0.5f, 0.5f, 0.5f)));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		arbol_T.RenderModel();
+
+		model = arbol_aux;
+		color = glm::vec3(0.9137f, 0.4196f, 0.9803f);
+		model = glm::translate(model, glm::vec3(0.0f, 10.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		arbol_H.RenderModel();
+
+		//árbol amarillo
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-30.0f, -1.0f, -26.0f));
+		model = glm::scale(model, glm::vec3(0.88f, 0.88f, 0.88f));
+		model = glm::rotate(model, 60 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		arbol_aux = model;
+		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(glm::vec3(0.5f, 0.5f, 0.5f)));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		arbol_T.RenderModel();
+
+		model = arbol_aux;
+		color = glm::vec3(1.0f, 0.7764f, 0.1254f);
+		model = glm::translate(model, glm::vec3(0.0f, 10.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		arbol_H.RenderModel();
 
 
 		//ILUMINACION
