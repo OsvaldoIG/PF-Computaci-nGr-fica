@@ -73,6 +73,7 @@ Model Llanta_M;
 Model Blackhawk_M;
 Model Aspas_M;
 Model ArmaKND_M;
+Model LanzaderaKND_M;
 Model CasaLorax_M;
 Model SimioArcoiris_M;
 Model AntenaSimio_M;
@@ -954,27 +955,15 @@ int main()
 	
 	
 
-	Kitt_M = Model();
-	//Kitt_M.LoadModel("Models/kitt_optimizado.obj");
-	//SE IMPORTAN LOS MODELOS
-	//Kitt_M.LoadModel("Models/kitt_obj.obj");
-	Kitt_M.LoadModel("Models/Vazz_obj.obj");
-
-	Llanta_M = Model();
-	Llanta_M.LoadModel("Models/Vazz_rueda_obj.obj");
-
-	Blackhawk_M = Model();
-	Blackhawk_M.LoadModel("Models/Black Hawk uh-60_Carcasa.obj");
-
-	Camino_M = Model();
-	Camino_M.LoadModel("Models/railroad track.obj");
-
-	
+		
 	ArmaKND_M = Model();
-	ArmaKND_M.LoadModel("Models/KNDSPANKLER.obj");
+	ArmaKND_M.LoadModel("Models/base_arma.obj");
+
+	LanzaderaKND_M = Model();
+	LanzaderaKND_M.LoadModel("Models/lanzadera_arma.obj");
 
 	CasaLorax_M = Model();
-	CasaLorax_M.LoadModel("Models/casa_Lorax.obj");
+	//CasaLorax_M.LoadModel("Models/casa_Lorax.obj");
 
 	//////PROYECTO FINAL
 
@@ -1369,7 +1358,7 @@ Model Ruedita_M;*/
 		model = glm::translate(model, glm::vec3(10.0f, 5.0f, 10.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		ArmaKND_M.RenderModel();
-		shaderList[0].SetSpotLights(spotLights, spotLightCount);
+
 
 		//pisoTexture.UseTexture();
 		//meshList[2]->RenderMesh();
@@ -2554,6 +2543,21 @@ Model Ruedita_M;*/
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		AntenaSimio_M.RenderModel();
+
+		//ARMA KND
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(10.0f, 5.0f, 10.0f));
+		modelaux = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		ArmaKND_M.RenderModel();
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		LanzaderaKND_M.RenderModel();
+
 		glUseProgram(0);
 
 		mainWindow.swapBuffers();
