@@ -53,6 +53,8 @@ Texture pisoTexture;
 Texture cuatroTexture;
 Texture caminoTexture;
 Texture loraxTexture;
+Texture fogataTexture;
+
 
 Model Kitt_M;
 Model Llanta_M;
@@ -61,6 +63,7 @@ Model Aspas_M;
 Model ArmaKND_M;
 Model CasaLorax_M;
 Model SimioArcoiris_M;
+Model AntenaSimio_M;
 Model Cuatro_M;
 
 //PEZ QUE JUEGA POQUER
@@ -90,7 +93,9 @@ Model Chimenea_M;
 Model Ruedita_M;
 
 Model arbol_T;
+Model Fogata_M;
 Model arbol_H;
+
 
 Skybox skybox;
 Skybox skyboxNoche;
@@ -104,6 +109,7 @@ glm::vec3 camaraPiso;
 glm::vec3 camaraAerea;
 GLint contadorSkybox = 0;
 GLboolean banderaSkybox = true;
+GLfloat giroSimios =0.0f;
 // luz direccional
 DirectionalLight mainLight;
 //para declarar varias luces de tipo pointlight
@@ -927,9 +933,13 @@ int main()
 	loraxTexture = Texture("Textures/textura_LORAX.png");
 	loraxTexture.LoadTextureA();
 
-	caminoTexture = Texture("Texture/camino.png");
+	caminoTexture = Texture("Textures/camino.png");
 	caminoTexture.LoadTexture();
 
+	fogataTexture = Texture("Textures/Fogata.png");
+	fogataTexture.LoadTexture();
+
+	
 	
 
 	Kitt_M = Model();
@@ -983,6 +993,8 @@ int main()
 	antorcha = Model();
 	antorcha.LoadModel("Models/Torch.obj");
 
+	Fogata_M = Model();
+	Fogata_M.LoadModel("Models/Fogata.obj");
 
 	/*Model Cortadora_M;
 Model Rueda_M;
@@ -1006,7 +1018,10 @@ Model Ruedita_M;*/
 	Ruedita_M.LoadModel("Models/tire-tx.obj");
 
 	SimioArcoiris_M = Model();
-	SimioArcoiris_M.LoadModel("Models/SimioArcoiris_obj_Texture.obj");
+	SimioArcoiris_M.LoadModel("Models/SimioArcoiris_obj_Texture_C.obj");
+
+	AntenaSimio_M = Model();
+	AntenaSimio_M.LoadModel("Models/SimioArcoiris_obj_Texture_A.obj");
 
 	Camino_M = Model();
 	Camino_M.LoadModel("Models/camino.obj");
@@ -1197,6 +1212,7 @@ Model Ruedita_M;*/
 	}
 	printf(" \n %d", contadorSkybox);
 	//printf("la camara piso: %f | %f | %f \n", pos)
+	//printf(" \n %d", contadorSkybox);
 
 	shaderList[0].UseShader();
 	uniformModel = shaderList[0].GetModelLocation();
@@ -1226,6 +1242,7 @@ Model Ruedita_M;*/
 
 		glm::mat4 model(1.0);
 		glm::mat4 modelaux(1.0);
+		glm::mat4 simios_aux(1.0);
 		glm::mat4 cortadora_aux(1.0);
 		glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f);
 		glm::mat4 pezpoq_aux(1.0);
@@ -1241,7 +1258,7 @@ Model Ruedita_M;*/
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(0.0f, 5.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(10.0f, 5.0f, 10.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		ArmaKND_M.RenderModel();
 		shaderList[0].SetSpotLights(spotLights, spotLightCount);
@@ -1830,13 +1847,9 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Hacha_M.RenderModel();
 
-		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
-		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		SimioArcoiris_M.RenderModel();
 	
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(0.0f, 1.0f, 0.0));
+		model = glm::translate(model, glm::vec3(0.0f, 1.0f, 10.0));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		cuatroTexture.UseTexture();
 		//meshList[3]->RenderMesh();
@@ -1974,6 +1987,156 @@ Model Ruedita_M;*/
 
 		antorcha.RenderModel();
 
+
+		//FOGATA
+		model = glm::mat4(1.0);
+		model = glm::scale(model, glm::vec3(0.3f, 0.3f, 0.3f));
+		model = glm::translate(model, glm::vec3(0.0f, -3.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Fogata_M.RenderModel();
+
+		//model = glm::mat4(1.0);
+		if (giroSimios >= 360.0f) {
+			giroSimios = 0.0f;
+		}
+		giroSimios += 0.1;
+		
+
+		//pivote
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(0.0f, -0.7f, 0.0f));
+		//model = glm::rotate(model, ,);
+		model = glm::scale(model, glm::vec3(0.3f, 0.3f, 0.3f));
+		modelaux = model;
+		//r*sin(giroSimios)
+		
+		//rojo
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(6.0f*(sin((giroSimios+90.0f)*toRadians)), 0.0f, 6.0f * (cos((giroSimios+90.0f) * toRadians))));
+		model = glm::rotate(model, (giroSimios + 0.0f) * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		simios_aux = model;
+		color = glm::vec3(0.9058f, 0.298f, 0.2352f);
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		SimioArcoiris_M.RenderModel();
+
+		model = simios_aux;
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		AntenaSimio_M.RenderModel();
+
+		//cyan
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(6.0f * (sin((giroSimios - 90.0f) * toRadians)), 0.0f, 6.0f * (cos((giroSimios - 90.0f) * toRadians))));
+		model = glm::rotate(model, (giroSimios + 180.0f) * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		simios_aux = model;
+		color = glm::vec3(0.3647f, 0.6784f, 0.8862f);
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		SimioArcoiris_M.RenderModel();
+
+		model = simios_aux;
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		AntenaSimio_M.RenderModel();
+
+		//morado
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(6.0f * (sin((giroSimios + 0.0f) * toRadians)), 0.0f, 6.0f * (cos((giroSimios + 0.0f) * toRadians))));
+		model = glm::rotate(model, (giroSimios - 90.0f) * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		simios_aux = model;
+		color = glm::vec3(0.5568f, 0.2666f, 0.6784f);
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		SimioArcoiris_M.RenderModel();
+
+		model = simios_aux;
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		AntenaSimio_M.RenderModel();
+
+		//amarillo
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(6.0f * (sin((giroSimios + 180.0f) * toRadians)), 0.0f, 6.0f * (cos((giroSimios + 180.0f) * toRadians))));
+		model = glm::rotate(model, (giroSimios + 90.0f) * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		simios_aux = model;
+		color = glm::vec3(0.9568f, 0.8156f, 0.2470f);
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		SimioArcoiris_M.RenderModel();
+
+		model = simios_aux;
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		AntenaSimio_M.RenderModel();
+
+		//naranja
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(6.0f * (sin((giroSimios + 135.0f) * toRadians)), 0.0f, 6.0f * (cos((giroSimios + 135.0f) * toRadians))));
+		model = glm::rotate(model, (giroSimios + 45.0f) * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		simios_aux = model;
+		color = glm::vec3(0.9019f, 0.4941f, 0.1333f);
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		SimioArcoiris_M.RenderModel();
+
+		model = simios_aux;
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		AntenaSimio_M.RenderModel();
+
+		//verde
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(6.0f * (sin((giroSimios + 225.0f) * toRadians)), 0.0f, 6.0f * (cos((giroSimios + 225.0f) * toRadians))));
+		model = glm::rotate(model, (giroSimios + 135.0f) * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		simios_aux = model;
+		color = glm::vec3(0.1529f, 0.6823f, 0.3764f);
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		SimioArcoiris_M.RenderModel();
+
+		model = simios_aux;
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		AntenaSimio_M.RenderModel();
+
+		//azul
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(6.0f * (sin((giroSimios + 315.0f) * toRadians)), 0.0f, 6.0f * (cos((giroSimios + 315.0f) * toRadians))));
+		model = glm::rotate(model, (giroSimios + 225.0f) * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		simios_aux = model;
+		color = glm::vec3(0.1215f, 0.4392f, 0.7764f);
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		SimioArcoiris_M.RenderModel();
+
+		model = simios_aux;
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		AntenaSimio_M.RenderModel();
+
+		//rosa
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(6.0f * (sin((giroSimios + 45.0f) * toRadians)), 0.0f, 6.0f * (cos((giroSimios + 45.0f) * toRadians))));
+		model = glm::rotate(model, (giroSimios + 315.0f) * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		simios_aux = model;
+		color = glm::vec3(0.9372f, 0.2491f, 0.9176f);
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		SimioArcoiris_M.RenderModel();
+
+		model = simios_aux;
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		AntenaSimio_M.RenderModel();
 		glUseProgram(0);
 
 		mainWindow.swapBuffers();
