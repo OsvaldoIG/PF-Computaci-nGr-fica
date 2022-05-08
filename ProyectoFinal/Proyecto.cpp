@@ -71,6 +71,9 @@ Model conejo_izq_pez;
 Model mano_izq_pez;
 Model pie_izq;
 Model pie_der;
+Model piedra;
+
+//ILUMINACION
 Model antorcha;
 
 
@@ -85,6 +88,8 @@ Model Rueda_M;
 Model Hacha_M;
 Model Chimenea_M;
 Model Ruedita_M;
+
+Model arbol_T;
 
 Skybox skybox;
 Skybox skyboxNoche;
@@ -946,6 +951,9 @@ int main()
 
 	//////PROYECTO FINAL
 
+	arbol_T = Model();
+	arbol_T.LoadModel("Models/the_lorax_tree.obj");
+
 	cuerpo_pez = Model();
 	cuerpo_pez.LoadModel("Models/cuerpo_pez.obj");
 	hombro_pez = Model();
@@ -960,6 +968,12 @@ int main()
 	pie_izq.LoadModel("Models/pie_izq_pez.obj");
 	pie_der = Model();
 	pie_der.LoadModel("Models/pie_der_pez.obj");
+	piedra = Model();
+	piedra.LoadModel("Models/piedras_bueno.obj");
+
+	//ILUMINACION
+	antorcha = Model();
+	antorcha.LoadModel("Models/Torch.obj");
 
 
 	/*Model Cortadora_M;
@@ -969,19 +983,19 @@ Model Chimenea_M;
 Model Ruedita_M;*/
 
 	Cortadora_M = Model();
-	//Cortadora_M.LoadModel("Models/cortadora_opt.obj");
+	Cortadora_M.LoadModel("Models/cortadora_opt.obj");
 
 	Rueda_M = Model();
-	//Rueda_M.LoadModel("Models/rueda.obj");
+	Rueda_M.LoadModel("Models/rueda.obj");
 
 	Hacha_M = Model();
-	//Hacha_M.LoadModel("Models/hacha_opt.obj");
+	Hacha_M.LoadModel("Models/hacha_opt.obj");
 
 	Chimenea_M = Model();
 	//Chimenea_M.LoadModel("Models/chimenea_opt.obj");
 
 	Ruedita_M = Model();
-	//Ruedita_M.LoadModel("Models/tire-tx.obj");
+	Ruedita_M.LoadModel("Models/tire-tx.obj");
 
 	SimioArcoiris_M = Model();
 	SimioArcoiris_M.LoadModel("Models/SimioArcoiris_obj_Texture.obj");
@@ -1133,6 +1147,12 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(0.0f, 5.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		ArmaKND_M.RenderModel();
+
+
 		//pisoTexture.UseTexture();
 		//meshList[2]->RenderMesh();
 		//PISO
@@ -1144,14 +1164,18 @@ Model Ruedita_M;*/
 		Pasto_M.RenderModel();
 
 		//PEZ POK
+		//		model = glm::scale(model, glm::vec3(0.3f, 0.3f, 0.3f));
+		//		model = glm::translate(model, glm::vec3(-90.0f, 0.0f, -1.0));
+		//
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(40.0f, 5.0f, 5.0));
+		model = glm::scale(model, glm::vec3(0.3f, 0.3f, 0.3f));
+		model = glm::translate(model, glm::vec3(90.0f, 2.0f, -5.0));
 		pezpoq_aux = model; // se guarda el centro del pez
-		pezpoq_aux_3 = model;
 		//model = glm::scale(model, glm::vec3(0.3f, 0.3f, 0.3f));
+		pezpoq_aux_3 = model;
 		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		//cuerpo_pez.RenderModel();
+		cuerpo_pez.RenderModel();
 
 		model = glm::mat4(1.0);
 		model = pezpoq_aux;
@@ -1160,7 +1184,7 @@ Model Ruedita_M;*/
 		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
 		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		//hombro_pez.RenderModel();
+		hombro_pez.RenderModel();
 
 		model = glm::mat4(1.0);
 		model = pezpoq_aux;
@@ -1169,7 +1193,7 @@ Model Ruedita_M;*/
 		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
 		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		//hombro_pez.RenderModel();
+		hombro_pez.RenderModel();
 
 		model = glm::mat4(1.0);
 		model = pezpoq_aux;
@@ -1177,7 +1201,7 @@ Model Ruedita_M;*/
 		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
 		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		//brazo_der_pez.RenderModel();
+		brazo_der_pez.RenderModel();
 
 		model = glm::mat4(1.0);
 		model = pezpoq_aux_2;
@@ -1186,7 +1210,7 @@ Model Ruedita_M;*/
 		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
 		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		//conejo_izq_pez.RenderModel();
+		conejo_izq_pez.RenderModel();
 
 		//es el codo va aaqui
 
@@ -1197,21 +1221,170 @@ Model Ruedita_M;*/
 		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
 		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		//mano_izq_pez.RenderModel();
+		mano_izq_pez.RenderModel();
 
 		model = glm::mat4(1.0);
 		model = pezpoq_aux_3;
 		model = glm::translate(model, glm::vec3(-0.2f, -2.6f, -0.2f));
 		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		//pie_izq.RenderModel();
+		pie_izq.RenderModel();
 
 		model = glm::mat4(1.0);
 		model = pezpoq_aux_3;
 		model = glm::translate(model, glm::vec3(0.23f, -2.5f, -0.2f));
 		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		//pie_der.RenderModel();
+		pie_der.RenderModel();
+
+		//PEZ 2
+				//PEZ POK
+		//		model = glm::scale(model, glm::vec3(0.3f, 0.3f, 0.3f));
+		//		model = glm::translate(model, glm::vec3(-90.0f, 0.0f, -1.0));
+		//
+		model = glm::mat4(1.0);
+		model = glm::scale(model, glm::vec3(0.3f, 0.3f, 0.3f));
+		model = glm::translate(model, glm::vec3(85.0f, 2.0f, -1.0));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		pezpoq_aux = model; // se guarda el centro del pez
+		//model = glm::scale(model, glm::vec3(0.3f, 0.3f, 0.3f));
+		pezpoq_aux_3 = model;
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		cuerpo_pez.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = pezpoq_aux;
+		model = glm::translate(model, glm::vec3(1.3f, 0.32f, -0.21f));
+		pezpoq_aux_2 = model;
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		hombro_pez.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = pezpoq_aux;
+		model = glm::translate(model, glm::vec3(-1.2f, 0.32f, 0.11f));
+		pezpoq_aux = model;
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		hombro_pez.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = pezpoq_aux;
+		model = glm::translate(model, glm::vec3(-0.3f, 0.0f, 0.1f));
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		brazo_der_pez.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = pezpoq_aux_2;
+		model = glm::translate(model, glm::vec3(0.2f, -0.1f, 0.4f));
+		pezpoq_aux_2 = model;
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		conejo_izq_pez.RenderModel();
+
+		//es el codo va aaqui
+
+		model = glm::mat4(1.0);
+		model = pezpoq_aux_2;
+		model = glm::translate(model, glm::vec3(-0.1f, 0.2f, 0.6f));
+		pezpoq_aux_2 = model;
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		mano_izq_pez.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = pezpoq_aux_3;
+		model = glm::translate(model, glm::vec3(-0.2f, -2.6f, -0.2f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		pie_izq.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = pezpoq_aux_3;
+		model = glm::translate(model, glm::vec3(0.23f, -2.5f, -0.2f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		pie_der.RenderModel();
+
+
+
+		//pez 3
+		model = glm::mat4(1.0);
+		model = glm::scale(model, glm::vec3(0.3f, 0.3f, 0.3f));
+		model = glm::translate(model, glm::vec3(90.0f, 2.0f, 5.0));
+		model = glm::rotate(model, -180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		pezpoq_aux = model; // se guarda el centro del pez
+		//model = glm::scale(model, glm::vec3(0.3f, 0.3f, 0.3f));
+		pezpoq_aux_3 = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		cuerpo_pez.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = pezpoq_aux;
+		model = glm::translate(model, glm::vec3(1.3f, 0.32f, -0.21f));
+		pezpoq_aux_2 = model;
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		hombro_pez.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = pezpoq_aux;
+		model = glm::translate(model, glm::vec3(-1.2f, 0.32f, 0.11f));
+		pezpoq_aux = model;
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		hombro_pez.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = pezpoq_aux;
+		model = glm::translate(model, glm::vec3(-0.3f, 0.0f, 0.1f));
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		brazo_der_pez.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = pezpoq_aux_2;
+		model = glm::translate(model, glm::vec3(0.2f, -0.1f, 0.4f));
+		pezpoq_aux_2 = model;
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		conejo_izq_pez.RenderModel();
+
+		//es el codo va aaqui
+
+		model = glm::mat4(1.0);
+		model = pezpoq_aux_2;
+		model = glm::translate(model, glm::vec3(-0.1f, 0.2f, 0.6f));
+		pezpoq_aux_2 = model;
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		mano_izq_pez.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = pezpoq_aux_3;
+		model = glm::translate(model, glm::vec3(-0.2f, -2.6f, -0.2f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		pie_izq.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = pezpoq_aux_3;
+		model = glm::translate(model, glm::vec3(0.23f, -2.5f, -0.2f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		pie_der.RenderModel();
 
 
 		model = modelaux;
@@ -1489,11 +1662,11 @@ Model Ruedita_M;*/
 
 
 		//	Simio Arcoiris
-		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0));
+		//model = glm::mat4(1.0);
+		//model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0));
 
-		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		//color = glm::vec3(1.0f, 1.0f, 1.0f);
+		//glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 
 		//Cortadora_M.RenderModel();
 		//Blackhawk_M.RenderModel();
@@ -1502,82 +1675,129 @@ Model Ruedita_M;*/
 		//CORTADORA DE ARBOLES
 		//Se hace una jerarquizaciÃ³n partiendo del cuerpo de la cortadora
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(0.0f, 5.0f, -1.0));
+		model = glm::scale(model, glm::vec3(0.7f, 0.7f, 0.7f));
+		model = glm::translate(model, glm::vec3(-30.0f, 1.5f, -1.0));
 		cortadora_aux = model;
-		//model = glm::scale(model, glm::vec3(0.3f, 0.3f, 0.3f));
 		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		//Cortadora_M.RenderModel();
+		Cortadora_M.RenderModel();
 
 
 		model = cortadora_aux;
 		model = glm::translate(model, glm::vec3(0.0f, 3.0f, 0.0));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		//Chimenea_M.RenderModel();
+		Chimenea_M.RenderModel();
+
 
 		model = cortadora_aux;
 		model = glm::translate(model, glm::vec3(-3.0f, -1.0f, -3.0f));
 		//model = glm::scale(model, glm::vec3(0.3f, 0.3f, 0.3f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		//Rueda_M.RenderModel();
+		Rueda_M.RenderModel();
 
 		model = cortadora_aux;
 		model = glm::translate(model, glm::vec3(-3.0f, -1.0f, 3.0f));
 		model = glm::rotate(model, -180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		//Rueda_M.RenderModel();
+		Rueda_M.RenderModel();
 
 		model = cortadora_aux;
 		model = glm::translate(model, glm::vec3(1.0f, -2.0f, -3.0f));
 		model = glm::scale(model, glm::vec3(0.7f, 0.7f, 0.7f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		//Rueda_M.RenderModel();
+		Rueda_M.RenderModel();
 
 		model = cortadora_aux;
 		model = glm::translate(model, glm::vec3(1.0f, -2.0f, 3.0f));
 		model = glm::scale(model, glm::vec3(0.7f, 0.7f, 0.7f));
 		model = glm::rotate(model, -180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		//Rueda_M.RenderModel();
+		Rueda_M.RenderModel();
 
 		model = cortadora_aux;
 		model = glm::translate(model, glm::vec3(6.8f, 0.0f, 6.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		//Hacha_M.RenderModel();
+		Hacha_M.RenderModel();
 		//////////////////////////////////////////////////////////////////////////////
 		model = cortadora_aux;
 		model = glm::translate(model, glm::vec3(9.4f, 0.0f, -6.0f));
 		model = glm::rotate(model, -180 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		//Hacha_M.RenderModel();
+		Hacha_M.RenderModel();
 
 		model = cortadora_aux;
 		model = glm::translate(model, glm::vec3(13.3f, 0.0f, 6.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		//Hacha_M.RenderModel();
+		Hacha_M.RenderModel();
 		/////////////////////////////////////////////////////////////////////////////
 		
 		model = cortadora_aux;
 		model = glm::translate(model, glm::vec3(17.0f, 0.0f, -6.0f));
 		model = glm::rotate(model, -180 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		//Hacha_M.RenderModel();
+		Hacha_M.RenderModel();
 
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		//SimioArcoiris_M.RenderModel();
+		SimioArcoiris_M.RenderModel();
 	
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(5.0f, 5.0f, 0.0));
+		model = glm::translate(model, glm::vec3(0.0f, 1.0f, 0.0));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		//cuatroTexture.UseTexture();
-		//meshList[3]->RenderMesh();
+		cuatroTexture.UseTexture();
+		meshList[3]->RenderMesh();
 
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(-5.0f, 5.0f, -5.0));
+		model = glm::translate(model, glm::vec3(0.0f, 1.0f, -20.0));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		loraxTexture.UseTexture();
 		meshList[4]->RenderMesh();
-		
+
+		// ROCA
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(27.0f, -1.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.7f, 0.7f, 0.7f));
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		piedra.RenderModel();
+
+		//ARBOLES
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(7.0f, 10.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		arbol_T.RenderModel();
+
+
+		//ILUMINACION
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(2.0f, -0.5f, -25.0f));
+		//model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		antorcha.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-1.0f, -0.5f, -15.0f));
+		//model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		antorcha.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-2.0f, -0.5f, 15.0f));
+		//model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		antorcha.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(1.0f, -0.5f, 25.0f));
+		//model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		antorcha.RenderModel();
 
 		glUseProgram(0);
 
