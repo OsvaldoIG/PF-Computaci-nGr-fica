@@ -87,6 +87,7 @@ Model Chimenea_M;
 Model Ruedita_M;
 
 Skybox skybox;
+Skybox skyboxNoche;
 
 //Sphere cabeza = Sphere(0.5, 20, 20);
 GLfloat deltaTime = 0.0f;
@@ -95,8 +96,8 @@ static double limitFPS = 1.0 / 60.0;
 
 glm::vec3 camaraPiso;
 glm::vec3 camaraAerea;
-
-
+GLint contadorSkybox = 0;
+GLboolean banderaSkybox = true;
 // luz direccional
 DirectionalLight mainLight;
 //para declarar varias luces de tipo pointlight
@@ -898,7 +899,6 @@ int main()
 
 	//camera = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 5.0f, 0.5f);
 	cameraP = Camera(glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, 0.0f, 0.1f, 0.5f);
-
 	cameraA = Camera(glm::vec3(0.0f, 20.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 0.1f, 0.5f);
 
 	//Aqui se importan texturas
@@ -993,23 +993,26 @@ Model Ruedita_M;*/
 	Pasto_M.LoadModel("Models/pasto.obj");
 
 	std::vector<std::string> skyboxFaces;
+	std::vector<std::string> skyboxFacesN;
+	
 	//Texturas de skyboard
-	/*skyboxFaces.push_back("Textures/Skybox/desert_bk.tga"); //bk
+	skyboxFaces.push_back("Textures/Skybox/desert_bk.tga"); //bk
 	skyboxFaces.push_back("Textures/Skybox/desert_ft.tga"); //ft
 	skyboxFaces.push_back("Textures/Skybox/desert_dn.tga"); //dn
 	skyboxFaces.push_back("Textures/Skybox/desert_up.tga"); //up
 	skyboxFaces.push_back("Textures/Skybox/desert_lt.tga"); //lt
-	skyboxFaces.push_back("Textures/Skybox/desert_rt.tga"); //rt */
-
-	//SKYBOX NOCHE
-	skyboxFaces.push_back("Textures/Skybox/desert_noche_bk.tga"); //bk
-	skyboxFaces.push_back("Textures/Skybox/desert_noche_ft.tga"); //ft
-	skyboxFaces.push_back("Textures/Skybox/desert_noche_dn.tga"); //dn
-	skyboxFaces.push_back("Textures/Skybox/desert_noche_up.tga"); //up
-	skyboxFaces.push_back("Textures/Skybox/desert_noche_lt.tga"); //lt
-	skyboxFaces.push_back("Textures/Skybox/desert_noche_rt.tga"); //rt
+	skyboxFaces.push_back("Textures/Skybox/desert_rt.tga"); //rt
 
 	skybox = Skybox(skyboxFaces);
+	//SKYBOX NOCHE
+	skyboxFacesN.push_back("Textures/Skybox/desert_noche_bk.tga"); //bk
+	skyboxFacesN.push_back("Textures/Skybox/desert_noche_ft.tga"); //ft
+	skyboxFacesN.push_back("Textures/Skybox/desert_noche_dn.tga"); //dn
+	skyboxFacesN.push_back("Textures/Skybox/desert_noche_up.tga"); //up
+	skyboxFacesN.push_back("Textures/Skybox/desert_noche_lt.tga"); //lt
+	skyboxFacesN.push_back("Textures/Skybox/desert_noche_rt.tga"); //rt
+
+	skyboxNoche = Skybox(skyboxFacesN);
 
 	//Material_brillante = Material(4.0f, 256);
 	//Material_opaco = Material(0.3f, 4);
@@ -1017,7 +1020,7 @@ Model Ruedita_M;*/
 
 	//luz direccional, sólo 1 y siempre debe de existir
 	mainLight = DirectionalLight(1.0f, 1.0f, 1.0f,
-		0.3f, 0.3f,
+		1.0f, 0.0f, //el primero la luz 1 - DIA 0.3 NOCHE
 		0.0f, 0.0f, -1.0f);
 	//contador de luces puntuales
 	unsigned int pointLightCount = 0;
@@ -1053,10 +1056,7 @@ Model Ruedita_M;*/
 
 		//Recibir eventos del usuario
 		glfwPollEvents();
-		//camera.keyControl(mainWindow.getsKeys(), deltaTime);
-		//camera.mouseControl(mainWindow.getXChange(), mainWindow.getYChange());
-
-
+		
 		//TIPO DE CAMARA
 		if (mainWindow.gettipoCamara() == 0) { //0 = PEGADA AL PISO, 1= AEREA
 			cameraP.mouseControl(mainWindow.getXChange(), mainWindow.getYChange(), mainWindow.gettipoCamara());
@@ -1071,12 +1071,29 @@ Model Ruedita_M;*/
 			camera = cameraA;
 		}
 
-		printf("( %f , %f , %f ) %f \n", camera.getCameraPosition().x, camera.getCameraPosition().y , camera.getCameraPosition().z, camera.getCameraDirection());
-		//printf("%f",C)
+		//printf("( %f , %f , %f ) %f \n", camera.getCameraPosition().x, camera.getCameraPosition().y , camera.getCameraPosition().z, camera.getCameraDirection());
+		
 		// Clear the window
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		skybox.DrawSkybox(camera.calculateViewMatrix(), projection);
+		
+	if (contadorSkybox < (40000)) {
+		if (banderaSkybox) {
+			skybox.DrawSkybox(camera.calculateViewMatrix(), projection);
+			mainLight.SetIntensity(1.0f);
+		}
+		else {
+			skyboxNoche.DrawSkybox(camera.calculateViewMatrix(), projection);
+			mainLight.SetIntensity(0.3f);
+		}
+		contadorSkybox++;
+	}
+	else {
+		contadorSkybox = 0;
+		banderaSkybox = !banderaSkybox;
+	}
+	printf(" \n %d", contadorSkybox);
+
 		shaderList[0].UseShader();
 		uniformModel = shaderList[0].GetModelLocation();
 		uniformProjection = shaderList[0].GetProjectionLocation();
