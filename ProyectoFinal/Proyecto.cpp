@@ -110,8 +110,11 @@ DirectionalLight mainLight;
 PointLight pointLights[MAX_POINT_LIGHTS];
 SpotLight spotLights[MAX_SPOT_LIGHTS];
 
+PointLight arrPointLights[20];
+
 // Vertex Shader
 static const char* vShader = "shaders/shader_light.vert";
+
 
 // Fragment Shader
 static const char* fShader = "shaders/shader_light.frag";
@@ -169,6 +172,7 @@ void CreateShaders()
 	Shader* shader1 = new Shader();
 	shader1->CreateFromFiles(vShader, fShader);
 	shaderList.push_back(*shader1);
+
 }
 
 void CrearCuatro()
@@ -904,7 +908,7 @@ int main()
 
 
 	//camera = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 5.0f, 0.5f);
-	cameraP = Camera(glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, 0.0f, 0.1f, 0.5f);
+	cameraP = Camera(glm::vec3(0.0f, 2.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, 0.0f, 0.1f, 0.5f);
 	cameraA = Camera(glm::vec3(0.0f, 20.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 0.1f, 0.5f);
 
 	//Aqui se importan texturas
@@ -1035,17 +1039,76 @@ Model Ruedita_M;*/
 	//Material_brillante = Material(4.0f, 256);
 	//Material_opaco = Material(0.3f, 4);
 
-
+	//ILUMINACION
 	//luz direccional, sólo 1 y siempre debe de existir
+
 	mainLight = DirectionalLight(1.0f, 1.0f, 1.0f,
 		1.0f, 0.0f, //el primero la luz 1 - DIA 0.3 NOCHE
 		0.0f, 0.0f, -1.0f);
-	//contador de luces puntuales
-	unsigned int pointLightCount = 0;
-	//Declaración de primer luz puntual
-	
 
+
+	//contadores de luces puntuales y spotlight
+	unsigned int pointLightCount = 0;
 	unsigned int spotLightCount = 0;
+	glm::vec3 pos_per = cameraP.getCameraPosition();
+
+	//Declaración de primer luz puntual
+			//model = glm::translate(model, glm::vec3(2.0f, -0.5f, -25.0f));
+		//model = glm::translate(model, glm::vec3(-1.0f, -0.5f, -15.0f));
+		//model = glm::translate(model, glm::vec3(-5.0f, -0.5f, 2.0f));
+		//model = glm::translate(model, glm::vec3(-2.0f, -0.5f, 15.0f));
+		//model = glm::translate(model, glm::vec3(1.0f, -0.5f, 25.0f));
+		//model = glm::translate(model, glm::vec3(25.0f, -0.5f, -2.0f));
+		//model = glm::translate(model, glm::vec3(15.0f, -0.5f, 1.0f));
+
+	mainLight = DirectionalLight(1.0f, 1.0f, 1.0f,
+		0.4f, 0.2f,
+		0.0f, 0.0f, -1.0f);
+	////model = glm::translate(model, glm::vec3(2.0f, -0.5f, -25.0f));
+	arrPointLights[0] = PointLight(0.8980f, 0.4901f, 0.2078f,
+		1.0f, 0.7f,
+		2.0f, 1.0f, -25.0f, //posición
+		0.3f, 0.2f, 0.1f); //coeficientes de la ecuación de 2do grado
+
+
+	////model = glm::translate(model, glm::vec3(-1.0f, -0.5f, -15.0f));
+	arrPointLights[1] = PointLight(0.8980f, 0.4901f, 0.2078f,
+		1.0f, 0.7f,
+		-1.0f, 1.0f, -15.0f, //posición
+		0.3f, 0.2f, 0.1f); //coeficientes de la ecuación de 2do grado
+
+	/*model = glm::translate(model, glm::vec3(-5.0f, -0.5f, 2.0f));*/
+	arrPointLights[2] = PointLight(0.8980f, 0.4901f, 0.2078f,
+		1.0f, 0.7f,
+		-5.0f, 1.0f, 2.0f, //posición
+		0.3f, 0.2f, 0.1f); //coeficientes de la ecuación de 2do grado
+	
+	//model = glm::translate(model, glm::vec3(-2.0f, -0.5f, 15.0f));
+	arrPointLights[3] = PointLight(0.8980f, 0.4901f, 0.2078f,
+		1.0f, 0.7f,
+		-2.0f, 1.0f, 15.0f, //posición
+		0.3f, 0.2f, 0.1f); //coeficientes de la ecuación de 2do grado
+
+	//model = glm::translate(model, glm::vec3(1.0f, -0.5f, 25.0f));
+	arrPointLights[4] = PointLight(0.8980f, 0.4901f, 0.2078f,
+		1.0f, 0.7f,
+		1.0f, 1.0f, 25.0f, //posición
+		0.3f, 0.2f, 0.1f); //coeficientes de la ecuación de 2do grado
+
+	//model = glm::translate(model, glm::vec3(25.0f, -0.5f, -2.0f));
+	arrPointLights[5] = PointLight(0.8980f, 0.4901f, 0.2078f,
+		1.0f, 0.7f,
+		25.0f, 1.0f, -2.0f, //posición
+		0.3f, 0.2f, 0.1f); //coeficientes de la ecuación de 2do grado
+
+	//model = glm::translate(model, glm::vec3(15.0f, -0.5f, 1.0f));
+	arrPointLights[6] = PointLight(0.8980f, 0.4901f, 0.2078f,
+		1.0f, 0.7f,
+		15.0f, 1.0f, 1.0f, //posición
+		0.3f, 0.2f, 0.1f); //coeficientes de la ecuación de 2do grado
+
+
+
 	//linterna
 	spotLights[0] = SpotLight(1.0f, 1.0f, 1.0f,
 		0.0f, 2.0f,
@@ -1064,6 +1127,7 @@ Model Ruedita_M;*/
 	////Loop mientras no se cierra la ventana
 	while (!mainWindow.getShouldClose())
 	{
+		pos_per = cameraP.getCameraPosition();
 		GLfloat now = glfwGetTime();
 		deltaTime = now - lastTime;
 		deltaTime += (now - lastTime) / limitFPS;
@@ -1099,10 +1163,31 @@ Model Ruedita_M;*/
 		if (banderaSkybox) {
 			skybox.DrawSkybox(camera.calculateViewMatrix(), projection);
 			mainLight.SetIntensity(1.0f);
+			pointLightCount = 0;
 		}
 		else {
+			//Es de noche
 			skyboxNoche.DrawSkybox(camera.calculateViewMatrix(), projection);
 			mainLight.SetIntensity(0.3f);
+			if (pos_per.z <-10 ) {
+				pointLights[0] = arrPointLights[0];
+				pointLights[1] = arrPointLights[1];
+				pointLightCount = 2;
+			}
+			else if(pos_per.x >10){
+				pointLights[0] = arrPointLights[6];
+				pointLights[1] = arrPointLights[5];
+				pointLightCount = 2;
+			}
+			else if (pos_per.z > 10) {
+				pointLights[0] = arrPointLights[3];
+				pointLights[1] = arrPointLights[4];
+				pointLightCount = 2;
+			}
+			else {
+				pointLights[0] = arrPointLights[2];
+				pointLightCount = 1;
+			}
 		}
 		contadorSkybox++;
 	}
@@ -1111,31 +1196,33 @@ Model Ruedita_M;*/
 		banderaSkybox = !banderaSkybox;
 	}
 	printf(" \n %d", contadorSkybox);
+	//printf("la camara piso: %f | %f | %f \n", pos)
 
-		shaderList[0].UseShader();
-		uniformModel = shaderList[0].GetModelLocation();
-		uniformProjection = shaderList[0].GetProjectionLocation();
-		uniformView = shaderList[0].GetViewLocation();
-		uniformEyePosition = shaderList[0].GetEyePositionLocation();
-		uniformColor = shaderList[0].getColorLocation();
+	shaderList[0].UseShader();
+	uniformModel = shaderList[0].GetModelLocation();
+	uniformProjection = shaderList[0].GetProjectionLocation();
+	uniformView = shaderList[0].GetViewLocation();
+	uniformEyePosition = shaderList[0].GetEyePositionLocation();
+	uniformColor = shaderList[0].getColorLocation();
 
-		//información en el shader de intensidad especular y brillo
-		uniformSpecularIntensity = shaderList[0].GetSpecularIntensityLocation();
-		uniformShininess = shaderList[0].GetShininessLocation();
+	//información en el shader de intensidad especular y brillo
+	uniformSpecularIntensity = shaderList[0].GetSpecularIntensityLocation();
+	uniformShininess = shaderList[0].GetShininessLocation();
 
-		glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projection));
-		glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(camera.calculateViewMatrix()));
-		glUniform3f(uniformEyePosition, camera.getCameraPosition().x, camera.getCameraPosition().y, camera.getCameraPosition().z);
+	glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projection));
+	glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(camera.calculateViewMatrix()));
+	glUniform3f(uniformEyePosition, camera.getCameraPosition().x, camera.getCameraPosition().y, camera.getCameraPosition().z);
 
-		// luz ligada a la cámara de tipo flash
-		//glm::vec3 lowerLight = camera.getCameraPosition();
-		//lowerLight.y -= 0.3f;
-		// spotLights[0].SetFlash(lowerLight, camera.getCameraDirection());
+	// luz ligada a la cámara de tipo flash
+	//glm::vec3 lowerLight = camera.getCameraPosition();
+	//lowerLight.y -= 0.3f;
+	// spotLights[0].SetFlash(lowerLight, camera.getCameraDirection());
 
-		//información al shader de fuentes de iluminación
-		shaderList[0].SetDirectionalLight(&mainLight);
-		shaderList[0].SetPointLights(pointLights, pointLightCount);
-		shaderList[0].SetSpotLights(spotLights, spotLightCount);
+	//información al shader de fuentes de iluminación
+	shaderList[0].SetDirectionalLight(&mainLight);
+	shaderList[0].SetPointLights(pointLights, pointLightCount);
+	shaderList[0].SetSpotLights(spotLights, spotLightCount);
+
 
 		glm::mat4 model(1.0);
 		glm::mat4 modelaux(1.0);
@@ -1157,7 +1244,7 @@ Model Ruedita_M;*/
 		model = glm::translate(model, glm::vec3(0.0f, 5.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		ArmaKND_M.RenderModel();
-
+		shaderList[0].SetSpotLights(spotLights, spotLightCount);
 
 		//pisoTexture.UseTexture();
 		//meshList[2]->RenderMesh();
@@ -1752,10 +1839,10 @@ Model Ruedita_M;*/
 		model = glm::translate(model, glm::vec3(0.0f, 1.0f, 0.0));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		cuatroTexture.UseTexture();
-		meshList[3]->RenderMesh();
+		//meshList[3]->RenderMesh();
 
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(0.0f, 1.0f, -20.0));
+		model = glm::translate(model, glm::vec3(pos_per.x, pos_per.y-2, pos_per.z));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		loraxTexture.UseTexture();
 		meshList[4]->RenderMesh();
@@ -1841,6 +1928,7 @@ Model Ruedita_M;*/
 
 		//ILUMINACION
 
+
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(2.0f, -0.5f, -25.0f));
 		//model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
@@ -1863,6 +1951,27 @@ Model Ruedita_M;*/
 		model = glm::translate(model, glm::vec3(1.0f, -0.5f, 25.0f));
 		//model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		antorcha.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(25.0f, -0.5f, -2.0f));
+		//model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		antorcha.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(15.0f, -0.5f, 1.0f));
+		//model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		antorcha.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-5.0f, -0.5f, 2.0f));
+		//model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		antorcha.RenderModel();
+
+
 		antorcha.RenderModel();
 
 		glUseProgram(0);
