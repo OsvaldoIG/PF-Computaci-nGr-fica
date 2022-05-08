@@ -15,6 +15,11 @@ Window::Window(GLint windowWidth, GLint windowHeight)
 	height = windowHeight;
 	muevex = 2.0f;
 	tipoCamara = 0;
+
+	//animación tala
+	tala_arbol = 0;
+	bandera_tala = true ;
+
 	for (size_t i = 0; i < 1024; i++)
 	{
 		keys[i] = 0;
@@ -123,7 +128,14 @@ void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, in
 			theWindow->tipoCamara = 0;
 		}
 	}
-
+	if (key == GLFW_KEY_P) {
+			theWindow->tala_arbol = 1; //Comienza la animación
+	}
+	if (key == GLFW_KEY_L) {
+		theWindow->tala_arbol = 0; //Para la animación
+	}
+	GLint tala_arbol;
+	GLint bandera_tala;
 
 
 	if (key >= 0 && key < 1024)

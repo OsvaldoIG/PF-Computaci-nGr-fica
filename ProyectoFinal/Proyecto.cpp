@@ -38,6 +38,18 @@ PrÃ¡ctica 5: Carga de Modelos
 
 const float toRadians = 3.14159265f / 180.0f;
 
+//VARIABLES ANIMACION 1 CORTADORA
+float giraHacha;
+float giraHachaOffset;
+float giroArbol;
+float giroHojas;
+float giroHojasOffset;
+float rotahacha;
+bool retrocede; 
+bool sacudehojas;
+bool sacude_der;
+int contador_sacude;
+
 Window mainWindow;
 std::vector<Mesh*> meshList;
 std::vector<Shader> shaderList;
@@ -1075,6 +1087,7 @@ Model Ruedita_M;*/
 		//model = glm::translate(model, glm::vec3(1.0f, -0.5f, 25.0f));
 		//model = glm::translate(model, glm::vec3(25.0f, -0.5f, -2.0f));
 		//model = glm::translate(model, glm::vec3(15.0f, -0.5f, 1.0f));
+	//model = glm::translate(model, glm::vec3(0.0f, -3.0f, 0.0f));
 
 	mainLight = DirectionalLight(1.0f, 1.0f, 1.0f,
 		0.4f, 0.2f,
@@ -1121,7 +1134,11 @@ Model Ruedita_M;*/
 		1.0f, 0.7f,
 		15.0f, 1.0f, 1.0f, //posición
 		0.3f, 0.2f, 0.1f); //coeficientes de la ecuación de 2do grado
-
+	//model = glm::translate(model, glm::vec3(0.0f, -3.0f, 0.0f));
+	arrPointLights[7] = PointLight(1.0f, 0.2156f, 0.2156f,
+		1.0f, 1.0f,
+		0.0f, -3.0f, 0.0f, //posición
+		0.3f, 0.2f, 0.1f); //coeficientes de la ecuación de 2do grado
 
 
 	//linterna
@@ -1139,6 +1156,19 @@ Model Ruedita_M;*/
 	glm::mat4 projection = glm::perspective(45.0f, (GLfloat)mainWindow.getBufferWidth() / mainWindow.getBufferHeight(), 0.1f, 1000.0f);
 
 
+	//ANIMACION 1 CORTADORA
+	//Cuando se apriete la tecla 'P' se hace el movimiento de las hachas y los árboles se sacuden 
+	giraHacha = 10.0;
+	giraHachaOffset = 0.005;
+	giroArbol = 0.0;
+	giroHojas = 0.0;
+	giroHojasOffset =0.0005;
+	rotahacha = 0.0;
+	retrocede = true; 
+	sacudehojas = false;
+	sacude_der = 0.0;
+	contador_sacude = 0;
+
 	////Loop mientras no se cierra la ventana
 	while (!mainWindow.getShouldClose())
 	{
@@ -1148,8 +1178,84 @@ Model Ruedita_M;*/
 		deltaTime += (now - lastTime) / limitFPS;
 		lastTime = now;
 
+		//ANIMACION CORTADORA
+		if (mainWindow.gettala() == 1) {
+			if (sacudehojas) {
+				printf("contador: %i \n", contador_sacude);
+				if (contador_sacude < 2) {
+					if (sacude_der) {
+						giroHojas += 0.8* deltaTime;
+						giroArbol += 0.4 * deltaTime;
+						if (giroHojas < 5) {
+							giroHojas -= giroHojasOffset * deltaTime;
+							giroArbol -= giroHojasOffset * deltaTime;
+						}
+						else
+						{
+							sacude_der = false;
+						}
+					}
+					else
+					{
+						giroHojas -= 0.8* deltaTime;
+						giroArbol -= 0.4 * deltaTime;
+						if (giroHojas > -5) {
+							giroHojas -= giroHojasOffset * deltaTime;
+							giroArbol -= giroHojasOffset * deltaTime;
+						}
+						else
+						{
+							sacude_der = true;
+							contador_sacude++;
+						}
 
+					}
+				}
+				else
+				{
+					giroHojas += 0.8 * deltaTime;
+					giroArbol += 0.4 * deltaTime;
+					if (giroHojas < 0) {
+						giroHojas -= giroHojasOffset * deltaTime;
+						giroArbol -= giroHojasOffset * deltaTime;
+					}
+					else
+					{
+						sacudehojas = false;
+						giroHojas = 0.0;
+						rotahacha = 0.0;
+						retrocede = true;
+						sacude_der = 0.0;
+						contador_sacude = 0;
 
+					}
+				}
+			}
+			else
+			{
+				if (retrocede) {
+					giraHacha += 0.2 * deltaTime;
+					if (giraHacha < 25) {
+						giraHacha -= giraHachaOffset * deltaTime;
+					}
+					else {
+						retrocede = false;
+					}
+				}
+				else {
+					giraHacha -= 0.2 * deltaTime;
+					if (giraHacha > 1) {
+						giraHacha -= giraHachaOffset * deltaTime;
+					}
+					else {
+						sacudehojas = true;
+					}
+				}
+			}
+
+		}
+
+		mainWindow.gettipoCamara() == 0;
 
 		//Recibir eventos del usuario
 		glfwPollEvents();
@@ -1174,7 +1280,7 @@ Model Ruedita_M;*/
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
-	if (contadorSkybox < (40000)) {
+	if (contadorSkybox < (4000)) {
 		if (banderaSkybox) {
 			skybox.DrawSkybox(camera.calculateViewMatrix(), projection);
 			mainLight.SetIntensity(1.0f);
@@ -1184,24 +1290,25 @@ Model Ruedita_M;*/
 			//Es de noche
 			skyboxNoche.DrawSkybox(camera.calculateViewMatrix(), projection);
 			mainLight.SetIntensity(0.3f);
+				pointLights[0] = arrPointLights[7];
 			if (pos_per.z <-10 ) {
-				pointLights[0] = arrPointLights[0];
-				pointLights[1] = arrPointLights[1];
-				pointLightCount = 2;
+				pointLights[1] = arrPointLights[0];
+				pointLights[2] = arrPointLights[1];
+				pointLightCount = 3;
 			}
 			else if(pos_per.x >10){
-				pointLights[0] = arrPointLights[6];
-				pointLights[1] = arrPointLights[5];
-				pointLightCount = 2;
+				pointLights[1] = arrPointLights[6];
+				pointLights[2] = arrPointLights[5];
+				pointLightCount = 3;
 			}
 			else if (pos_per.z > 10) {
-				pointLights[0] = arrPointLights[3];
-				pointLights[1] = arrPointLights[4];
-				pointLightCount = 2;
+				pointLights[1] = arrPointLights[3];
+				pointLights[2] = arrPointLights[4];
+				pointLightCount = 3;
 			}
 			else {
-				pointLights[0] = arrPointLights[2];
-				pointLightCount = 1;
+				pointLights[1] = arrPointLights[2];
+				pointLightCount = 2;
 			}
 		}
 		contadorSkybox++;
@@ -1244,6 +1351,7 @@ Model Ruedita_M;*/
 		glm::mat4 modelaux(1.0);
 		glm::mat4 simios_aux(1.0);
 		glm::mat4 cortadora_aux(1.0);
+		glm::mat4 cortadora_hacha_aux(1.0);
 		glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f);
 		glm::mat4 pezpoq_aux(1.0);
 		glm::mat4 pezpoq_aux_2(1.0);
@@ -1788,6 +1896,7 @@ Model Ruedita_M;*/
 		model = glm::scale(model, glm::vec3(0.7f, 0.7f, 0.7f));
 		model = glm::translate(model, glm::vec3(-30.0f, 1.5f, -1.0));
 		cortadora_aux = model;
+		cortadora_hacha_aux = model;
 		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Cortadora_M.RenderModel();
@@ -1825,28 +1934,141 @@ Model Ruedita_M;*/
 		Rueda_M.RenderModel();
 
 		model = cortadora_aux;
-		model = glm::translate(model, glm::vec3(6.8f, 0.0f, 6.0f));
+		model = glm::translate(model, glm::vec3(6.8f, 0.0f, 0.0f));
+		model = glm::rotate(model, giraHacha * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+
+
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 6.0f));
+		cortadora_hacha_aux = model;
+		//model = glm::translate(model, glm::vec3(6.8f, 0.0f, 6.0f));
+		//model = glm::rotate(model, 30 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Hacha_M.RenderModel();
-		//////////////////////////////////////////////////////////////////////////////
-		model = cortadora_aux;
-		model = glm::translate(model, glm::vec3(9.4f, 0.0f, -6.0f));
-		model = glm::rotate(model, -180 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Hacha_M.RenderModel();
 
+		//ÁRBOL ROJO |1
 		model = cortadora_aux;
-		model = glm::translate(model, glm::vec3(13.3f, 0.0f, 6.0f));
+		//model = glm::translate(model, glm::vec3(-3.0f, -2.5f, 4.0f));
+		model = glm::translate(model, glm::vec3(4.8f, -2.5f, 10.0f));
+		arbol_aux = model;
+		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		model = glm::rotate(model, giroArbol * toRadians, glm::vec3(0.0f, 0.0f, -1.0f));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(glm::vec3(0.5f, 0.5f, 0.5f)));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		arbol_T.RenderModel();
+		model = arbol_aux;
+		color = glm::vec3(1.0f, 0.2274f, 0.0001f);
+		model = glm::translate(model, glm::vec3(0.0f, 10.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		model = glm::rotate(model, giroHojas* toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		arbol_H.RenderModel();
+		//////////////////////////////////////////////////////////////////////////////
+
+		model = cortadora_aux;
+		model = glm::translate(model, glm::vec3(9.4f, 0.0f, 0.0f));
+		model = glm::rotate(model, -giraHacha * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -6.0f));
+		model = glm::rotate(model, -180 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		//model = glm::rotate(model, giraHacha* toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Hacha_M.RenderModel();
+
+		//ÁRBOL ROJO |2
+		model = cortadora_aux;
+		model = glm::translate(model, glm::vec3(7.4f, -2.5f, -10.0f));
+		arbol_aux = model;
+		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		model = glm::rotate(model, -giroHojas * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(glm::vec3(0.5f, 0.5f, 0.5f)));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		arbol_T.RenderModel();
+		model = arbol_aux;
+		color = glm::vec3(1.0f, 0.2274f, 0.0001f);
+		model = glm::translate(model, glm::vec3(0.0f, 10.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		model = glm::rotate(model, -giroArbol * toRadians, glm::vec3(0.0f, 0.0f, -1.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		arbol_H.RenderModel();
+		//////////////////////////////////////////////////////////////////////////////
+
+		model = cortadora_aux;
+		model = glm::translate(model, glm::vec3(13.3f, 0.0f, 0.0f));
+		model = glm::rotate(model, giraHacha * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 6.0f));
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Hacha_M.RenderModel();
+
+		////ÁRBOL ROSA |3
+		model = cortadora_aux;
+		model = glm::translate(model, glm::vec3(11.3f, -2.5f, 10.0f));
+		model = glm::scale(model, glm::vec3(0.95f, 0.95f, 0.95f));
+		model = glm::rotate(model, 45 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		arbol_aux = model;
+		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		model = glm::rotate(model, giroArbol * toRadians, glm::vec3(0.0f, 0.0f, -1.0f));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(glm::vec3(0.5f, 0.5f, 0.5f)));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		arbol_T.RenderModel();
+		model = arbol_aux;
+		color = glm::vec3(0.9137f, 0.4196f, 0.9803f);
+		model = glm::translate(model, glm::vec3(0.0f, 10.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		model = glm::rotate(model, giroHojas * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		arbol_H.RenderModel();
+
 		/////////////////////////////////////////////////////////////////////////////
 		
 		model = cortadora_aux;
-		model = glm::translate(model, glm::vec3(17.0f, 0.0f, -6.0f));
+		model = glm::translate(model, glm::vec3(17.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, -giraHacha * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -6.0f));
 		model = glm::rotate(model, -180 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Hacha_M.RenderModel();
 
+		////ÁRBOL ROSA |4
+		model = cortadora_aux;
+		model = glm::translate(model, glm::vec3(15.0f, -2.5f, -10.0f));
+		model = glm::scale(model, glm::vec3(0.85f, 0.85f, 0.85f));
+		model = glm::rotate(model, 45 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		arbol_aux = model;
+		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		model = glm::rotate(model, -giroArbol * toRadians, glm::vec3(0.0f, 0.0f, -1.0f));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(glm::vec3(0.5f, 0.5f, 0.5f)));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		arbol_T.RenderModel();
+
+		model = arbol_aux;
+		color = glm::vec3(0.9137f, 0.4196f, 0.9803f);
+		model = glm::translate(model, glm::vec3(0.0f, 10.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		model = glm::rotate(model, -giroHojas * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		arbol_H.RenderModel();
 	
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(0.0f, 1.0f, 10.0));
@@ -1856,7 +2078,9 @@ Model Ruedita_M;*/
 
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(pos_per.x, pos_per.y-2, pos_per.z));
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		loraxTexture.UseTexture();
 		meshList[4]->RenderMesh();
 
@@ -1866,7 +2090,9 @@ Model Ruedita_M;*/
 		model = glm::scale(model, glm::vec3(0.7f, 0.7f, 0.7f));
 		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
 		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		piedra.RenderModel();
 
 		//ARBOLES
@@ -1881,7 +2107,6 @@ Model Ruedita_M;*/
 		glUniform3fv(uniformColor, 1, glm::value_ptr(glm::vec3(0.5f, 0.5f, 0.5f)));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		arbol_T.RenderModel();
-
 		model = arbol_aux;
 		color = glm::vec3(1.0f, 0.2274f, 0.0001f);
 		model = glm::translate(model, glm::vec3(0.0f, 10.0f, 0.0f));
@@ -1904,7 +2129,6 @@ Model Ruedita_M;*/
 		glUniform3fv(uniformColor, 1, glm::value_ptr(glm::vec3(0.5f, 0.5f, 0.5f)));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		arbol_T.RenderModel();
-
 		model = arbol_aux;
 		color = glm::vec3(0.9137f, 0.4196f, 0.9803f);
 		model = glm::translate(model, glm::vec3(0.0f, 10.0f, 0.0f));
@@ -1927,7 +2151,6 @@ Model Ruedita_M;*/
 		glUniform3fv(uniformColor, 1, glm::value_ptr(glm::vec3(0.5f, 0.5f, 0.5f)));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		arbol_T.RenderModel();
-
 		model = arbol_aux;
 		color = glm::vec3(1.0f, 0.7764f, 0.1254f);
 		model = glm::translate(model, glm::vec3(0.0f, 10.0f, 0.0f));
@@ -1938,6 +2161,200 @@ Model Ruedita_M;*/
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
 
+		//árbol rojo
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-30.0f, -1.0f, -24.0f));
+		arbol_aux = model;
+		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(glm::vec3(0.5f, 0.5f, 0.5f)));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		arbol_T.RenderModel();
+		model = arbol_aux;
+		color = glm::vec3(1.0f, 0.2274f, 0.0001f);
+		model = glm::translate(model, glm::vec3(0.0f, 10.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		arbol_H.RenderModel();
+
+		//árbol amarillo
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-30.0f, -1.0f, -22.0f));
+		model = glm::scale(model, glm::vec3(0.75f, 0.75f, 0.75f));
+		model = glm::rotate(model, 60 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		arbol_aux = model;
+		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(glm::vec3(0.5f, 0.5f, 0.5f)));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		arbol_T.RenderModel();
+		model = arbol_aux;
+		color = glm::vec3(1.0f, 0.7764f, 0.1254f);
+		model = glm::translate(model, glm::vec3(0.0f, 10.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		arbol_H.RenderModel();
+
+		//árbol rosa
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-30.0f, -1.0f, -20.0f));
+		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
+		model = glm::rotate(model, 45 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		arbol_aux = model;
+		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(glm::vec3(0.5f, 0.5f, 0.5f)));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		arbol_T.RenderModel();
+		model = arbol_aux;
+		color = glm::vec3(0.9137f, 0.4196f, 0.9803f);
+		model = glm::translate(model, glm::vec3(0.0f, 10.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		arbol_H.RenderModel();
+
+		//árbol rojo
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-30.0f, -1.0f, -18.0f));
+		model = glm::scale(model, glm::vec3(0.96f, 0.96f, 0.96f));
+		model = glm::rotate(model, 15 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		arbol_aux = model;
+		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(glm::vec3(0.5f, 0.5f, 0.5f)));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		arbol_T.RenderModel();
+		model = arbol_aux;
+		color = glm::vec3(1.0f, 0.2274f, 0.0001f);
+		model = glm::translate(model, glm::vec3(0.0f, 10.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		arbol_H.RenderModel();
+
+		//árbol rosa
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-30.0f, -1.0f, -16.0f));
+		model = glm::scale(model, glm::vec3(0.95f, 0.95f, 0.95f));
+		model = glm::rotate(model, 75 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		arbol_aux = model;
+		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(glm::vec3(0.5f, 0.5f, 0.5f)));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		arbol_T.RenderModel();
+		model = arbol_aux;
+		color = glm::vec3(0.9137f, 0.4196f, 0.9803f);
+		model = glm::translate(model, glm::vec3(0.0f, 10.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		arbol_H.RenderModel();
+
+		//árbol amarillo
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-30.0f, -1.0f, -14.0f));
+		model = glm::scale(model, glm::vec3(0.8f, 0.8f, 0.8f));
+		model = glm::rotate(model, 10 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		arbol_aux = model;
+		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(glm::vec3(0.5f, 0.5f, 0.5f)));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		arbol_T.RenderModel();
+		model = arbol_aux;
+		color = glm::vec3(1.0f, 0.7764f, 0.1254f);
+		model = glm::translate(model, glm::vec3(0.0f, 10.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		arbol_H.RenderModel();
+
+		//árbol rojo
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-30.0f, -1.0f, -12.0f));
+		model = glm::scale(model, glm::vec3(0.65f, 0.65f, 0.65f));
+		arbol_aux = model;
+		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(glm::vec3(0.5f, 0.5f, 0.5f)));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		arbol_T.RenderModel();
+		model = arbol_aux;
+		color = glm::vec3(1.0f, 0.2274f, 0.0001f);
+		model = glm::translate(model, glm::vec3(0.0f, 10.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		arbol_H.RenderModel();
+
+		//árbol amarillo
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-30.0f, -1.0f, -10.0f));
+		model = glm::scale(model, glm::vec3(0.95f, 0.95f, 0.95f));
+		model = glm::rotate(model, 20 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		arbol_aux = model;
+		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(glm::vec3(0.5f, 0.5f, 0.5f)));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		arbol_T.RenderModel();
+		model = arbol_aux;
+		color = glm::vec3(1.0f, 0.7764f, 0.1254f);
+		model = glm::translate(model, glm::vec3(0.0f, 10.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		arbol_H.RenderModel();
+
+		//árbol rosa
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-30.0f, -1.0f, -8.0f));
+		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		model = glm::rotate(model, 35 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		arbol_aux = model;
+		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(glm::vec3(0.5f, 0.5f, 0.5f)));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		arbol_T.RenderModel();
+		model = arbol_aux;
+		color = glm::vec3(0.9137f, 0.4196f, 0.9803f);
+		model = glm::translate(model, glm::vec3(0.0f, 10.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		arbol_H.RenderModel();
 
 		//ILUMINACION
 
