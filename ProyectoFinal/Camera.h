@@ -18,6 +18,10 @@ public:
 
 	glm::vec3 getCameraPosition();
 	glm::vec3 getCameraDirection();
+	bool getFrente(){ return frente; };
+	bool getAtras() { return atras; };
+	bool getDerecha() { return derecha; };
+	bool getIzquierda() { return izquierda; };
 	void setCameraPosition(glm::vec3 pos);
 	void setCameraDirection();
 	glm::mat4 calculateViewMatrix();
@@ -36,6 +40,11 @@ private:
 
 	GLfloat moveSpeed;
 	GLfloat turnSpeed;
+
+	bool frente;
+	bool atras;
+	bool derecha;
+	bool izquierda;
 
 	void update();
 };

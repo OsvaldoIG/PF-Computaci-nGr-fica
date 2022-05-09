@@ -16,6 +16,9 @@ public:
 	GLfloat getmuevex() { return muevex; }
 	GLint gettipoCamara() { return tipoCamara;  }
 	GLint gettala() { return tala_arbol; }
+
+	GLint getCamina() { return camina; }
+	GLint getDesplaza() { return desplaza; }
 	bool getbandera() { return bandera_tala; }
 	bool getShouldClose() {
 		return  glfwWindowShouldClose(mainWindow);}
@@ -36,6 +39,8 @@ private:
 	GLfloat muevex;
 	GLint tipoCamara;
 	GLint tala_arbol;
+	GLint camina;
+	GLint desplaza;
 	bool bandera_tala;
 	bool mouseFirstMoved;
 	static void ManejaTeclado(GLFWwindow* window, int key, int code, int action, int mode);
