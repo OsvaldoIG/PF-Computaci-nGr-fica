@@ -2113,7 +2113,9 @@ Model Ruedita_M;*/
 	
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(0.0f, 1.0f, 10.0));
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		cuatroTexture.UseTexture();
 		meshList[3]->RenderMesh();
 

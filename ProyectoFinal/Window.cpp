@@ -192,7 +192,7 @@ void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, in
 	if (key == GLFW_KEY_O) {
 		theWindow->lanzadera = 1;
 	}
-	if (key == GLFW_KEY_K) {
+	if (key == GLFW_KEY_I) {
 		theWindow->lanzadera = 0;
 	}
 
