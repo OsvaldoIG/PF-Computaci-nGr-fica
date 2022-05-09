@@ -19,6 +19,9 @@ public:
 
 	GLint getCamina() { return camina; }
 	GLint getDesplaza() { return desplaza; }
+
+	GLint getLuzLampara() { return luz_lampara; }
+
 	bool getbandera() { return bandera_tala; }
 	GLint getlanzadera() { return lanzadera; }
 	bool getShouldClose() {
@@ -43,6 +46,7 @@ private:
 	GLint camina;
 	GLint desplaza;
 	GLint lanzadera;
+	GLint luz_lampara;
 	bool bandera_tala;
 	bool mouseFirstMoved;
 	static void ManejaTeclado(GLFWwindow* window, int key, int code, int action, int mode);

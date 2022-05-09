@@ -24,6 +24,8 @@ Window::Window(GLint windowWidth, GLint windowHeight)
 	desplaza = 0;
 
 	lanzadera = 0;
+	luz_lampara = 0;
+
 	for (size_t i = 0; i < 1024; i++)
 	{
 		keys[i] = 0;
@@ -180,6 +182,12 @@ void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, in
 	}
 	if (key == GLFW_KEY_L) {
 		theWindow->tala_arbol = 0; //Para la animación
+	}
+	if (key == GLFW_KEY_K) {
+		theWindow->luz_lampara = 1; //Se prende la lámpara
+	}
+	if (key == GLFW_KEY_M) {
+		theWindow->luz_lampara = 0; //Se apaga la lámpara
 	}
 	if (key == GLFW_KEY_O) {
 		theWindow->lanzadera = 1;
