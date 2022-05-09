@@ -13,6 +13,11 @@ Camera::Camera(glm::vec3 startPosition, glm::vec3 startUp, GLfloat startYaw, GLf
 	moveSpeed = startMoveSpeed;
 	turnSpeed = startTurnSpeed;
 
+	frente = false;
+	atras = false;
+	derecha = false;
+	izquierda = false;
+
 	update();
 }
 
@@ -21,8 +26,9 @@ Camera::Camera(glm::vec3 startPosition, glm::vec3 startUp, GLfloat startYaw, GLf
 
 void Camera::keyControl(bool* keys, GLfloat deltaTime, GLint tipo)
 {
+
 	GLfloat velocity = moveSpeed * deltaTime;
-	if (tipo == 0) {
+	if (tipo == 0) { //ligada al suelo
 		if (position.y != 1.0f) {
 			position.y = 1.0f;
 		}
@@ -43,21 +49,25 @@ void Camera::keyControl(bool* keys, GLfloat deltaTime, GLint tipo)
 		if (keys[GLFW_KEY_W])
 		{
 			position += front * velocity;
+			frente = true;
 		}
 
 		if (keys[GLFW_KEY_S])
 		{
 			position -= front * velocity;
+			atras = true;
 		}
 
 		if (keys[GLFW_KEY_A])
 		{
 			position -= right * velocity;
+			izquierda = true;
 		}
 
 		if (keys[GLFW_KEY_D])
 		{
 			position += right * velocity;
+			derecha = true;
 		}
 
 		if (keys[GLFW_KEY_Q])
@@ -101,7 +111,10 @@ void Camera::keyControl(bool* keys, GLfloat deltaTime, GLint tipo)
 			position -= up * velocity;
 		}
 	}
-	
+	frente = false;
+	atras = false;
+	derecha = false;
+	izquierda = false;
 
 }
 

@@ -50,6 +50,14 @@ bool sacudehojas;
 bool sacude_der;
 int contador_sacude;
 
+//VARIABLES ANIMACION AVATAR
+float giroAvanza;
+float giroAvanzaOffset;
+float giroLado;
+float giroLadoOffset;
+bool banderaAvanza;
+bool banderaLado;
+
 Window mainWindow;
 std::vector<Mesh*> meshList;
 std::vector<Shader> shaderList;
@@ -586,292 +594,224 @@ void CrearLorax() {
 		18, 19, 16,
 
 		20, 21, 22,
-		22, 23, 20,
-		//CABEZA
-		24, 25, 26,
-		26, 27, 24,
+		22, 23, 20 };
 
-		28, 29, 30,
-		30, 31, 28,
+	GLfloat verticesCuerpo[] = {
 
-		32, 33, 34,
-		34, 35, 32,
+		//CUERPO
+		//FRENTE
+		//X		Y		Z		S		T		NX		NY		NZ
+		-0.4f, -0.6f, 0.2f,		0.57025f,	0.71366f,		0.0f, 0.0f, -1.0f,
+		0.4f, -0.6f, 0.2f,		0.71317f,	0.71366f,		0.0f, 0.0f, -1.0f,
+		0.4f, 0.6f, 0.2f,		0.71317f,	0.85658f,		0.0f, 0.0f, -1.0f,
+		-0.4f, 0.6f, 0.2f,		0.57025f,	0.85658f,		0.0f, 0.0f, -1.0f,
+		//DERECHA
+		0.4f, -0.6f, 0.2f,		0.71317f,	0.71366f,		-1.0f, 0.0f, 0.0f,
+		0.4f, -0.6f, -0.2f,		0.8561f,	0.71366f,		-1.0f, 0.0f, 0.0f,
+		0.4f, 0.6f, -0.2f,		0.8561f,	0.85658f,		-1.0f, 0.0f, 0.0f,
+		0.4f, 0.6f, 0.2f,		0.71317f,	0.85658f,		-1.0f, 0.0f, 0.0f,
 
-		36, 37, 38,
-		38, 39, 36,
+		//IZQUIERDA
+		-0.4f, -0.6f, 0.2f,		0.71317f,	0.71366f,		1.0f, 0.0f, 0.0f,
+		-0.4f, -0.6f, -0.2f,	0.42684f,	0.71366f,			1.0f, 0.0f, 0.0f,
+		-0.4f, 0.6f, -0.2f,		0.42684f,	0.85658f,		1.0f, 0.0f, 0.0f,
+		-0.4f, 0.6f, 0.2f,		0.71317f,	0.85658f,	1.0f, 0.0f, 0.0f,
 
-		40, 41, 42,
-		42, 43, 40,
+		//ATRAS
+		-0.4f, -0.6f, -0.2f,	0.8561f,	0.71366f,			0.0f, 0.0f, 1.0f,
+		0.4f, -0.6f, -0.2f,		0.99903f,	0.71366f,		0.0f, 0.0f, 1.0f,
+		0.4f, 0.6f, -0.2f,		0.99903f,	0.85658f,	0.0f, 0.0f, 1.0f,
+		-0.4f, 0.6f, -0.2f,		0.8561f,	0.85658f,		0.0f, 0.0f, 1.0f,
 
-		44, 45, 46,
-		46, 47, 44,
+		//ARRIBA
+		0.4f, 0.6f, 0.2f,		0.71317f,	0.85658f,	0.0f, -1.0f, 0.0f,
+		0.4f, 0.6f, -0.2f,		0.71317f,	0.99903f,	0.0f, -1.0f, 0.0f,
+		-0.4f, 0.6f, -0.2f,		0.57025f,	0.99903f,	0.0f, -1.0f, 0.0f,
+		-0.4f, 0.6f, 0.2f,		0.57025f,	0.85658f,	0.0f, -1.0f, 0.0f,
 
-		//PIERNA IZQ
-		48, 49, 50,
-		50, 51, 48,
+		//ABAJO
+		0.4f, -0.6f, -0.2f,		0.71317f,	0.71366f,	0.0f, 1.0f, 0.0f,
+		-0.4f, -0.6f, -0.2f,	0.57025f,	0.71366f,	0.0f, 1.0f, 0.0f,
+		-0.4f, -0.6f, 0.2f,		0.57025f,	0.57073f,	0.0f, 1.0f, 0.0f,
+		0.4f, -0.6f, 0.2f,		0.71317f,	0.57073f,	0.0f, 1.0f, 0.0f };
+	Mesh* cuerpo = new Mesh();
+	cuerpo->CreateMesh(verticesCuerpo, indices, sizeof(verticesCuerpo) / 4, sizeof(indices) / 4);
+	meshList.push_back(cuerpo);
 
-		52, 53, 54,
-		54, 55, 52,
 
-		56, 57, 58,
-		58, 59, 56,
 
-		60, 61, 62,
-		62, 63, 60,
 
-		64, 65, 66,
-		66, 67, 64,
 
-		68, 69, 70,
-		70, 71, 68,
-
-		//PIERNA DER
-		72, 73, 74,
-		74, 75, 72,
-
-		76, 77, 78,
-		78, 79, 76,
-
-		80, 81, 82,
-		82, 83, 80,
-
-		84, 85, 86,
-		86, 87, 84,
-
-		88, 89, 90,
-		90, 91, 88,
-
-		92, 93, 94,
-		94, 95, 92,
-
-		//BRAZO IZQ
-		96, 97, 98,
-		98, 99, 96,
-
-		100, 101, 102,
-		102, 103, 100,
-
-		104, 105, 106,
-		106, 107, 104,
-
-		108, 109, 110,
-		110, 111, 108,
-
-		112, 113, 114,
-		114, 115, 112,
-
-		116, 117, 118,
-		118, 119, 116,
-
-		//BRAZO DER
-		120, 121, 122,
-		122, 123, 120,
-
-		124, 125, 126,
-		126, 127, 124,
-
-		128, 129, 130,
-		130, 131, 128,
-
-		132, 133, 134,
-		134, 135, 132,
-
-		136, 137, 138,
-		138, 139, 136,
-
-		140, 141, 142,
-		142, 143, 140,
-
-};
 //Ejercicio 1: reemplazar con sus dados de 6 caras texturizados, agregar normales
 // average normals
-GLfloat vertices[] = {
+	GLfloat verticesCabeza[] = {
 
-	//CUERPO
-	//FRENTE
-	//X		Y		Z		S		T		NX		NY		NZ
-	-0.4f, -0.6f, 0.2f,		0.57025f,	0.71366f,		0.0f, 0.0f, -1.0f,
-	0.4f, -0.6f, 0.2f,		0.71317f,	0.71366f,		0.0f, 0.0f, -1.0f,
-	0.4f, 0.6f, 0.2f,		0.71317f,	0.85658f,		0.0f, 0.0f, -1.0f,
-	-0.4f, 0.6f, 0.2f,		0.57025f,	0.85658f,		0.0f, 0.0f, -1.0f,
-	//DERECHA
-	0.4f, -0.6f, 0.2f,		0.71317f,	0.71366f,		-1.0f, 0.0f, 0.0f,
-	0.4f, -0.6f, -0.2f,		0.8561f,	0.71366f,		-1.0f, 0.0f, 0.0f,
-	0.4f, 0.6f, -0.2f,		0.8561f,	0.85658f,		-1.0f, 0.0f, 0.0f,
-	0.4f, 0.6f, 0.2f,		0.71317f,	0.85658f,		-1.0f, 0.0f, 0.0f,
+		//CABEZA
+		//FRENTE
+		-0.4f, -0.4f, 0.4f,		0.11579f,	0.62839f,	0.0f, 0.0f, -1.0f,
+		0.4f, -0.4f, 0.4f,		0.24872f,	0.62839f,	0.0f, 0.0f, -1.0f,
+		0.4f, 0.4f, 0.4f,		0.24872f,	0.74273f,		0.0f, 0.0f, -1.0f,
+		-0.4f, 0.4f, 0.4f,		0.11579f,	0.74273f,		0.0f, 0.0f, -1.0f,
 
-	//IZQUIERDA
-	-0.4f, -0.6f, 0.2f,		0.57025f,	0.71366f,		1.0f, 0.0f, 0.0f,
-	-0.4f, -0.6f, -0.2f,	0.42684f,	0.71366f,			1.0f, 0.0f, 0.0f,
-	-0.4f, 0.6f, -0.2f,		0.42684f,	0.6875f,		1.0f, 0.0f, 0.0f,
-	-0.4f, 0.6f, 0.2f,		0.57025f,	0.6875f,	1.0f, 0.0f, 0.0f,
+		//DERECHA
+		0.4f, -0.4f, 0.4f,		0.24872f,	0.62839f,		-1.0f, 0.0f, 0.0f,
+		0.4f, -0.4f, -0.4f,		0.37209f,	0.62839f,		-1.0f, 0.0f, 0.0f,
+		0.4f, 0.4f, -0.4f,		0.37209f,	0.74273f,		-1.0f, 0.0f, 0.0f,
+		0.4f, 0.4f, 0.4f,		0.24872f,	0.74273f,		-1.0f, 0.0f, 0.0f,
 
-	//ATRAS
-	-0.4f, -0.6f, -0.2f,	0.8561f,	0.71366f,			0.0f, 0.0f, 1.0f,
-	0.4f, -0.6f, -0.2f,		0.99903f,	0.71366f,		0.0f, 0.0f, 1.0f,
-	0.4f, 0.6f, -0.2f,		0.99903f,	0.85658f,	0.0f, 0.0f, 1.0f,
-	-0.4f, 0.6f, -0.2f,		0.8561f,	0.85658f,		0.0f, 0.0f, 1.0f,
+		//IZQUIERDA
+		-0.4f, -0.4f, 0.4f,		0.11579f,	0.62839f,		1.0f, 0.0f, 0.0f,
+		-0.4f, -0.4f, -0.4f,		0.0f,		0.62839f,		1.0f, 0.0f, 0.0f,
+		-0.4f, 0.4f, -0.4f,		0.0f,		0.74273f,		1.0f, 0.0f, 0.0f,
+		-0.4f, 0.4f, 0.4f,		0.11579f,	0.74273f,		1.0f, 0.0f, 0.0f,
 
-	//ARRIBA
-	0.4f, 0.6f, 0.2f,		0.71317f,	0.85658f,	0.0f, -1.0f, 0.0f,
-	0.4f, 0.6f, -0.2f,		0.71317f,	0.99903f,	0.0f, -1.0f, 0.0f,
-	-0.4f, 0.6f, -0.2f,		0.57025f,	0.99903f,	0.0f, -1.0f, 0.0f,
-	-0.4f, 0.6f, 0.2f,		0.57025f,	0.85658f,	0.0f, -1.0f, 0.0f,
+		//ATRAS
+		-0.4f, -0.4f, -0.4f,		0.11579f,	0.97189f,		0.0f, 0.0f, 1.0f,
+		0.4f, -0.4f, -0.4f,		0.24872f,	0.97189f,		0.0f, 0.0f, 1.0f,
+		0.4f, 0.4f, -0.4f,		0.24872f,	0.85755f,		0.0f, 0.0f, 1.0f,
+		-0.4f, 0.4f, -0.4f,		0.11579f,	0.85755f,		0.0f, 0.0f, 1.0f,
 
-	//ABAJO
-	0.4f, -0.6f, -0.2f,		0.71317f,	0.71366f,	0.0f, 1.0f, 0.0f,
-	-0.4f, -0.6f, -0.2f,	0.57025f,	0.71366f,	0.0f, 1.0f, 0.0f,
-	-0.4f, -0.6f, 0.2f,		0.57025f,	0.57073f,	0.0f, 1.0f, 0.0f,
-	0.4f, -0.6f, 0.2f,		0.71317f,	0.57073f,	0.0f, 1.0f, 0.0f,
+		//ARRIBA
+		0.4f, 0.4f, 0.4f,		0.24872f, 0.74273f,		0.0f, -1.0f, 0.0f,
+		0.4f, 0.4f, -0.4f,		0.24872f, 0.85755f,		0.0f, -1.0f, 0.0f,
+		-0.4f, 0.4f, -0.4f,		0.11579f, 0.85755f,		0.0f, -1.0f, 0.0f,
+		-0.4f, 0.4f, 0.4f,		0.11579f, 0.74273f,		0.0f, -1.0f, 0.0f,
 
-	//CABEZA
-	//FRENTE
-	-0.4f, 0.6f, 0.4f,		0.11579f,	0.62839f,	0.0f, 0.0f, -1.0f,
-	0.4f, 0.6f, 0.4f,		0.24872f,	0.62839f,	0.0f, 0.0f, -1.0f,
-	0.4f, 1.4f, 0.4f,		0.24872f,	0.74273f,		0.0f, 0.0f, -1.0f,
-	-0.4f, 1.4f, 0.4f,		0.11579f,	0.74273f,		0.0f, 0.0f, -1.0f,
+		//ABAJO
+		0.4f, -0.4f, -0.4f,		0.24872f, 0.51453f,		0.0f, 1.0f, 0.0f,
+		-0.4f, -0.4f, -0.4f,		0.11579f, 0.51453f,		0.0f, 1.0f, 0.0f,
+		-0.4f, -0.4f, 0.4f,		0.11579f, 0.62839f,		0.0f, 1.0f, 0.0f,
+		0.4f, -0.4f, 0.4f,		0.24872f, 0.62839f,		0.0f, 1.0f, 0.0f };
 
-	//DERECHA
-	0.4f, 0.6f, 0.4f,		0.24872f,	0.62839f,		-1.0f, 0.0f, 0.0f,
-	0.4f, 0.6f, -0.4f,		0.37209f,	0.62839f,		-1.0f, 0.0f, 0.0f,
-	0.4f, 1.4f, -0.4f,		0.37209f,	0.74273f,		-1.0f, 0.0f, 0.0f,
-	0.4f, 1.4f, 0.4f,		0.24872f,	0.74273f,		-1.0f, 0.0f, 0.0f,
+	Mesh* cabeza = new Mesh();
+	cabeza->CreateMesh(verticesCabeza, indices, sizeof(verticesCabeza) / 4, sizeof(indices) / 4);
+	meshList.push_back(cabeza);
 
-	//IZQUIERDA
-	-0.4f, 0.6f, 0.4f,		0.11579f,	0.62839f,		1.0f, 0.0f, 0.0f,
-	-0.4f, 0.6f, -0.4f,		0.0f,		0.62839f,		1.0f, 0.0f, 0.0f,
-	-0.4f, 1.4f, -0.4f,		0.0f,		0.74273f,		1.0f, 0.0f, 0.0f,
-	-0.4f, 1.4f, 0.4f,		0.11579f,	0.74273f,		1.0f, 0.0f, 0.0f,
+	GLfloat verticesPiernaIzq[] = {
+		//PIERNA IZQ
+		//FRENTE
+		-0.2f, -0.6f, 0.2f,		0.12693f, 0.05859f,		0.0f, 0.0f, -1.0f,
+		0.2f, -0.6f, 0.2f,		0.18410f, 0.05859f,		0.0f, 0.0f, -1.0f,
+		0.2f, 0.6f, 0.2f,		0.18410f, 0.22916f,	0.0f, 0.0f, -1.0f,
+		-0.2f, 0.6f, 0.2f,		0.12693f, 0.22916f,	0.0f, 0.0f, -1.0f,
 
-	//ATRAS
-	-0.4f, 0.6f, -0.4f,		0.11579f,	0.97189f,		0.0f, 0.0f, 1.0f,
-	0.4f, 0.6f, -0.4f,		0.24872f,	0.97189f,		0.0f, 0.0f, 1.0f,
-	0.4f, 1.4f, -0.4f,		0.24872f,	0.85755f,		0.0f, 0.0f, 1.0f,
-	-0.4f, 1.4f, -0.4f,		0.11579f,	0.85755f,		0.0f, 0.0f, 1.0f,
+		//DERECHA
+		0.2f, -0.6f, 0.2f,		0.18410f, 0.05859f,		-1.0f, 0.0f, 0.0f,
+		0.2f, -0.6f, -0.2f,		0.24127f, 0.05859,		-1.0f, 0.0f, 0.0f,
+		0.2f, 0.6f, -0.2f,		0.24127f, 0.22916f,	-1.0f, 0.0f, 0.0f,
+		0.2f, 0.6f, 0.2f,		0.18410f, 0.22916f,		-1.0f, 0.0f, 0.0f,
 
-	//ARRIBA
-	0.4f, 1.4f, 0.4f,		0.24872f, 0.74273f,		0.0f, -1.0f, 0.0f,
-	0.4f, 1.4f, -0.4f,		0.24872f, 0.85755f,		0.0f, -1.0f, 0.0f,
-	-0.4f, 1.4f, -0.4f,		0.11579f, 0.85755f,		0.0f, -1.0f, 0.0f,
-	-0.4f, 1.4f, 0.4f,		0.11579f, 0.74273f,		0.0f, -1.0f, 0.0f,
+		//IZQUIERDA
+		-0.2f, -0.6f, 0.2f,		0.12693f, 0.05859f,		1.0f, 0.0f, 0.0f,
+		-0.2f, -0.6f, -0.2f,	0.06976f, 0.05859f,		1.0f, 0.0f, 0.0f,
+		-0.2f, 0.6f, -0.2f,	0.06976f, 0.22916f,		1.0f, 0.0f, 0.0f,
+		-0.2f, 0.6f, 0.2f,		0.12693f, 0.22916f,		1.0f, 0.0f, 0.0f,
 
-	//ABAJO
-	0.4f, 0.6f, -0.4f,		0.24872f, 0.51453f,		0.0f, 1.0f, 0.0f,
-	-0.4f, 0.6f, -0.4f,		0.11579f, 0.51453f,		0.0f, 1.0f, 0.0f,
-	-0.4f, 0.6f, 0.4f,		0.11579f, 0.62839f,		0.0f, 1.0f, 0.0f,
-	0.4f, 0.6f, 0.4f,		0.24872f, 0.62839f,		0.0f, 1.0f, 0.0f,
-	/////////
-	//PIERNA IZQ
-	//FRENTE
-	-0.4f, -1.8f, 0.2f,		0.12693f, 0.05859f,		0.0f, 0.0f, -1.0f,
-	0.0f, -1.8f, 0.2f,		0.18410f, 0.05859f,		0.0f, 0.0f, -1.0f,
-	0.0f, -0.6f, 0.2f,		0.18410f, 0.22916f,	0.0f, 0.0f, -1.0f,
-	-0.4f, -0.6f, 0.2f,		0.12693f, 0.22916f,	0.0f, 0.0f, -1.0f,
+		//ATRAS
+		0.2f, -0.6f, -0.2f,		0.24127f, 0.05859,		0.0f, 0.0f, 1.0f,
+		-0.2f, -0.6f, -0.2f,	0.29844f, 0.05859,		0.0f, 0.0f, 1.0f,
+		-0.2f, 0.6f, -0.2f,	0.29844f, 0.22916f,		0.0f, 0.0f, 1.0f,
+		0.2f, 0.6f, -0.2f,		0.24127f, 0.22916f,		0.0f, 0.0f, 1.0f,
 
-	//DERECHA
-	0.0f, -1.8f, 0.2f,		0.18410f, 0.05859f,		-1.0f, 0.0f, 0.0f,
-	0.0f, -1.8f, -0.2f,		0.24127f, 0.05859,		-1.0f, 0.0f, 0.0f,
-	0.0f, -0.6f, -0.2f,		0.24127f, 0.22916f,	-1.0f, 0.0f, 0.0f,
-	0.0f, -0.6f, 0.2f,		0.18410f, 0.22916f,		-1.0f, 0.0f, 0.0f,
+		//ARRIBA
+		0.2f, 0.6f, 0.2f,		0.24127f, 0.22916f,		0.0f, -1.0f, 0.0f,
+		0.2f, 0.6f, -0.2f,		0.24127f, 0.28585f,		0.0f, -1.0f, 0.0f,
+		-0.2f, 0.6f, -0.2f,	0.1841f, 0.28585f,		0.0f, -1.0f, 0.0f,
+		-0.2f, 0.6f, 0.2f,		0.18410f, 0.22916f,		0.0f, -1.0f, 0.0f,
 
-	//IZQUIERDA
-	-0.4f, -1.8f, 0.2f,		0.12693f, 0.05859f,		1.0f, 0.0f, 0.0f,
-	-0.4f, -1.8f, -0.2f,	0.06976f, 0.05859f,		1.0f, 0.0f, 0.0f,
-	-0.4f, -0.6f, -0.2f,	0.06976f, 0.22916f,		1.0f, 0.0f, 0.0f,
-	-0.4f, -0.6f, 0.2f,		0.12693f, 0.22916f,		1.0f, 0.0f, 0.0f,
+		//ABAJO
+		0.2f, -0.6f, 0.2f,		0.18410f, 0.05859f,		0.0f, 1.0f, 0.0f,
+		0.2f, -0.6f, -0.2f,		0.18410f, 0.0f,			0.0f, 1.0f, 0.0f,
+		-0.2f, -0.6f, -0.2f,	0.12693f, 0.0f,		0.0f, 1.0f, 0.0f,
+		-0.2f, -0.6f, 0.2f,		0.12693f, 0.05859f,		0.0f, 1.0f, 0.0f };
+	Mesh* p_izq = new Mesh();
+	p_izq->CreateMesh(verticesPiernaIzq, indices, sizeof(verticesPiernaIzq) / 4, sizeof(indices) / 4);
+	meshList.push_back(p_izq);
 
-	//ATRAS
-	0.0f, -1.8f, -0.2f,		0.24127f, 0.05859,		0.0f, 0.0f, 1.0f,
-	-0.4f, -1.8f, -0.2f,	0.29844f, 0.05859,		0.0f, 0.0f, 1.0f,
-	-0.4f, -0.6f, -0.2f,	0.29844f, 0.22916f,		0.0f, 0.0f, 1.0f,
-	0.0f, -0.6f, -0.2f,		0.24127f, 0.22916f,		0.0f, 0.0f, 1.0f,
+	GLfloat verticesPiernaDer[] = {
+		//PIERNA DER
+		//FRENTE
+		-0.2f, -0.6f, 0.2f,		0.12693f, 0.05859f,		0.0f, 0.0f, -1.0f,
+		0.2f, -0.6f, 0.2f,		0.18410f, 0.05859f,		0.0f, 0.0f, -1.0f,
+		0.2f, 0.6f, 0.2f,		0.18410f, 0.22916f,	0.0f, 0.0f, -1.0f,
+		0.0f, -0.6f, 0.2f,		0.12693f, 0.22916f,	0.0f, 0.0f, -1.0f,
 
-	//ARRIBA
-	0.0f, -0.6f, 0.2f,		0.24127f, 0.22916f,		0.0f, -1.0f, 0.0f,
-	0.0f, -0.6f, -0.2f,		0.24127f, 0.28585f,		0.0f, -1.0f, 0.0f,
-	-0.4f, -0.6f, -0.2f,	0.1841f, 0.28585f,		0.0f, -1.0f, 0.0f,
-	-0.4f, -0.6f, 0.2f,		0.18410f, 0.22916f,		0.0f, -1.0f, 0.0f,
+		//DERECHA
+		0.4f, -1.8f, 0.2f,		0.18410f, 0.05859f,		-1.0f, 0.0f, 0.0f,
+		0.4f, -1.8f, -0.2f,		0.24127f, 0.05859,		-1.0f, 0.0f, 0.0f,
+		0.4f, -0.6f, -0.2f,		0.24127f, 0.22916f,	-1.0f, 0.0f, 0.0f,
+		0.4f, -0.6f, 0.2f,		0.18410f, 0.22916f,		-1.0f, 0.0f, 0.0f,
 
-	//ABAJO
-	0.0f, -1.8f, 0.2f,		0.18410f, 0.05859f,		0.0f, 1.0f, 0.0f,
-	0.0f, -1.8f, -0.2f,		0.18410f, 0.0f,			0.0f, 1.0f, 0.0f,
-	-0.4f, -1.8f, -0.2f,	0.12693f, 0.0f,		0.0f, 1.0f, 0.0f,
-	-0.4f, -1.8f, 0.2f,		0.12693f, 0.05859f,		0.0f, 1.0f, 0.0f,
+		//IZQUIERDA
+		0.0f, -1.8f, 0.2f,		0.12693f, 0.05859f,		1.0f, 0.0f, 0.0f,
+		0.0f, -1.8f, -0.2f,		0.06976f, 0.05859f,		1.0f, 0.0f, 0.0f,
+		0.0f, -0.6f, -0.2f,		0.06976f, 0.22916f,	1.0f, 0.0f, 0.0f,
+		0.0f, -0.6f, 0.2f,		0.12693f, 0.22916f,		1.0f, 0.0f, 0.0f,
 
-	//PIERNA DER
-	//FRENTE
-	0.0f, -1.8f, 0.2f,		0.12693f, 0.05859f,		0.0f, 0.0f, -1.0f,
-	0.4f, -1.8f, 0.2f,		0.18410f, 0.05859f,		0.0f, 0.0f, -1.0f,
-	0.4f, -0.6f, 0.2f,		0.18410f, 0.22916f,	0.0f, 0.0f, -1.0f,
-	0.0f, -0.6f, 0.2f,		0.12693f, 0.22916f,	0.0f, 0.0f, -1.0f,
+		//ATRAS
+		0.4f, -1.8f, -0.2f,		0.24127f, 0.05859,		0.0f, 0.0f, 1.0f,
+		0.0f, -1.8f, -0.2f,		0.29844f, 0.05859,		0.0f, 0.0f, 1.0f,
+		0.0f, -0.6f, -0.2f,		0.29844f, 0.22916f,		0.0f, 0.0f, 1.0f,
+		0.4f, -0.6f, -0.2f,		0.24127f, 0.22916f,		0.0f, 0.0f, 1.0f,
 
-	//DERECHA
-	0.4f, -1.8f, 0.2f,		0.18410f, 0.05859f,		-1.0f, 0.0f, 0.0f,
-	0.4f, -1.8f, -0.2f,		0.24127f, 0.05859,		-1.0f, 0.0f, 0.0f,
-	0.4f, -0.6f, -0.2f,		0.24127f, 0.22916f,	-1.0f, 0.0f, 0.0f,
-	0.4f, -0.6f, 0.2f,		0.18410f, 0.22916f,		-1.0f, 0.0f, 0.0f,
+		//ARRIBA
+		0.4f, -0.6f, 0.2f,		0.24127f, 0.22916f,	0.0f, -1.0f, 0.0f,
+		0.4f, -0.6f, -0.2f,		0.24127f, 0.28585f,	0.0f, -1.0f, 0.0f,
+		0.0f, -0.6f, -0.2f,		0.1841f, 0.28585f,		0.0f, -1.0f, 0.0f,
+		0.0f, -0.6f, 0.2f,		0.18410f, 0.22916f,		0.0f, -1.0f, 0.0f,
 
-	//IZQUIERDA
-	0.0f, -1.8f, 0.2f,		0.12693f, 0.05859f,		1.0f, 0.0f, 0.0f,
-	0.0f, -1.8f, -0.2f,		0.06976f, 0.05859f,		1.0f, 0.0f, 0.0f,
-	0.0f, -0.6f, -0.2f,		0.06976f, 0.22916f,	1.0f, 0.0f, 0.0f,
-	0.0f, -0.6f, 0.2f,		0.12693f, 0.22916f,		1.0f, 0.0f, 0.0f,
+		//ABAJO
+		0.4f, -1.8f, 0.2f,		0.18410f, 0.05859f,	0.0f, 1.0f, 0.0f,
+		0.4f, -1.8f, -0.2f,		0.18410f, 0.0f,		0.0f, 1.0f, 0.0f,
+		0.0f, -1.8f, -0.2f,		0.12693f, 0.0f,		0.0f, 1.0f, 0.0f,
+		0.0f, -1.8f, 0.2f,		0.12693f, 0.05859f,		0.0f, 1.0f, 0.0f };
+	Mesh* p_der = new Mesh();
+	p_der->CreateMesh(verticesPiernaDer, indices, sizeof(verticesPiernaDer) / 4, sizeof(indices) / 4);
+	meshList.push_back(p_der);
 
-	//ATRAS
-	0.4f, -1.8f, -0.2f,		0.24127f, 0.05859,		0.0f, 0.0f, 1.0f,
-	0.0f, -1.8f, -0.2f,		0.29844f, 0.05859,		0.0f, 0.0f, 1.0f,
-	0.0f, -0.6f, -0.2f,		0.29844f, 0.22916f,		0.0f, 0.0f, 1.0f,
-	0.4f, -0.6f, -0.2f,		0.24127f, 0.22916f,		0.0f, 0.0f, 1.0f,
 
-	//ARRIBA
-	0.4f, -0.6f, 0.2f,		0.24127f, 0.22916f,	0.0f, -1.0f, 0.0f,
-	0.4f, -0.6f, -0.2f,		0.24127f, 0.28585f,	0.0f, -1.0f, 0.0f,
-	0.0f, -0.6f, -0.2f,		0.1841f, 0.28585f,		0.0f, -1.0f, 0.0f,
-	0.0f, -0.6f, 0.2f,		0.18410f, 0.22916f,		0.0f, -1.0f, 0.0f,
+	GLfloat verticesBrazoIzq[] = {
+		//BRAZO IZQ////////////////////////////////////////////////////////////->
+		//FRENTE
+		-0.2f, -0.6f, 0.2f,		0.69282f, 0.33478f,		0.0f, 0.0f, -1.0f,
+		0.2f, -0.6f, 0.2f,		0.72093f, 0.33478f,		0.0f, 0.0f, -1.0f,
+		0.2f, 0.6f, 0.2f,			0.72093f, 0.47819f,		0.0f, 0.0f, -1.0f,
+		-0.2f, 0.6f, 0.2f,		0.69282f, 0.47819f,		0.0f, 0.0f, -1.0f,
 
-	//ABAJO
-	0.4f, -1.8f, 0.2f,		0.18410f, 0.05859f,	0.0f, 1.0f, 0.0f,
-	0.4f, -1.8f, -0.2f,		0.18410f, 0.0f,		0.0f, 1.0f, 0.0f,
-	0.0f, -1.8f, -0.2f,		0.12693f, 0.0f,		0.0f, 1.0f, 0.0f,
-	0.0f, -1.8f, 0.2f,		0.12693f, 0.05859f,		0.0f, 1.0f, 0.0f,
+		//DERECHA
+		0.2f, -0.6f, 0.2f,		0.72093f, 0.33478f,		-1.0f, 0.0f, 0.0f,
+		0.2f, -0.6f, -0.2f,		0.7495f, 0.33478f,		-1.0f, 0.0f, 0.0f,
+		0.2f, 0.6f, -0.2f,		0.7495f, 0.47819f,		-1.0f, 0.0f, 0.0f,
+		0.2f, 0.6f, 0.2f,		0.72093f, 0.47819f,		-1.0f, 0.0f, 0.0f,
 
-	//BRAZO IZQ////////////////////////////////////////////////////////////->
-	//FRENTE
-	0.4f, -0.6f, 0.2f,		0.69282f, 0.33478f,		0.0f, 0.0f, -1.0f,
-	0.8f, -0.6f, 0.2f,		0.72093f, 0.33478f,		0.0f, 0.0f, -1.0f,
-	0.8f, 0.6f, 0.2f,		0.72093f, 0.47819f,		0.0f, 0.0f, -1.0f,
-	0.4f, 0.6f, 0.2f,		0.69282f, 0.47819f,		0.0f, 0.0f, -1.0f,
+		//IZQUIERDA
+		-0.2f, -0.6f, 0.2f,		0.80668f, 0.33478f,		1.0f, 0.0f, 0.0f,
+		-0.2f, -0.6f, -0.2f,	0.778585f, 0.33478f,		1.0f, 0.0f, 0.0f,
+		-0.2f, 0.6f, -0.2f,		0.778585f, 0.47819f,	1.0f, 0.0f, 0.0f,
+		-0.2f, 0.6f, 0.2f,		0.80668f, 0.47819f,	1.0f, 0.0f, 0.0f,
 
-	//DERECHA
-	0.8f, -0.6f, 0.2f,		0.72093f, 0.33478f,		-1.0f, 0.0f, 0.0f,
-	0.8f, -0.6f, -0.2f,		0.7495f, 0.33478f,		-1.0f, 0.0f, 0.0f,
-	0.8f, 0.6f, -0.2f,		0.7495f, 0.47819f,		-1.0f, 0.0f, 0.0f,
-	0.8f, 0.6f, 0.2f,		0.72093f, 0.47819f,		-1.0f, 0.0f, 0.0f,
+		//ATRAS
+		0.2f, -0.6f, -0.2f,		0.7495f, 0.33478f,		0.0f, 0.0f, 1.0f,
+		-0.2f, -0.6f, -0.2f,		0.778585f, 0.33478f,	0.0f, 0.0f, 1.0f,
+		-0.2f, 0.6f, -0.2f,		0.778585f, 0.47819f,	0.0f, 0.0f, 1.0f,
+		0.2f, 0.6f, -0.2f,		0.7495f, 0.47819f,		0.0f, 0.0f, 1.0f,
 
-	//IZQUIERDA
-	0.4f, -0.6f, -0.2f,		0.80668f, 0.33478f,		1.0f, 0.0f, 0.0f,
-	0.4f, -0.6f, 0.2f,		0.778585f, 0.33478f,		1.0f, 0.0f, 0.0f,
-	0.4f, 0.6f, 0.2f,		0.778585f, 0.47819f,	1.0f, 0.0f, 0.0f,
-	0.4f, 0.6f, -0.2f,		0.80668f, 0.47819f,	1.0f, 0.0f, 0.0f,
+		//ARRIBA
+		0.2f, 0.6f, 0.2f,		0.778585f, 0.47819f,	0.0f, -1.0f, 0.0f,
+		0.2f, 0.6f, -0.2f,		0.80668f, 0.47819f,		0.0f, -1.0f, 0.0f,
+		-0.2f, 0.6f, -0.2f,		0.80668f, 0.50678f,		0.0f, -1.0f, 0.0f,
+		-0.2f, 0.6f, 0.2f,		0.778585f, 0.50678f,		0.0f, -1.0f, 0.0f,
 
-	//ATRAS
-	0.8f, -0.6f, -0.2f,		0.7495f, 0.33478f,		0.0f, 0.0f, 1.0f,
-	0.4f, -0.6f, -0.2f,		0.778585f, 0.33478f,	0.0f, 0.0f, 1.0f,
-	0.4f, 0.6f, -0.2f,		0.778585f, 0.47819f,	0.0f, 0.0f, 1.0f,
-	0.8f, 0.6f, -0.2f,		0.7495f, 0.47819f,		0.0f, 0.0f, 1.0f,
+		//ABAJO
+		0.2f, -0.6f, 0.2f,		0.69282f, 0.3062f,	0.0f, 1.0f, 0.0f,
+		0.2f, -0.6f, -0.2f,		0.72093f, 0.3062f,	0.0f, 1.0f, 0.0f,
+		-0.2f, -0.6f, -0.2f,		0.72093f, 0.33478f,		0.0f, 1.0f, 0.0f,
+		-0.2f, -0.6f, 0.2f,		0.69282f, 0.33478f,		0.0f, 1.0f, 0.0f };
+	Mesh* b_iz = new Mesh();
+	b_iz->CreateMesh(verticesBrazoIzq, indices, sizeof(verticesBrazoIzq) / 4, sizeof(indices) / 4);
+	meshList.push_back(b_iz);
 
-	//ARRIBA
-	0.4f, 0.6f, 0.2f,		0.778585f, 0.47819f,	0.0f, -1.0f, 0.0f,
-	0.8f, 0.6f, 0.2f,		0.80668f, 0.47819f,		0.0f, -1.0f, 0.0f,
-	0.8f, 0.6f, -0.2f,		0.80668f, 0.50678f,		0.0f, -1.0f, 0.0f,
-	0.4f, 0.6f, -0.2f,		0.778585f, 0.50678f,		0.0f, -1.0f, 0.0f,
-
-	//ABAJO
-	0.4f, -0.6f, -0.2f,		0.69282f, 0.3062f,	0.0f, 1.0f, 0.0f,
-	0.8f, -0.6f, -0.2f,		0.72093f, 0.3062f,	0.0f, 1.0f, 0.0f,
-	0.8f, -0.6f, 0.2f,		0.72093f, 0.33478f,		0.0f, 1.0f, 0.0f,
-	0.4f, -0.6f, 0.2f,		0.69282f, 0.33478f,		0.0f, 1.0f, 0.0f,
-
+	GLfloat verticesBrazoDer[] = {
 	//BRAZO DER////////////////////////////77 - >
 	//FRENTE
 	-0.4f, -0.6f, 0.2f,		0.69282f, 0.33478f,		0.0f, 0.0f, -1.0f,
@@ -910,11 +850,9 @@ GLfloat vertices[] = {
 	-0.4f, -0.6f, 0.2f,		0.69282f, 0.33478f,		0.0f, 1.0f, 0.0f,
 
 };
-
-	Mesh* lorax = new Mesh();
-	lorax->CreateMesh(vertices, indices, sizeof(vertices) / 4, sizeof(indices) / 4);
-	meshList.push_back(lorax);
-
+	Mesh* b_der = new Mesh();
+	b_der->CreateMesh(verticesBrazoDer, indices, sizeof(verticesBrazoDer) / 4, sizeof(indices) / 4);
+	meshList.push_back(b_der);
 
 }
 
@@ -1164,6 +1102,14 @@ Model Ruedita_M;*/
 	sacude_der = 0.0;
 	contador_sacude = 0;
 
+	//ANIMACION AVATAR
+	giroAvanza = 0.0;
+	giroAvanzaOffset = 0.005;
+	giroLado = 0.0;
+	giroLadoOffset = 0.0;
+	banderaAvanza = true;
+	banderaLado = true;
+
 	////Loop mientras no se cierra la ventana
 	while (!mainWindow.getShouldClose())
 	{
@@ -1176,7 +1122,6 @@ Model Ruedita_M;*/
 		//ANIMACION CORTADORA
 		if (mainWindow.gettala() == 1) {
 			if (sacudehojas) {
-				printf("contador: %i \n", contador_sacude);
 				if (contador_sacude < 2) {
 					if (sacude_der) {
 						giroHojas += 0.8* deltaTime;
@@ -1250,6 +1195,56 @@ Model Ruedita_M;*/
 
 		}
 
+		if (mainWindow.getCamina()==1 && mainWindow.gettipoCamara() == 0) {
+			if (banderaAvanza) {
+				giroAvanza += 0.8 * deltaTime;
+				if (giroAvanza < 10.0) {
+					giroAvanza -= giroAvanzaOffset * deltaTime;
+				}
+				else
+				{
+					banderaAvanza = false;
+				}
+			}
+			else
+			{
+				giroAvanza -= 0.8 * deltaTime;
+				if (giroAvanza > -10.0) {
+					giroAvanza -= giroAvanzaOffset * deltaTime;
+				}
+				else
+				{
+					banderaAvanza = true;
+				}
+			}
+
+		}
+
+		if (mainWindow.getDesplaza() == 1 && mainWindow.gettipoCamara() == 0) {
+			if (banderaLado) {
+				giroLado += 0.8 * deltaTime;
+				if (giroLado < 15.0) {
+					giroLado -= giroLadoOffset * deltaTime;
+				}
+				else
+				{
+					banderaLado = false;
+				}
+			}
+			else
+			{
+				giroLado -= 0.8 * deltaTime;
+				if (giroLado > 0.0) {
+					giroLado -= giroLadoOffset * deltaTime;
+				}
+				else
+				{
+					banderaLado = true;
+				}
+			}
+
+		}
+
 		mainWindow.gettipoCamara() == 0;
 
 		//Recibir eventos del usuario
@@ -1275,7 +1270,7 @@ Model Ruedita_M;*/
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
-	if (contadorSkybox < (4000)) {
+	if (contadorSkybox < (40000)) {
 		if (banderaSkybox) {
 			skybox.DrawSkybox(camera.calculateViewMatrix(), projection);
 			mainLight.SetIntensity(1.0f);
@@ -1343,6 +1338,7 @@ Model Ruedita_M;*/
 
 
 		glm::mat4 model(1.0);
+		glm::mat4 avatar_aux(1.0);
 		glm::mat4 modelaux(1.0);
 		glm::mat4 simios_aux(1.0);
 		glm::mat4 cortadora_aux(1.0);
@@ -2069,15 +2065,76 @@ Model Ruedita_M;*/
 		model = glm::translate(model, glm::vec3(0.0f, 1.0f, 10.0));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		cuatroTexture.UseTexture();
-		//meshList[3]->RenderMesh();
+		meshList[3]->RenderMesh();
 
+		//PErsonaje LORAX jeraquizado//////////////////////////////////////
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(pos_per.x, pos_per.y-2, pos_per.z));
+		model = glm::translate(model, glm::vec3(pos_per.x, pos_per.y, pos_per.z-3.5));
+		//model = glm::translate(model, glm::vec3(5,5,5));
+		avatar_aux = model;
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		loraxTexture.UseTexture();
 		meshList[4]->RenderMesh();
+
+		model = avatar_aux;
+		model = glm::translate(model, glm::vec3(0, 0.5, 0));
+		model = glm::rotate(model, 30 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+
+		model = glm::translate(model, glm::vec3(0,0.5,0));
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		loraxTexture.UseTexture();
+		meshList[5]->RenderMesh();
+
+		model = avatar_aux;
+		model = glm::translate(model, glm::vec3(0.2, -0.6, 0));
+		model = glm::rotate(model, giroAvanza * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, giroLado * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+
+		model = glm::translate(model, glm::vec3(0.0, -0.6, 0));
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		loraxTexture.UseTexture();
+		meshList[6]->RenderMesh();
+
+		model = avatar_aux;
+		model = glm::translate(model, glm::vec3(-0.2, -0.6, 0));
+		model = glm::rotate(model, giroAvanza * toRadians, glm::vec3(-1.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, giroLado * toRadians, glm::vec3(0.0f, 0.0f, -1.0f));
+
+		model = glm::translate(model, glm::vec3(0.0, -0.6, 0));
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		loraxTexture.UseTexture();
+		meshList[6]->RenderMesh();
+
+		model = avatar_aux;
+		model = glm::translate(model, glm::vec3(0.3, 0.5, 0));
+		model = glm::rotate(model, giroAvanza * toRadians, glm::vec3(-1.0f, 0.0f, 0.0f));
+
+		model = glm::translate(model, glm::vec3(0.3, -0.5, 0));
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		loraxTexture.UseTexture();
+		meshList[8]->RenderMesh();
+
+		model = avatar_aux;
+		model = glm::translate(model, glm::vec3(-0.3, 0.5, 0));
+		model = glm::rotate(model, giroAvanza * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+
+		model = glm::translate(model, glm::vec3(-0.3, -0.5, 0));
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		loraxTexture.UseTexture();
+		meshList[8]->RenderMesh();
+
 
 		// ROCA
 		model = glm::mat4(1.0);

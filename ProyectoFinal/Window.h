@@ -16,6 +16,9 @@ public:
 	GLfloat getmuevex() { return muevex; }
 	GLint gettipoCamara() { return tipoCamara;  }
 	GLint gettala() { return tala_arbol; }
+
+	GLint getCamina() { return camina; }
+	GLint getDesplaza() { return desplaza; }
 	bool getbandera() { return bandera_tala; }
 	GLint getlanzadera() { return lanzadera; }
 	bool getShouldClose() {
@@ -37,6 +40,8 @@ private:
 	GLfloat muevex;
 	GLint tipoCamara;
 	GLint tala_arbol;
+	GLint camina;
+	GLint desplaza;
 	GLint lanzadera;
 	bool bandera_tala;
 	bool mouseFirstMoved;

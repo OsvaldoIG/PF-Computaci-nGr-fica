@@ -20,6 +20,9 @@ Window::Window(GLint windowWidth, GLint windowHeight)
 	tala_arbol = 0;
 	bandera_tala = true ;
 
+	camina = 0;
+	desplaza = 0;
+
 	lanzadera = 0;
 	for (size_t i = 0; i < 1024; i++)
 	{
@@ -106,6 +109,49 @@ GLfloat Window::getYChange()
 void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, int mode)
 {
 	Window* theWindow = static_cast<Window*>(glfwGetWindowUserPointer(window));
+
+	if (key == GLFW_KEY_W) {
+		if (action == GLFW_PRESS)
+		{
+			theWindow->camina = 1;
+		}
+		else if (action == GLFW_RELEASE)
+		{
+			theWindow->camina = 0;
+		}
+	}
+
+	if (key == GLFW_KEY_D) {
+		if (action == GLFW_PRESS)
+		{
+			theWindow->desplaza = 1;
+		}
+		else if (action == GLFW_RELEASE)
+		{
+			theWindow->desplaza = 0;
+		}
+	}
+	if (key == GLFW_KEY_S) {
+		if (action == GLFW_PRESS)
+		{
+			theWindow->camina = 1;
+		}
+		else if (action == GLFW_RELEASE)
+		{
+			theWindow->camina = 0;
+		}
+	}
+
+	if (key == GLFW_KEY_A) {
+		if (action == GLFW_PRESS)
+		{
+			theWindow->desplaza = 1;
+		}
+		else if (action == GLFW_RELEASE)
+		{
+			theWindow->desplaza = 0;
+		}
+	}
 
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 	{
