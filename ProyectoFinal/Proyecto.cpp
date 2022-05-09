@@ -74,6 +74,7 @@ Model Blackhawk_M;
 Model Aspas_M;
 Model ArmaKND_M;
 Model LanzaderaKND_M;
+Model Pelota_M;
 Model CasaLorax_M;
 Model SimioArcoiris_M;
 Model AntenaSimio_M;
@@ -123,6 +124,8 @@ glm::vec3 camaraAerea;
 GLint contadorSkybox = 0;
 GLboolean banderaSkybox = true;
 GLfloat giroSimios =0.0f;
+GLfloat giroArma = 0.0f;
+GLboolean banderaArma = true;
 // luz direccional
 DirectionalLight mainLight;
 //para declarar varias luces de tipo pointlight
@@ -960,7 +963,10 @@ int main()
 	ArmaKND_M.LoadModel("Models/base_arma.obj");
 
 	LanzaderaKND_M = Model();
-	LanzaderaKND_M.LoadModel("Models/lanzadera_arma.obj");
+	LanzaderaKND_M.LoadModel("Models/lanzadera_armaA.obj");
+
+	Pelota_M = Model();
+	Pelota_M.LoadModel("Models/Pelota.obj");
 
 	CasaLorax_M = Model();
 	//CasaLorax_M.LoadModel("Models/casa_Lorax.obj");
@@ -1354,10 +1360,10 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 
-		model = glm::mat4(1.0);
+		/*model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(10.0f, 5.0f, 10.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		ArmaKND_M.RenderModel();
+		ArmaKND_M.RenderModel();*/
 
 
 		//pisoTexture.UseTexture();
@@ -2350,8 +2356,10 @@ Model Ruedita_M;*/
 
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(2.0f, -0.5f, -25.0f));
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		//model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		antorcha.RenderModel();
 
 		model = glm::mat4(1.0);
@@ -2407,7 +2415,7 @@ Model Ruedita_M;*/
 		}
 		giroSimios += 0.1;
 		
-
+		
 		//pivote
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(0.0f, -0.7f, 0.0f));
@@ -2545,18 +2553,43 @@ Model Ruedita_M;*/
 		AntenaSimio_M.RenderModel();
 
 		//ARMA KND
+		if (mainWindow.getlanzadera() == 1) {
+			if (giroArma <= 60.0f) {
+				giroArma += 1.0;
+			}
+		}else{
+			if (giroArma >= 50.0f) {
+				giroArma = 0;
+			}
+		}
+		
+		
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(10.0f, 5.0f, 10.0f));
+		model = glm::translate(model, glm::vec3(0.0f, 0.5f, 30.0f));
 		modelaux = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		ArmaKND_M.RenderModel();
 
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(1.0f, 0.1f, 0.0087f));
+		model = glm::rotate(model,giroArma*toRadians,glm::vec3(0.0f,0.0f,-1.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		LanzaderaKND_M.RenderModel();
+
+		model = glm::mat4(1.0);
+		//model = glm::translate(model, glm::vec3(-0.5f, 1.2f, 31.0f));
+		if (((10.0f * cos(giroArma * toRadians)) - 8.8f) >= -1.0f) {
+			model = glm::translate(model, glm::vec3((10.0f * sin(giroArma * toRadians)) - 0.5f, (10.0f * cos(giroArma * toRadians)) - 8.8f, 30.2f));
+		}
+		else {
+			
+			model = glm::translate(model, glm::vec3((10.0f * sin(giroArma * toRadians)) - 0.5f, -1.0f, 30.2f));
+		}
+		model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f));
+
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		LanzaderaKND_M.RenderModel();
+		Pelota_M.RenderModel();
 
 		glUseProgram(0);
 

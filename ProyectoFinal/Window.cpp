@@ -20,6 +20,7 @@ Window::Window(GLint windowWidth, GLint windowHeight)
 	tala_arbol = 0;
 	bandera_tala = true ;
 
+	lanzadera = 0;
 	for (size_t i = 0; i < 1024; i++)
 	{
 		keys[i] = 0;
@@ -134,6 +135,13 @@ void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, in
 	if (key == GLFW_KEY_L) {
 		theWindow->tala_arbol = 0; //Para la animación
 	}
+	if (key == GLFW_KEY_O) {
+		theWindow->lanzadera = 1;
+	}
+	if (key == GLFW_KEY_K) {
+		theWindow->lanzadera = 0;
+	}
+
 	GLint tala_arbol;
 	GLint bandera_tala;
 
