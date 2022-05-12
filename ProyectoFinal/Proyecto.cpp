@@ -2693,7 +2693,7 @@ Model Ruedita_M;*/
 		
 		//rojo
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(6.0f*(sin((giroSimios+90.0f)*toRadians)), 0.0f, 6.0f * (cos((giroSimios+90.0f) * toRadians))));
+		model = glm::translate(model, glm::vec3(6.0f*(sin((giroSimios+90.0f)*toRadians)), abs(sin((giroSimios*0.5f))), 6.0f * (cos((giroSimios+90.0f) * toRadians))));
 		model = glm::rotate(model, (giroSimios + 0.0f) * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		simios_aux = model;
 		color = glm::vec3(0.9058f, 0.298f, 0.2352f);
@@ -2709,7 +2709,7 @@ Model Ruedita_M;*/
 
 		//cyan
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(6.0f * (sin((giroSimios - 90.0f) * toRadians)), 0.0f, 6.0f * (cos((giroSimios - 90.0f) * toRadians))));
+		model = glm::translate(model, glm::vec3(6.0f * (sin((giroSimios - 90.0f) * toRadians)), abs(sin((giroSimios * 0.5f))), 6.0f * (cos((giroSimios - 90.0f) * toRadians))));
 		model = glm::rotate(model, (giroSimios + 180.0f) * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		simios_aux = model;
 		color = glm::vec3(0.3647f, 0.6784f, 0.8862f);
@@ -2725,7 +2725,7 @@ Model Ruedita_M;*/
 
 		//morado
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(6.0f * (sin((giroSimios + 0.0f) * toRadians)), 0.0f, 6.0f * (cos((giroSimios + 0.0f) * toRadians))));
+		model = glm::translate(model, glm::vec3(6.0f * (sin((giroSimios + 0.0f) * toRadians)), abs(sin((giroSimios * 0.5f))), 6.0f * (cos((giroSimios + 0.0f) * toRadians))));
 		model = glm::rotate(model, (giroSimios - 90.0f) * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		simios_aux = model;
 		color = glm::vec3(0.5568f, 0.2666f, 0.6784f);
@@ -2741,7 +2741,7 @@ Model Ruedita_M;*/
 
 		//amarillo
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(6.0f * (sin((giroSimios + 180.0f) * toRadians)), 0.0f, 6.0f * (cos((giroSimios + 180.0f) * toRadians))));
+		model = glm::translate(model, glm::vec3(6.0f * (sin((giroSimios + 180.0f) * toRadians)), abs(sin((giroSimios * 0.5f))), 6.0f * (cos((giroSimios + 180.0f) * toRadians))));
 		model = glm::rotate(model, (giroSimios + 90.0f) * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		simios_aux = model;
 		color = glm::vec3(0.9568f, 0.8156f, 0.2470f);
@@ -2757,7 +2757,7 @@ Model Ruedita_M;*/
 
 		//naranja
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(6.0f * (sin((giroSimios + 135.0f) * toRadians)), 0.0f, 6.0f * (cos((giroSimios + 135.0f) * toRadians))));
+		model = glm::translate(model, glm::vec3(6.0f * (sin((giroSimios + 135.0f) * toRadians)), abs(sin((giroSimios * 0.5f)+90.0f)), 6.0f * (cos((giroSimios + 135.0f) * toRadians))));
 		model = glm::rotate(model, (giroSimios + 45.0f) * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		simios_aux = model;
 		color = glm::vec3(0.9019f, 0.4941f, 0.1333f);
@@ -2773,7 +2773,7 @@ Model Ruedita_M;*/
 
 		//verde
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(6.0f * (sin((giroSimios + 225.0f) * toRadians)), 0.0f, 6.0f * (cos((giroSimios + 225.0f) * toRadians))));
+		model = glm::translate(model, glm::vec3(6.0f * (sin((giroSimios + 225.0f) * toRadians)), abs(sin((giroSimios * 0.5f)+90.0f)), 6.0f * (cos((giroSimios + 225.0f) * toRadians))));
 		model = glm::rotate(model, (giroSimios + 135.0f) * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		simios_aux = model;
 		color = glm::vec3(0.1529f, 0.6823f, 0.3764f);
@@ -2789,7 +2789,7 @@ Model Ruedita_M;*/
 
 		//azul
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(6.0f * (sin((giroSimios + 315.0f) * toRadians)), 0.0f, 6.0f * (cos((giroSimios + 315.0f) * toRadians))));
+		model = glm::translate(model, glm::vec3(6.0f * (sin((giroSimios + 315.0f) * toRadians)), abs(sin((giroSimios * 0.5f)+90.0f)), 6.0f * (cos((giroSimios + 315.0f) * toRadians))));
 		model = glm::rotate(model, (giroSimios + 225.0f) * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		simios_aux = model;
 		color = glm::vec3(0.1215f, 0.4392f, 0.7764f);
@@ -2805,7 +2805,7 @@ Model Ruedita_M;*/
 
 		//rosa
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(6.0f * (sin((giroSimios + 45.0f) * toRadians)), 0.0f, 6.0f * (cos((giroSimios + 45.0f) * toRadians))));
+		model = glm::translate(model, glm::vec3(6.0f * (sin((giroSimios + 45.0f) * toRadians)), abs(sin((giroSimios * 0.5f)+90.0f)), 6.0f * (cos((giroSimios + 45.0f) * toRadians))));
 		model = glm::rotate(model, (giroSimios + 315.0f) * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		simios_aux = model;
 		color = glm::vec3(0.9372f, 0.2491f, 0.9176f);
@@ -2851,6 +2851,7 @@ Model Ruedita_M;*/
 		else {
 			
 			model = glm::translate(model, glm::vec3((10.0f * sin(giroArma * toRadians)) - 0.5f, -1.0f, 30.2f));
+			model = glm::rotate(model,giroArma*toRadians,glm::vec3(0.0f,0.0f,1.0f));
 		}
 		model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f));
 
