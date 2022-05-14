@@ -58,7 +58,35 @@ float giroLadoOffset;
 bool banderaAvanza;
 bool banderaLado;
 
+//Variables SHOW DE LUCES
+bool bandera_show_luces;
+bool bandera_giro;
+bool bandera_prende_apaga;
+int contador_show;
+float giro_luz;
+float giro_lamp_1;
+float giro_lamp_2;
+float giro_lamp_3;
+float giro_lamp_4;
+float giro_lamp_5;
+float giro_luz_X;
+float giroLuzOffset;
+float valX;
+float valY;
+glm::vec3 pos_lampara1;
+glm::vec3 pos_lampara2;
+glm::vec3 pos_lampara3;
+glm::vec3 pos_lampara4;
+glm::vec3 pos_lampara5;
+
+glm::vec3 dir_lampara1;
+glm::vec3 dir_lampara2;
+glm::vec3 dir_lampara3;
+glm::vec3 dir_lampara4;
+glm::vec3 dir_lampara5;
+
 bool banderaLamparaPrendida;
+bool banderaShowLuces;
 
 Window mainWindow;
 std::vector<Mesh*> meshList;
@@ -76,6 +104,8 @@ Texture cuatroTexture;
 Texture caminoTexture;
 Texture loraxTexture;
 Texture fogataTexture;
+
+Texture prueba;
 
 
 Model Kitt_M;
@@ -105,7 +135,9 @@ Model antorcha;
 Model lampara;
 Model base_show;
 Model lamp_show;
-
+int inidice_spotlights;
+int conteo_spotlights;
+bool bandera_lamp;
 
 
 //BASE
@@ -123,6 +155,8 @@ Model arbol_T;
 Model Fogata_M;
 Model arbol_H;
 
+Material Material_opaco;
+Material Material_brillante;
 
 Skybox skybox;
 Skybox skyboxNoche;
@@ -862,6 +896,77 @@ void CrearLorax() {
 
 }
 
+void CrearEscenarioShow()
+{
+	unsigned int indices_escenario[] = {
+		// front
+		0, 1, 2,
+		2, 3, 0,
+		// right
+		4, 5, 6,
+		6, 7, 4,
+		// back
+		8, 9, 10,
+		10, 11, 8,
+
+		// left
+		12, 13, 14,
+		14, 15, 12,
+		// bottom
+		16, 17, 18,
+		18, 19, 16,
+		// top
+		20, 21, 22,
+		22, 23, 20	};
+	//Ejercicio 1: reemplazar con sus dados de 6 caras texturizados, agregar normales
+// average normals
+	GLfloat vertices_escenario[] = {
+		//FRENTE
+		//X		Y		Z		S		T		NX		NY		NZ
+		-5.0f, -0.5f, 3.0f,		0.3125f, 0.5f,		0.0f, 0.0f, 1.0f,
+		5.0f, -0.5f,  3.0f,		0.4375f, 0.5f,		0.0f, 0.0f, 1.0f,
+		5.0f,  0.5f,  3.0f,		0.4375f, 0.6875f,	0.0f, 0.0f, 1.0f,
+		-5.0f, 0.5f,  3.0f,		0.3125f, 0.6875f,	0.0f, 0.0f, 1.0f,
+
+		//DERECHA
+		5.0f, -0.5f, 3.0f,		0.4375f, 0.5f,		1.0f, 0.0f, 0.0f,
+		5.0f, -0.5f, -3.0f,		0.5f, 0.5f,			1.0f, 0.0f, 0.0f,
+		5.0f, 0.5f, -3.0f,		0.5f, 0.6875f,		1.0f, 0.0f, 0.0f,
+		5.0f, 0.5f, 3.0f,		0.4375f, 0.6875f,	1.0f, 0.0f, 0.0f,
+
+		//IZQUIERDA
+		-5.0f, -0.5f, 3.0f,		0.4375f, 0.5f,		-1.0f, 0.0f, 0.0f,
+		-5.0f, -0.5f, -3.0f,	0.5f, 0.5f,			-1.0f, 0.0f, 0.0f,
+		-5.0f, 0.5f, -3.0f,		0.5f, 0.6875f,		-1.0f, 0.0f, 0.0f,
+		-5.0f, 0.5f, 3.0f,		0.4375f, 0.6875f,	-1.0f, 0.0f, 0.0f,
+
+		//ATRAS
+		-5.0f, -0.5f, -3.0f,	0.5f, 0.5f,			0.0f, 0.0f, -1.0f,
+		5.0f, -0.5f, -3.0f,		0.625f, 0.5f,		0.0f, 0.0f, -1.0f,
+		5.0f, 0.5f, -3.0f,		0.625f, 0.6875f,	0.0f, 0.0f, -1.0f,
+		-5.0f, 0.5f, -3.0f,		0.5f, 0.6875f,		0.0f, 0.0f, -1.0f,
+
+		//ARRIBA
+		5.0f, 0.5f, 3.0f,		0.4375f, 0.5f,		0.0f, 1.0f, 0.0f,
+		5.0f, 0.5f, -3.0f,		0.5f, 0.5f,			0.0f, 1.0f, 0.0f,
+		-5.0f, 0.5f, -3.0f,		0.5f, 0.6875f,		0.0f, 1.0f, 0.0f,
+		-5.0f, 0.5f, 3.0f,		0.4375f, 0.6875f,	0.0f, 1.0f, 0.0f,
+
+		//ABAJO
+		5.0f, -0.5f, -3.0f,		0.4375f, 0.5f,		0.0f, -1.0f, 0.0f,
+		-5.0f, -0.5f, -3.0f,	0.5f, 0.5f,			0.0f, -1.0f, 0.0f,
+		-5.0f, -0.5f, 3.0f,		0.5f, 0.6875f,		0.0f, -1.0f, 0.0f,
+		5.0f, -0.5f, 3.0f,		0.4375f, 0.6875f,	0.0f, -1.0f, 0.0f,
+
+
+	};
+
+	Mesh* escenario = new Mesh();
+	escenario -> CreateMesh(vertices_escenario, indices_escenario, sizeof(vertices_escenario) / 4, sizeof(indices_escenario) / 4);
+	meshList.push_back(escenario);
+
+}
+
 int main()
 {
 	mainWindow = Window(1366, 768); // 1280, 1024 or 1024, 768
@@ -870,8 +975,11 @@ int main()
 	CreateObjects();
 	CrearCuatro();
 	CrearLorax();
+	CrearEscenarioShow();
 	CreateShaders();
 
+	inidice_spotlights = 0;
+	conteo_spotlights = 0;
 
 	//camera = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 5.0f, 0.5f);
 	cameraP = Camera(glm::vec3(0.0f, 2.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, 0.0f, 0.1f, 0.5f);
@@ -1011,8 +1119,8 @@ Model Ruedita_M;*/
 
 	skyboxNoche = Skybox(skyboxFacesN);
 
-	//Material_brillante = Material(4.0f, 256);
-	//Material_opaco = Material(0.3f, 4);
+	Material_brillante = Material(4.0f, 256);
+	Material_opaco = Material(0.3f, 4);
 
 	//ILUMINACION
 	//luz direccional, sólo 1 y siempre debe de existir
@@ -1082,6 +1190,7 @@ Model Ruedita_M;*/
 		1.0f, 0.7f,
 		15.0f, 1.0f, 1.0f, //posición
 		0.3f, 0.2f, 0.1f); //coeficientes de la ecuación de 2do grado
+
 	//model = glm::translate(model, glm::vec3(0.0f, -3.0f, 0.0f));
 	arrPointLights[7] = PointLight(1.0f, 0.2156f, 0.2156f,
 		1.0f, 1.0f,
@@ -1107,41 +1216,48 @@ Model Ruedita_M;*/
 		1.0f, 0.0f, 0.0f,
 		20.0f);
 
-	//model = glm::translate(model, glm::vec3(5.0f, 6.8f, -18.0f));
-	//arrSpotLigths[1] = SpotLight(1.0f,0.0f, 0.0f,
-	//	0.7f, 2.0f,
-	//	5.0f, 10.8f, -18.0f,//posición
-	//	0.0f, -5.0f, 0.0f,
-	//	1.0f, 0.0f, 0.0f,
-	//	10.0f);
 
-	arrSpotLigths[1] = SpotLight(0.6509, 1.0f, 0.2823f,
+	//SHOW DE LUCES
+	//model = glm::translate(model, glm::vec3(5.0f, 6. 8f, -18.0f));
+	arrSpotLigths[1] = SpotLight(0.0f, 0.0f, 1.0f,//azul
 		0.7f, 2.0f,
 		//26.0f, 0.0f, 4.2f,//posición
-		4.5f, 10.2f, -18.0f,
-		0.0f, -5.0f, 0.0f,
+		5.0f, 6.8f, -18.0f,
+		//1.0f, -1.7320f, 0.0f,
+		0.0f, -1.0f, 0.0f,
+		//0.864218f,-5.0f, 0.0f,
 		1.0f, 0.0f, 0.0f,
-		7.0f);
+		10.0f);
+
 
 	//		model = glm::translate(model, glm::vec3(5.0f, 6.8f, -16.0f));
-	arrSpotLigths[2] = SpotLight(0.87f, 0.0f, 0.8f,
+	arrSpotLigths[2] = SpotLight(1.0f, 0.0f, 1.0f, //magenta
 		0.7f, 2.0f,
 		5.0f, 6.8f, -16.0f,//posición
-		0.0f, -5.0f, -1.0f,
+		0.0f, -1.0f, 0.0f,
 		1.0f, 0.0f, 0.0f,
 		10.0f);
 	//model = glm::translate(model, glm::vec3(5.0f, 6.8f, -14.0f));
-	arrSpotLigths[3] = SpotLight(0.8f, 0.0f, 0.0f,
+	arrSpotLigths[3] = SpotLight(0.0f, 1.0f, 0.0f,//verde
 		0.7f, 2.0f,
 		5.0f, 6.8f, -14.0f,//posición
-		0.0f, -5.0f, -1.0f,
+		0.0f, -1.0f, 0.0f,
 		1.0f, 0.0f, 0.0f,
 		10.0f);
 
-	arrSpotLigths[4] = SpotLight(0.8627f, 1.0f, 0.0f,
+	// model = glm::translate(model, glm::vec3(5.0f, 6.8f, -20.0f));
+	arrSpotLigths[4] = SpotLight(0.0f, 1.0f, 1.0f, //cyan
 		0.7f, 2.0f,
-		-26.0f, 10.0f, 4.2f,//posición
-		0.0f, -5.0f, -1.0f,
+		5.0f, 6.8f, -20.0f,//posición
+		0.0f, -1.0f, 0.0f,
+		1.0f, 0.0f, 0.0f,
+		10.0f);
+
+	//model = glm::translate(model, glm::vec3(5.0f, 6.8f, -22.0f));
+	arrSpotLigths[5] = SpotLight(1.0f, 1.0f, 0.0f,//amarillo
+		0.7f, 2.0f,
+		5.0f, 6.8f, -22.0f,//posición
+		0.0f, -5.0f, 0.0f,
 		1.0f, 0.0f, 0.0f,
 		10.0f);
 
@@ -1151,6 +1267,7 @@ Model Ruedita_M;*/
 	glm::mat4 projection = glm::perspective(45.0f, (GLfloat)mainWindow.getBufferWidth() / mainWindow.getBufferHeight(), 0.1f, 1000.0f);
 
 	banderaLamparaPrendida = false;
+	banderaShowLuces = false;
 
 	//ANIMACION 1 CORTADORA
 	//Cuando se apriete la tecla 'P' se hace el movimiento de las hachas y los árboles se sacuden 
@@ -1173,7 +1290,36 @@ Model Ruedita_M;*/
 	banderaAvanza = true;
 	banderaLado = true;
 
+	//SHOW DE LUCES
+	bandera_show_luces = false;
+	//bandera_show_luces = true;
+	bandera_giro = true;
+	bandera_prende_apaga = true;
 
+	contador_show = 0;
+	giro_luz = 0.0;
+
+	giro_lamp_1 = 0.0;
+	giro_lamp_2 = 0.0;
+	giro_lamp_3 = 0.0;
+	giro_lamp_4 = 0.0;
+	giro_lamp_5 = 0.0;
+
+	giroLuzOffset = 0.05;
+	pos_lampara1 = glm::vec3(5.0f, 6.8f, -18.0f);
+	pos_lampara2 = glm::vec3(5.0f, 6.8f, -16.0f);
+	pos_lampara3 = glm::vec3(5.0f, 6.8f, -14.0f);
+	pos_lampara4 = glm::vec3(5.0f, 6.8f, -20.0f);
+	pos_lampara5 = glm::vec3(5.0f, 6.8f, -22.0f);
+
+	dir_lampara1 = glm::vec3(0.0f, -1.0f, 0.0f);
+	dir_lampara2 = glm::vec3(0.0f, -1.0f, 0.0f);
+	dir_lampara3 = glm::vec3(0.0f, -1.0f, 0.0f);
+	dir_lampara4 = glm::vec3(0.0f, -1.0f, 0.0f);
+	dir_lampara5 = glm::vec3(0.0f, -1.0f, 0.0f);
+
+	valX = 0.0f;
+	valY = 0.0f;
 
 	////Loop mientras no se cierra la ventana
 	while (!mainWindow.getShouldClose())
@@ -1310,8 +1456,7 @@ Model Ruedita_M;*/
 
 		}
 
-		//ANIMACION SHOW DE LUCES
-		printf("LUCES SPOTLIGHT: %i \n", spotLightCount);
+		//printf("LUCES SPOTLIGHT: %i \n", spotLightCount);
 		mainWindow.gettipoCamara() == 0;
 
 		//Recibir eventos del usuario
@@ -1337,41 +1482,38 @@ Model Ruedita_M;*/
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
-	if (contadorSkybox < (4000)) {
+	if (contadorSkybox < (2000)) {
 		if (banderaSkybox) {
 			skybox.DrawSkybox(camera.calculateViewMatrix(), projection);
 			mainLight.SetIntensity(1.0f);
+			bandera_show_luces = false;
 			pointLightCount = 0;
 		}
 		else {
 			//Es de noche
+			bandera_show_luces = true;
 			skyboxNoche.DrawSkybox(camera.calculateViewMatrix(), projection);
 			mainLight.SetIntensity(0.3f);
 				pointLights[0] = arrPointLights[7];
-				pointLightCount = 1;
-				spotLights[0] = arrSpotLigths[1];
-				spotLights[1] = arrSpotLigths[2];
-				spotLights[2] = arrSpotLigths[3];
-				spotLightCount = 3;
-			//if (pos_per.z <-10 ) {
-			//	pointLights[1] = arrPointLights[0];
-			//	pointLights[2] = arrPointLights[1];
-			//	pointLightCount = 3;
-			//}
-			//else if(pos_per.x >10){
-			//	pointLights[1] = arrPointLights[6];
-			//	pointLights[2] = arrPointLights[5];
-			//	pointLightCount = 3;
-			//}
-			//else if (pos_per.z > 10) {
-			//	pointLights[1] = arrPointLights[3];
-			//	pointLights[2] = arrPointLights[4];
-			//	pointLightCount = 3;
-			//}
-			//else {
-			//	pointLights[1] = arrPointLights[2];
-			//	pointLightCount = 2;
-			//}
+			if (pos_per.z <-10 ) {
+				pointLights[1] = arrPointLights[0];
+				pointLights[2] = arrPointLights[1];
+				pointLightCount = 3;
+			}
+			else if(pos_per.x >10){
+				pointLights[1] = arrPointLights[6];
+				pointLights[2] = arrPointLights[5];
+				pointLightCount = 3;
+			}
+			else if (pos_per.z > 10) {
+				pointLights[1] = arrPointLights[3];
+				pointLights[2] = arrPointLights[4];
+				pointLightCount = 3;
+			}
+			else {
+				pointLights[1] = arrPointLights[2];
+				pointLightCount = 2;
+			}
 		}
 		contadorSkybox++;
 	}
@@ -1381,7 +1523,179 @@ Model Ruedita_M;*/
 	}
 	printf(" \n %d", contadorSkybox);
 
-	if (mainWindow.getLuzLampara() == 1 && !banderaLamparaPrendida) {
+	//SHOW DE LUCES /DEL INDICE 1 AL 5
+	if (bandera_show_luces && banderaShowLuces) {
+		//printf("EL VECTOR 0 TIENE ESTA EN %f, %f, %f  | | apunta a %f, %f, %f \n",spotLights[0])
+		contador_show++;
+		if (contador_show < 400)
+		{
+			if (contador_show % 6 == 0) {
+				bandera_prende_apaga = !bandera_prende_apaga;
+				inidice_spotlights = 0;
+			}
+			if (bandera_prende_apaga) {
+				spotLights[0] = arrSpotLigths[1];
+				spotLights[1] = arrSpotLigths[3];
+				spotLights[2] = arrSpotLigths[5];
+				spotLightCount = 3;
+			}
+			else {
+				spotLights[0] = arrSpotLigths[2];
+				spotLights[1] = arrSpotLigths[4];
+				spotLightCount = 2;
+			}
+
+
+		}
+		else if (contador_show ==400) {
+			inidice_spotlights = 0;
+		}
+		else if (contador_show < 600) {
+			spotLights[0] = arrSpotLigths[3];
+			inidice_spotlights++;
+			spotLights[1] = arrSpotLigths[5];
+			spotLightCount = 2;
+			if (bandera_giro) { //esta viendo con unángulo de 0° y se debe girar hasta llegar a los 20
+				giro_luz += 1.2 * deltaTime;
+				if (giro_luz < 40.0) {
+					giro_luz -= giroLuzOffset * deltaTime;
+
+				}
+				else
+				{
+					bandera_giro = false;
+				}
+			}
+			else
+			{
+				giro_luz -= 1.2 * deltaTime;
+				if (giro_luz > 0)
+				{
+					giro_luz -= giroLuzOffset * deltaTime;
+				}
+				else
+				{
+					bandera_giro = true;
+				}
+			}
+			giro_lamp_3 = giro_luz;
+			giro_lamp_5 = giro_luz;
+
+			valX = sin(giro_luz*toRadians);
+			valY = cos(giro_luz*toRadians);
+
+			if (valY > 0) {
+				valY =valY* -1;
+			}
+			//valX += 0.01;
+
+			dir_lampara3.x =valX;
+			dir_lampara3.y = valY;
+
+			dir_lampara5.x = valX;
+			dir_lampara5.y = valY;
+
+			//printf("El anguo al que se encuentra la lampar es: %f y la X estaría en: %f\n", giro_luz, dir_lampara1.x);
+			//printf("\nEn z: %f", dir_lampara1.z);
+			spotLights[0].SetFlash(pos_lampara3,dir_lampara3);
+			spotLights[1].SetFlash(pos_lampara5, dir_lampara5);
+			//spotLights[0].SetPos(dir_lampara1);
+
+		}
+		else if (contador_show == 600) {
+			dir_lampara3 = glm::vec3(0.0f, -1.0f, 0.0f);
+			dir_lampara5 = glm::vec3(0.0f, -1.0f, 0.0f);
+			giro_luz = 0.0f;
+			giro_lamp_3 = 0.0f;
+			giro_lamp_5 = 0.0f;
+			inidice_spotlights = 0;
+
+		}
+		else if (contador_show < 800) {
+			spotLights[0] = arrSpotLigths[2];
+			inidice_spotlights++;
+			spotLights[1] = arrSpotLigths[4];
+			inidice_spotlights++;
+			spotLightCount = 2;
+			if (bandera_giro) { //esta viendo con unángulo de 0° y se debe girar hasta llegar a los 20
+				giro_luz += 1.2 * deltaTime;
+				if (giro_luz < 40.0) {
+					giro_luz -= giroLuzOffset * deltaTime;
+
+				}
+				else
+				{
+					bandera_giro = false;
+				}
+			}
+			else
+			{
+				giro_luz -= 1.2 * deltaTime;
+				if (giro_luz > 0)
+				{
+					giro_luz -= giroLuzOffset * deltaTime;
+				}
+				else
+				{
+					bandera_giro = true;
+				}
+			}
+			giro_lamp_2 = giro_luz;
+			giro_lamp_4 = giro_luz;
+
+			valX = sin(giro_luz * toRadians);
+			valY = cos(giro_luz * toRadians);
+
+			if (valY > 0) {
+				valY = valY * -1;
+			}
+			//valX += 0.01;
+
+			dir_lampara2.x = valX;
+			dir_lampara2.y = valY;
+
+			dir_lampara4.x = valX;
+			dir_lampara4.y = valY;
+
+			//printf("El anguo al que se encuentra la lampar es: %f y la X estaría en: %f\n", giro_luz, dir_lampara1.x);
+			//printf("\nEn z: %f", dir_lampara1.z);
+			spotLights[0].SetFlash(pos_lampara2, dir_lampara2);
+			spotLights[1].SetFlash(pos_lampara4, dir_lampara4);
+			//spotLights[0].SetPos(dir_lampara1);
+
+		}
+		else if (contador_show == 800) {
+			dir_lampara2 = glm::vec3(0.0f, -1.0f, 0.0f);
+			dir_lampara4 = glm::vec3(0.0f, -1.0f, 0.0f);
+			giro_luz = 0.0f;
+			giro_lamp_2 = 0.0f;
+			giro_lamp_4 = 0.0f;
+			inidice_spotlights = 0;
+		}
+		else {
+			dir_lampara2 = glm::vec3(0.0f, -1.0f, 0.0f);
+			dir_lampara4 = glm::vec3(0.0f, -1.0f, 0.0f);
+			dir_lampara1 = glm::vec3(0.0f, -1.0f, 0.0f);
+			dir_lampara3 = glm::vec3(0.0f, -1.0f, 0.0f);
+			dir_lampara5 = glm::vec3(0.0f, -1.0f, 0.0f);
+			giro_luz = 0.0f;
+			giro_lamp_1 = 0.0f;
+			giro_lamp_2 = 0.0f;
+			giro_lamp_3 = 0.0f;
+			giro_lamp_4 = 0.0f;
+			giro_lamp_5 = 0.0f;
+			giro_luz = 0.0f;
+			contador_show = 0;
+		}
+		//printf("\nLa luz 0 esta en %f, %f, %f \n Y apunta a %f, %f, %f", spotLights[0].getPos().x, spotLights[0].getPos().y, spotLights[0].getPos().z, spotLights[0].getDir().x, spotLights[0].getDir().y, spotLights[0].getDir().z);
+	}
+	else {
+		//spotLightCount = 0;
+
+	}
+	//printf(" \n %d", contador_show);
+
+	if (mainWindow.getLuzLampara() == 1 && !banderaLamparaPrendida && !banderaShowLuces ) {
 		spotLights[0] = arrSpotLigths[0];
 		spotLightCount = 1;
 		banderaLamparaPrendida = true;
@@ -1391,6 +1705,14 @@ Model Ruedita_M;*/
 		spotLightCount = 0;
 		banderaLamparaPrendida = false;
 	}
+
+	if (mainWindow.getShowLuces() == 1 && !banderaLamparaPrendida && !banderaShowLuces) {
+		banderaShowLuces = true;
+	}
+	if (banderaShowLuces && mainWindow.getShowLuces() == 0) {
+		banderaShowLuces = false;
+	}
+
 	//printf("la camara piso: %f | %f | %f \n", pos)
 	//printf(" \n %d", contadorSkybox);
 
@@ -2161,6 +2483,7 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		loraxTexture.UseTexture();
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[4]->RenderMesh();
 
 		model = avatar_aux;
@@ -2172,6 +2495,7 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		loraxTexture.UseTexture();
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[5]->RenderMesh();
 
 		model = avatar_aux;
@@ -2184,6 +2508,7 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		loraxTexture.UseTexture();
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[6]->RenderMesh();
 
 		model = avatar_aux;
@@ -2196,6 +2521,7 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		loraxTexture.UseTexture();
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[6]->RenderMesh();
 
 		model = avatar_aux;
@@ -2218,7 +2544,19 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		loraxTexture.UseTexture();
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[8]->RenderMesh();
+
+
+		//ESCENARIO
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(9.5f, -0.5f, -18.0f));
+		model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 2.0f));
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		pisoTexture.UseTexture();
+		meshList[10]->RenderMesh();
 
 
 		// ROCA
@@ -6681,6 +7019,11 @@ Model Ruedita_M;*/
 		antorcha.RenderModel();
 
 		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(0.0f, -3.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		antorcha.RenderModel();
+
+		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(26.0f, -1.0f, 4.0f));
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, -1.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(3.0f,3.0f, 3.0f));
@@ -6691,6 +7034,7 @@ Model Ruedita_M;*/
 		lampara.RenderModel();
 
 
+
 		//FOGATA
 		model = glm::mat4(1.0);
 		model = glm::scale(model, glm::vec3(0.3f, 0.3f, 0.3f));
@@ -6698,7 +7042,7 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Fogata_M.RenderModel();
 
-
+		//SHOW DE LUCES//////////////
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(5.0f, 6.8f, -18.0f));
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, -1.0f, 0.0f));
@@ -6730,6 +7074,8 @@ Model Ruedita_M;*/
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(5.0f, 6.8f, -18.0f));
 		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		model = glm::rotate(model, giro_lamp_1 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+		//model = glm::rotate(model, 30 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
 		//model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		lamp_show.RenderModel();
@@ -6737,6 +7083,7 @@ Model Ruedita_M;*/
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(5.0f, 6.8f, -16.0f));
 		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		model = glm::rotate(model, giro_lamp_2 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
 		//model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		lamp_show.RenderModel();
@@ -6744,6 +7091,7 @@ Model Ruedita_M;*/
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(5.0f, 6.8f, -14.0f));
 		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		model = glm::rotate(model, giro_lamp_3 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
 		//model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		lamp_show.RenderModel();
@@ -6751,12 +7099,14 @@ Model Ruedita_M;*/
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(5.0f, 6.8f, -20.0f));
 		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		model = glm::rotate(model, giro_lamp_4 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
 		//model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		lamp_show.RenderModel();
 
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(5.0f, 6.8f, -22.0f));
+		model = glm::rotate(model, giro_lamp_5 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
 		//model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
 		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
 		//model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));

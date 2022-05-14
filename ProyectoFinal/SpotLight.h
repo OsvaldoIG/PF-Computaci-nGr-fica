@@ -20,6 +20,10 @@ public:
 
 	void SetFlash(glm::vec3 pos, glm::vec3 dir);
 	void SetPos(glm::vec3 pos);
+	void SetDir(glm::vec3 dir);
+
+	glm::vec3 getPos();
+	glm::vec3 getDir();
 	~SpotLight();
 
 private:

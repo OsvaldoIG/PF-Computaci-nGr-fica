@@ -14,7 +14,6 @@ newmtl wire_154154229
 	Ni 1.5000
 	Ke 0.0000 0.0000 0.0000
 	illum 2
-	map_Kd -bm 0.0000 _Map Output Selector.png
 
 newmtl wire_088199225
 	Kd 0.3451 0.7804 0.8824
@@ -28,5 +27,4 @@ newmtl wire_088199225
 	Pcr 0.0000
 	Ni 1.5000
 	Ke 0.0000 0.0000 0.0000
-	illum 2
-	map_Kd -bm 0.0000 _Map Output Selector.png
+	illum 211:20 a. m. 10/05/2022
