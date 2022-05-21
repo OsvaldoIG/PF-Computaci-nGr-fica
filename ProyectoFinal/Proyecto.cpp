@@ -119,6 +119,7 @@ Model CasaLorax_M;
 Model SimioArcoiris_M;
 Model AntenaSimio_M;
 Model Cuatro_M;
+Model Fuente_M;
 
 //PEZ QUE JUEGA POQUER
 Model cuerpo_pez;
@@ -1022,6 +1023,9 @@ int main()
 
 	CasaLorax_M = Model();
 	//CasaLorax_M.LoadModel("Models/casa_Lorax.obj");
+
+	Fuente_M = Model();
+	Fuente_M.LoadModel("Models/Fuente.obj");
 
 	//////PROYECTO FINAL
 
@@ -7298,6 +7302,14 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Pelota_M.RenderModel();
+
+		//FUENTE
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(20.0f, -3.0f, -20.0f));
+		modelaux = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Fuente_M.RenderModel();
+
 
 		glUseProgram(0);
 
