@@ -110,7 +110,7 @@
     <ClCompile Include="Toroide.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="Ejecucion_Toroide.cpp">
+    <ClCompile Include="Proyecto.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
