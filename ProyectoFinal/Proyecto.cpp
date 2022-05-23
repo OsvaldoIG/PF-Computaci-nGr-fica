@@ -21,6 +21,7 @@ PrÃ¡ctica 5: Carga de Modelos
 //#include<assimp/Importer.hpp>
 //MUSICA
 #include <irrKlang.h>
+
 //TOROIDE
 #include "Toroide.h"
 
@@ -973,6 +974,7 @@ void CrearEscenarioShow()
 }
 
 Toroide toro = Toroide(3.0f, 1.0f, 0.5f);
+using namespace irrklang;
 
 int main()
 {
@@ -988,20 +990,23 @@ int main()
 	toro.init();
 	toro.load();
 
-	irrklang::ISoundEngine* engine = irrklang::createIrrKlangDevice();
+	//camera = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 5.0f, 0.5f);
+	cameraP = Camera(glm::vec3(0.0f, 2.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, 0.0f, 0.1f, 0.5f);
+	cameraA = Camera(glm::vec3(0.0f, 20.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 0.1f, 0.5f);
+
+	ISoundEngine* engine = createIrrKlangDevice();
 	if (!engine)
 		return 0; // Error al inicial el motor de sonidos
-
-	//Opcional: Crear una carpeta para la musica
+	//Sonido Ambiental
 	engine->play2D("Media/Bosque.wav", true);
-
+	//Sonido Espacial
+	ISound* music = engine->play3D("Media/Fogata.wav", vec3df(0, 0, 0), true, false, true);
+	music->setMinDistance(3.0f);
 
 	inidice_spotlights = 0;
 	conteo_spotlights = 0;
 
-	//camera = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 5.0f, 0.5f);
-	cameraP = Camera(glm::vec3(0.0f, 2.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, 0.0f, 0.1f, 0.5f);
-	cameraA = Camera(glm::vec3(0.0f, 20.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 0.1f, 0.5f);
+	
 
 	//Aqui se importan texturas
 	brickTexture = Texture("Textures/brick.png");
@@ -1346,6 +1351,8 @@ Model Ruedita_M;*/
 	while (!mainWindow.getShouldClose())
 	{
 		pos_per = cameraP.getCameraPosition();
+
+		engine->setListenerPosition(vec3df(pos_per.x, pos_per.y, pos_per.z), vec3df(0, 1, 0));
 		GLfloat now = glfwGetTime();
 		deltaTime = now - lastTime;
 		deltaTime += (now - lastTime) / limitFPS;
@@ -1542,7 +1549,7 @@ Model Ruedita_M;*/
 			contadorSkybox = 0;
 			banderaSkybox = !banderaSkybox;
 		}
-		printf(" \n %d", contadorSkybox);
+		//printf(" \n %d", contadorSkybox);
 
 		//SHOW DE LUCES /DEL INDICE 1 AL 5
 		if (bandera_show_luces && banderaShowLuces) {
