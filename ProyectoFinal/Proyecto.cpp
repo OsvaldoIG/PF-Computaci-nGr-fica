@@ -19,6 +19,11 @@ PrÃ¡ctica 5: Carga de Modelos
 #include <gtc\type_ptr.hpp>
 //para probar el importer
 //#include<assimp/Importer.hpp>
+//MUSICA
+#include <irrKlang.h>
+
+//TOROIDE
+#include "Toroide.h"
 
 #include "Window.h"
 #include "Mesh.h"
@@ -45,7 +50,7 @@ float giroArbol;
 float giroHojas;
 float giroHojasOffset;
 float rotahacha;
-bool retrocede; 
+bool retrocede;
 bool sacudehojas;
 bool sacude_der;
 int contador_sacude;
@@ -185,7 +190,7 @@ glm::vec3 camaraPiso;
 glm::vec3 camaraAerea;
 GLint contadorSkybox = 0;
 GLboolean banderaSkybox = true;
-GLfloat giroSimios =0.0f;
+GLfloat giroSimios = 0.0f;
 GLfloat giroArma = 0.0f;
 GLboolean banderaArma = true;
 // luz direccional
@@ -311,14 +316,14 @@ void CrearCuatro()
 		34, 35, 32,
 
 		36, 37, 38,
-		38, 39, 36, 
+		38, 39, 36,
 
 		40, 41, 42,
 		42, 43, 40,
 
 		44, 45, 46,
 		46, 47, 44,
-		 
+
 		//PIERNA IZQ
 		48, 49, 50,
 		50, 51, 48,
@@ -373,11 +378,11 @@ void CrearCuatro()
 		112, 113, 114,
 		114, 115, 112,
 
-		116, 117, 118, 
+		116, 117, 118,
 		118, 119, 116,
 
 		//BRAZO DER
-		120, 121, 122, 
+		120, 121, 122,
 		122, 123, 120,
 
 		124, 125, 126,
@@ -399,7 +404,7 @@ void CrearCuatro()
 	//Ejercicio 1: reemplazar con sus dados de 6 caras texturizados, agregar normales
 // average normals
 	GLfloat cubo_vertices[] = {
-		
+
 		//CUERPO
 		//FRENTE
 		//X		Y		Z		S		T		NX		NY		NZ
@@ -408,7 +413,7 @@ void CrearCuatro()
 		0.4f, 0.6f, 0.2f,		0.4375f, 0.6875f,	0.0f, 0.0f, -1.0f,
 		-0.4f, 0.6f, 0.2f,		0.3125f, 0.6875f,	0.0f, 0.0f, -1.0f,
 		//DERECHA
-		0.4f, -0.6f, 0.2f,		0.4375f, 0.5f,		-1.0f, 0.0f, 0.0f,	
+		0.4f, -0.6f, 0.2f,		0.4375f, 0.5f,		-1.0f, 0.0f, 0.0f,
 		0.4f, -0.6f, -0.2f,		0.5f, 0.5f,			-1.0f, 0.0f, 0.0f,
 		0.4f, 0.6f, -0.2f,		0.5f, 0.6875f,		-1.0f, 0.0f, 0.0f,
 		0.4f, 0.6f, 0.2f,		0.4375f, 0.6875f,	-1.0f, 0.0f, 0.0f,
@@ -424,7 +429,7 @@ void CrearCuatro()
 		0.4f, -0.6f, -0.2f,		0.625f, 0.5f,		0.0f, 0.0f, 1.0f,
 		0.4f, 0.6f, -0.2f,		0.625f, 0.6875f,	0.0f, 0.0f, 1.0f,
 		-0.4f, 0.6f, -0.2f,		0.5f, 0.6875f,		0.0f, 0.0f, 1.0f,
-		
+
 		//ARRIBA
 		0.4f, 0.6f, 0.2f,		0.4375f, 0.5f,		0.0f, -1.0f, 0.0f,
 		0.4f, 0.6f, -0.2f,		0.5f, 0.5f,			0.0f, -1.0f, 0.0f,
@@ -625,7 +630,7 @@ void CrearCuatro()
 	};
 
 	Mesh* dado = new Mesh();
-	dado->CreateMesh(cubo_vertices, cubo_indices, sizeof(cubo_vertices)/4, sizeof(cubo_indices)/4);
+	dado->CreateMesh(cubo_vertices, cubo_indices, sizeof(cubo_vertices) / 4, sizeof(cubo_indices) / 4);
 	meshList.push_back(dado);
 
 }
@@ -697,8 +702,8 @@ void CrearLorax() {
 
 
 
-//Ejercicio 1: reemplazar con sus dados de 6 caras texturizados, agregar normales
-// average normals
+	//Ejercicio 1: reemplazar con sus dados de 6 caras texturizados, agregar normales
+	// average normals
 	GLfloat verticesCabeza[] = {
 
 		//CABEZA
@@ -867,44 +872,44 @@ void CrearLorax() {
 	meshList.push_back(b_iz);
 
 	GLfloat verticesBrazoDer[] = {
-	//BRAZO DER////////////////////////////77 - >
-	//FRENTE
-	-0.4f, -0.6f, 0.2f,		0.69282f, 0.33478f,		0.0f, 0.0f, -1.0f,
-	-0.8f, -0.6f, 0.2f,		0.72093f, 0.33478f,		0.0f, 0.0f, -1.0f,
-	-0.8f, 0.6f, 0.2f,		0.72093f, 0.47819,		0.0f, 0.0f, -1.0f,
-	-0.4f, 0.6f, 0.2f,		0.69282f, 0.47819f,	0.0f, 0.0f, -1.0f,
+		//BRAZO DER////////////////////////////77 - >
+		//FRENTE
+		-0.4f, -0.6f, 0.2f,		0.69282f, 0.33478f,		0.0f, 0.0f, -1.0f,
+		-0.8f, -0.6f, 0.2f,		0.72093f, 0.33478f,		0.0f, 0.0f, -1.0f,
+		-0.8f, 0.6f, 0.2f,		0.72093f, 0.47819,		0.0f, 0.0f, -1.0f,
+		-0.4f, 0.6f, 0.2f,		0.69282f, 0.47819f,	0.0f, 0.0f, -1.0f,
 
-	//DERECHA
-	-0.8f, -0.6f, 0.2f,		0.72093f, 0.33478f,		-1.0f, 0.0f, 0.0f,
-	-0.8f, -0.6f, -0.2f,	0.7495f, 0.33478f,		-1.0f, 0.0f, 0.0f,
-	-0.8f, 0.6f, -0.2f,		0.7495f, 0.47819f,		-1.0f, 0.0f, 0.0f,
-	-0.8f, 0.6f, 0.2f,		0.72093f, 0.47819f,		-1.0f, 0.0f, 0.0f,
+		//DERECHA
+		-0.8f, -0.6f, 0.2f,		0.72093f, 0.33478f,		-1.0f, 0.0f, 0.0f,
+		-0.8f, -0.6f, -0.2f,	0.7495f, 0.33478f,		-1.0f, 0.0f, 0.0f,
+		-0.8f, 0.6f, -0.2f,		0.7495f, 0.47819f,		-1.0f, 0.0f, 0.0f,
+		-0.8f, 0.6f, 0.2f,		0.72093f, 0.47819f,		-1.0f, 0.0f, 0.0f,
 
-	//IZQUIERDA
-	-0.4f, -0.6f, -0.2f,	0.80668f, 0.33478f,		1.0f, 0.0f, 0.0f,
-	-0.4f, -0.6f, 0.2f,		0.778585f, 0.33478f,	1.0f, 0.0f, 0.0f,
-	-0.4f, 0.6f, 0.2f,		0.778585f, 0.47819f,	1.0f, 0.0f, 0.0f,
-	-0.4f, 0.6f, -0.2f,		0.80668f, 0.47819f,		1.0f, 0.0f, 0.0f,
+		//IZQUIERDA
+		-0.4f, -0.6f, -0.2f,	0.80668f, 0.33478f,		1.0f, 0.0f, 0.0f,
+		-0.4f, -0.6f, 0.2f,		0.778585f, 0.33478f,	1.0f, 0.0f, 0.0f,
+		-0.4f, 0.6f, 0.2f,		0.778585f, 0.47819f,	1.0f, 0.0f, 0.0f,
+		-0.4f, 0.6f, -0.2f,		0.80668f, 0.47819f,		1.0f, 0.0f, 0.0f,
 
-	//ATRAS
-	-0.8f, -0.6f, -0.2f,	0.7495f, 0.33478f,		0.0f, 0.0f, 1.0f,
-	-0.4f, -0.6f, -0.2f,	0.778585f, 0.33478f,	0.0f, 0.0f, 1.0f,
-	-0.4f, 0.6f, -0.2f,		0.778585f, 0.47819f,	0.0f, 0.0f, 1.0f,
-	-0.8f, 0.6f, -0.2f,		0.7495f, 0.47819f,		0.0f, 0.0f, 1.0f,
+		//ATRAS
+		-0.8f, -0.6f, -0.2f,	0.7495f, 0.33478f,		0.0f, 0.0f, 1.0f,
+		-0.4f, -0.6f, -0.2f,	0.778585f, 0.33478f,	0.0f, 0.0f, 1.0f,
+		-0.4f, 0.6f, -0.2f,		0.778585f, 0.47819f,	0.0f, 0.0f, 1.0f,
+		-0.8f, 0.6f, -0.2f,		0.7495f, 0.47819f,		0.0f, 0.0f, 1.0f,
 
-	//ARRIBA
-	-0.4f, 0.6f, 0.2f,		0.778585f, 0.47819f,	0.0f, -1.0f, 0.0f,
-	-0.8f, 0.6f, 0.2f,		0.80668f, 0.47819f,		0.0f, -1.0f, 0.0f,
-	-0.8f, 0.6f, -0.2f,		0.80668f, 0.50678f,		0.0f, -1.0f, 0.0f,
-	-0.4f, 0.6f, -0.2f,		0.778585f, 0.50678f,		0.0f, -1.0f, 0.0f,
+		//ARRIBA
+		-0.4f, 0.6f, 0.2f,		0.778585f, 0.47819f,	0.0f, -1.0f, 0.0f,
+		-0.8f, 0.6f, 0.2f,		0.80668f, 0.47819f,		0.0f, -1.0f, 0.0f,
+		-0.8f, 0.6f, -0.2f,		0.80668f, 0.50678f,		0.0f, -1.0f, 0.0f,
+		-0.4f, 0.6f, -0.2f,		0.778585f, 0.50678f,		0.0f, -1.0f, 0.0f,
 
-	//ABAJO
-	-0.4f, -0.6f, -0.2f,	0.69282f, 0.3062f,		0.0f, 1.0f, 0.0f,
-	-0.8f, -0.6f, -0.2f,	0.72093f, 0.3062f,		0.0f, 1.0f, 0.0f,
-	-0.8f, -0.6f, 0.2f,		0.72093f, 0.33478f,		0.0f, 1.0f, 0.0f,
-	-0.4f, -0.6f, 0.2f,		0.69282f, 0.33478f,		0.0f, 1.0f, 0.0f,
+		//ABAJO
+		-0.4f, -0.6f, -0.2f,	0.69282f, 0.3062f,		0.0f, 1.0f, 0.0f,
+		-0.8f, -0.6f, -0.2f,	0.72093f, 0.3062f,		0.0f, 1.0f, 0.0f,
+		-0.8f, -0.6f, 0.2f,		0.72093f, 0.33478f,		0.0f, 1.0f, 0.0f,
+		-0.4f, -0.6f, 0.2f,		0.69282f, 0.33478f,		0.0f, 1.0f, 0.0f,
 
-};
+	};
 	Mesh* b_der = new Mesh();
 	b_der->CreateMesh(verticesBrazoDer, indices, sizeof(verticesBrazoDer) / 4, sizeof(indices) / 4);
 	meshList.push_back(b_der);
@@ -932,7 +937,7 @@ void CrearEscenarioShow()
 		18, 19, 16,
 		// top
 		20, 21, 22,
-		22, 23, 20	};
+		22, 23, 20 };
 	//Ejercicio 1: reemplazar con sus dados de 6 caras texturizados, agregar normales
 // average normals
 	GLfloat vertices_escenario[] = {
@@ -977,10 +982,13 @@ void CrearEscenarioShow()
 	};
 
 	Mesh* escenario = new Mesh();
-	escenario -> CreateMesh(vertices_escenario, indices_escenario, sizeof(vertices_escenario) / 4, sizeof(indices_escenario) / 4);
+	escenario->CreateMesh(vertices_escenario, indices_escenario, sizeof(vertices_escenario) / 4, sizeof(indices_escenario) / 4);
 	meshList.push_back(escenario);
 
 }
+
+Toroide toro = Toroide(3.0f, 1.0f, 0.5f);
+using namespace irrklang;
 
 int main()
 {
@@ -993,12 +1001,26 @@ int main()
 	CrearEscenarioShow();
 	CreateShaders();
 
-	inidice_spotlights = 0;
-	conteo_spotlights = 0;
+	toro.init();
+	toro.load();
 
 	//camera = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 5.0f, 0.5f);
 	cameraP = Camera(glm::vec3(0.0f, 2.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, 0.0f, 0.1f, 0.5f);
 	cameraA = Camera(glm::vec3(0.0f, 20.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 0.1f, 0.5f);
+
+	ISoundEngine* engine = createIrrKlangDevice();
+	if (!engine)
+		return 0; // Error al inicial el motor de sonidos
+	//Sonido Ambiental
+	engine->play2D("Media/Bosque.wav", true);
+	//Sonido Espacial
+	ISound* music = engine->play3D("Media/Fogata.wav", vec3df(0, 0, 0), true, false, true);
+	music->setMinDistance(3.0f);
+
+	inidice_spotlights = 0;
+	conteo_spotlights = 0;
+
+	
 
 	//Aqui se importan texturas
 	brickTexture = Texture("Textures/brick.png");
@@ -1022,10 +1044,10 @@ int main()
 	fogataTexture = Texture("Textures/Fogata.png");
 	fogataTexture.LoadTexture();
 
-	
-	
 
-		
+
+
+
 	ArmaKND_M = Model();
 	ArmaKND_M.LoadModel("Models/base_arma.obj");
 
@@ -1123,7 +1145,7 @@ Model Ruedita_M;*/
 
 	std::vector<std::string> skyboxFaces;
 	std::vector<std::string> skyboxFacesN;
-	
+
 	//Texturas de skyboard
 	skyboxFaces.push_back("Textures/Skybox/desert_bk.tga"); //bk
 	skyboxFaces.push_back("Textures/Skybox/desert_ft.tga"); //ft
@@ -1190,7 +1212,7 @@ Model Ruedita_M;*/
 		1.0f, 0.7f,
 		-5.0f, 1.0f, 2.0f, //posición
 		0.3f, 0.2f, 0.1f); //coeficientes de la ecuación de 2do grado
-	
+
 	//model = glm::translate(model, glm::vec3(-2.0f, -0.5f, 15.0f));
 	arrPointLights[3] = PointLight(0.8980f, 0.4901f, 0.2078f,
 		1.0f, 0.7f,
@@ -1232,7 +1254,7 @@ Model Ruedita_M;*/
 	//spotLightCount++;
 
 	//
-	arrSpotLigths[0]= SpotLight(0.8627f, 1.0f, 0.0f,
+	arrSpotLigths[0] = SpotLight(0.8627f, 1.0f, 0.0f,
 		0.7f, 2.0f,
 		26.0f, 10.0f, 4.2f,//posición
 		//5.0f, 15.0f, -18.0f,
@@ -1299,9 +1321,9 @@ Model Ruedita_M;*/
 	giraHachaOffset = 0.005;
 	giroArbol = 0.0;
 	giroHojas = 0.0;
-	giroHojasOffset =0.0005;
+	giroHojasOffset = 0.0005;
 	rotahacha = 0.0;
-	retrocede = true; 
+	retrocede = true;
 	sacudehojas = false;
 	sacude_der = 0.0;
 	contador_sacude = 0;
@@ -1361,6 +1383,8 @@ Model Ruedita_M;*/
 	while (!mainWindow.getShouldClose())
 	{
 		pos_per = cameraP.getCameraPosition();
+
+		engine->setListenerPosition(vec3df(pos_per.x, pos_per.y, pos_per.z), vec3df(0, 1, 0));
 		GLfloat now = glfwGetTime();
 		deltaTime = now - lastTime;
 		deltaTime += (now - lastTime) / limitFPS;
@@ -1636,223 +1660,223 @@ Model Ruedita_M;*/
 			bandera_aire = true;
 		}
 
-	//SHOW DE LUCES /DEL INDICE 1 AL 5
-	if (bandera_show_luces && banderaShowLuces) {
-		//printf("EL VECTOR 0 TIENE ESTA EN %f, %f, %f  | | apunta a %f, %f, %f \n",spotLights[0])
-		contador_show++;
-		if (contador_show < 400)
-		{
-			if (contador_show % 6 == 0) {
-				bandera_prende_apaga = !bandera_prende_apaga;
+		//SHOW DE LUCES /DEL INDICE 1 AL 5
+		if (bandera_show_luces && banderaShowLuces) {
+			//printf("EL VECTOR 0 TIENE ESTA EN %f, %f, %f  | | apunta a %f, %f, %f \n",spotLights[0])
+			contador_show++;
+			if (contador_show < 400)
+			{
+				if (contador_show % 6 == 0) {
+					bandera_prende_apaga = !bandera_prende_apaga;
+					inidice_spotlights = 0;
+				}
+				if (bandera_prende_apaga) {
+					spotLights[0] = arrSpotLigths[1];
+					spotLights[1] = arrSpotLigths[3];
+					spotLights[2] = arrSpotLigths[5];
+					spotLightCount = 3;
+				}
+				else {
+					spotLights[0] = arrSpotLigths[2];
+					spotLights[1] = arrSpotLigths[4];
+					spotLightCount = 2;
+				}
+
+
+			}
+			else if (contador_show == 400) {
 				inidice_spotlights = 0;
 			}
-			if (bandera_prende_apaga) {
-				spotLights[0] = arrSpotLigths[1];
-				spotLights[1] = arrSpotLigths[3];
-				spotLights[2] = arrSpotLigths[5];
-				spotLightCount = 3;
+			else if (contador_show < 600) {
+				spotLights[0] = arrSpotLigths[3];
+				inidice_spotlights++;
+				spotLights[1] = arrSpotLigths[5];
+				spotLightCount = 2;
+				if (bandera_giro) { //esta viendo con unángulo de 0° y se debe girar hasta llegar a los 20
+					giro_luz += 1.2 * deltaTime;
+					if (giro_luz < 40.0) {
+						giro_luz -= giroLuzOffset * deltaTime;
+
+					}
+					else
+					{
+						bandera_giro = false;
+					}
+				}
+				else
+				{
+					giro_luz -= 1.2 * deltaTime;
+					if (giro_luz > 0)
+					{
+						giro_luz -= giroLuzOffset * deltaTime;
+					}
+					else
+					{
+						bandera_giro = true;
+					}
+				}
+				giro_lamp_3 = giro_luz;
+				giro_lamp_5 = giro_luz;
+
+				valX = sin(giro_luz * toRadians);
+				valY = cos(giro_luz * toRadians);
+
+				if (valY > 0) {
+					valY = valY * -1;
+				}
+				//valX += 0.01;
+
+				dir_lampara3.x = valX;
+				dir_lampara3.y = valY;
+
+				dir_lampara5.x = valX;
+				dir_lampara5.y = valY;
+
+				//printf("El anguo al que se encuentra la lampar es: %f y la X estaría en: %f\n", giro_luz, dir_lampara1.x);
+				//printf("\nEn z: %f", dir_lampara1.z);
+				spotLights[0].SetFlash(pos_lampara3, dir_lampara3);
+				spotLights[1].SetFlash(pos_lampara5, dir_lampara5);
+				//spotLights[0].SetPos(dir_lampara1);
+
+			}
+			else if (contador_show == 600) {
+				dir_lampara3 = glm::vec3(0.0f, -1.0f, 0.0f);
+				dir_lampara5 = glm::vec3(0.0f, -1.0f, 0.0f);
+				giro_luz = 0.0f;
+				giro_lamp_3 = 0.0f;
+				giro_lamp_5 = 0.0f;
+				inidice_spotlights = 0;
+
+			}
+			else if (contador_show < 800) {
+				spotLights[0] = arrSpotLigths[2];
+				inidice_spotlights++;
+				spotLights[1] = arrSpotLigths[4];
+				inidice_spotlights++;
+				spotLightCount = 2;
+				if (bandera_giro) { //esta viendo con unángulo de 0° y se debe girar hasta llegar a los 20
+					giro_luz += 1.2 * deltaTime;
+					if (giro_luz < 40.0) {
+						giro_luz -= giroLuzOffset * deltaTime;
+
+					}
+					else
+					{
+						bandera_giro = false;
+					}
+				}
+				else
+				{
+					giro_luz -= 1.2 * deltaTime;
+					if (giro_luz > 0)
+					{
+						giro_luz -= giroLuzOffset * deltaTime;
+					}
+					else
+					{
+						bandera_giro = true;
+					}
+				}
+				giro_lamp_2 = giro_luz;
+				giro_lamp_4 = giro_luz;
+
+				valX = sin(giro_luz * toRadians);
+				valY = cos(giro_luz * toRadians);
+
+				if (valY > 0) {
+					valY = valY * -1;
+				}
+				//valX += 0.01;
+
+				dir_lampara2.x = valX;
+				dir_lampara2.y = valY;
+
+				dir_lampara4.x = valX;
+				dir_lampara4.y = valY;
+
+				//printf("El anguo al que se encuentra la lampar es: %f y la X estaría en: %f\n", giro_luz, dir_lampara1.x);
+				//printf("\nEn z: %f", dir_lampara1.z);
+				spotLights[0].SetFlash(pos_lampara2, dir_lampara2);
+				spotLights[1].SetFlash(pos_lampara4, dir_lampara4);
+				//spotLights[0].SetPos(dir_lampara1);
+
+			}
+			else if (contador_show == 800) {
+				dir_lampara2 = glm::vec3(0.0f, -1.0f, 0.0f);
+				dir_lampara4 = glm::vec3(0.0f, -1.0f, 0.0f);
+				giro_luz = 0.0f;
+				giro_lamp_2 = 0.0f;
+				giro_lamp_4 = 0.0f;
+				inidice_spotlights = 0;
 			}
 			else {
-				spotLights[0] = arrSpotLigths[2];
-				spotLights[1] = arrSpotLigths[4];
-				spotLightCount = 2;
+				dir_lampara2 = glm::vec3(0.0f, -1.0f, 0.0f);
+				dir_lampara4 = glm::vec3(0.0f, -1.0f, 0.0f);
+				dir_lampara1 = glm::vec3(0.0f, -1.0f, 0.0f);
+				dir_lampara3 = glm::vec3(0.0f, -1.0f, 0.0f);
+				dir_lampara5 = glm::vec3(0.0f, -1.0f, 0.0f);
+				giro_luz = 0.0f;
+				giro_lamp_1 = 0.0f;
+				giro_lamp_2 = 0.0f;
+				giro_lamp_3 = 0.0f;
+				giro_lamp_4 = 0.0f;
+				giro_lamp_5 = 0.0f;
+				giro_luz = 0.0f;
+				contador_show = 0;
 			}
-
-
-		}
-		else if (contador_show ==400) {
-			inidice_spotlights = 0;
-		}
-		else if (contador_show < 600) {
-			spotLights[0] = arrSpotLigths[3];
-			inidice_spotlights++;
-			spotLights[1] = arrSpotLigths[5];
-			spotLightCount = 2;
-			if (bandera_giro) { //esta viendo con unángulo de 0° y se debe girar hasta llegar a los 20
-				giro_luz += 1.2 * deltaTime;
-				if (giro_luz < 40.0) {
-					giro_luz -= giroLuzOffset * deltaTime;
-
-				}
-				else
-				{
-					bandera_giro = false;
-				}
-			}
-			else
-			{
-				giro_luz -= 1.2 * deltaTime;
-				if (giro_luz > 0)
-				{
-					giro_luz -= giroLuzOffset * deltaTime;
-				}
-				else
-				{
-					bandera_giro = true;
-				}
-			}
-			giro_lamp_3 = giro_luz;
-			giro_lamp_5 = giro_luz;
-
-			valX = sin(giro_luz*toRadians);
-			valY = cos(giro_luz*toRadians);
-
-			if (valY > 0) {
-				valY =valY* -1;
-			}
-			//valX += 0.01;
-
-			dir_lampara3.x =valX;
-			dir_lampara3.y = valY;
-
-			dir_lampara5.x = valX;
-			dir_lampara5.y = valY;
-
-			//printf("El anguo al que se encuentra la lampar es: %f y la X estaría en: %f\n", giro_luz, dir_lampara1.x);
-			//printf("\nEn z: %f", dir_lampara1.z);
-			spotLights[0].SetFlash(pos_lampara3,dir_lampara3);
-			spotLights[1].SetFlash(pos_lampara5, dir_lampara5);
-			//spotLights[0].SetPos(dir_lampara1);
-
-		}
-		else if (contador_show == 600) {
-			dir_lampara3 = glm::vec3(0.0f, -1.0f, 0.0f);
-			dir_lampara5 = glm::vec3(0.0f, -1.0f, 0.0f);
-			giro_luz = 0.0f;
-			giro_lamp_3 = 0.0f;
-			giro_lamp_5 = 0.0f;
-			inidice_spotlights = 0;
-
-		}
-		else if (contador_show < 800) {
-			spotLights[0] = arrSpotLigths[2];
-			inidice_spotlights++;
-			spotLights[1] = arrSpotLigths[4];
-			inidice_spotlights++;
-			spotLightCount = 2;
-			if (bandera_giro) { //esta viendo con unángulo de 0° y se debe girar hasta llegar a los 20
-				giro_luz += 1.2 * deltaTime;
-				if (giro_luz < 40.0) {
-					giro_luz -= giroLuzOffset * deltaTime;
-
-				}
-				else
-				{
-					bandera_giro = false;
-				}
-			}
-			else
-			{
-				giro_luz -= 1.2 * deltaTime;
-				if (giro_luz > 0)
-				{
-					giro_luz -= giroLuzOffset * deltaTime;
-				}
-				else
-				{
-					bandera_giro = true;
-				}
-			}
-			giro_lamp_2 = giro_luz;
-			giro_lamp_4 = giro_luz;
-
-			valX = sin(giro_luz * toRadians);
-			valY = cos(giro_luz * toRadians);
-
-			if (valY > 0) {
-				valY = valY * -1;
-			}
-			//valX += 0.01;
-
-			dir_lampara2.x = valX;
-			dir_lampara2.y = valY;
-
-			dir_lampara4.x = valX;
-			dir_lampara4.y = valY;
-
-			//printf("El anguo al que se encuentra la lampar es: %f y la X estaría en: %f\n", giro_luz, dir_lampara1.x);
-			//printf("\nEn z: %f", dir_lampara1.z);
-			spotLights[0].SetFlash(pos_lampara2, dir_lampara2);
-			spotLights[1].SetFlash(pos_lampara4, dir_lampara4);
-			//spotLights[0].SetPos(dir_lampara1);
-
-		}
-		else if (contador_show == 800) {
-			dir_lampara2 = glm::vec3(0.0f, -1.0f, 0.0f);
-			dir_lampara4 = glm::vec3(0.0f, -1.0f, 0.0f);
-			giro_luz = 0.0f;
-			giro_lamp_2 = 0.0f;
-			giro_lamp_4 = 0.0f;
-			inidice_spotlights = 0;
+			//printf("\nLa luz 0 esta en %f, %f, %f \n Y apunta a %f, %f, %f", spotLights[0].getPos().x, spotLights[0].getPos().y, spotLights[0].getPos().z, spotLights[0].getDir().x, spotLights[0].getDir().y, spotLights[0].getDir().z);
 		}
 		else {
-			dir_lampara2 = glm::vec3(0.0f, -1.0f, 0.0f);
-			dir_lampara4 = glm::vec3(0.0f, -1.0f, 0.0f);
-			dir_lampara1 = glm::vec3(0.0f, -1.0f, 0.0f);
-			dir_lampara3 = glm::vec3(0.0f, -1.0f, 0.0f);
-			dir_lampara5 = glm::vec3(0.0f, -1.0f, 0.0f);
-			giro_luz = 0.0f;
-			giro_lamp_1 = 0.0f;
-			giro_lamp_2 = 0.0f;
-			giro_lamp_3 = 0.0f;
-			giro_lamp_4 = 0.0f;
-			giro_lamp_5 = 0.0f;
-			giro_luz = 0.0f;
-			contador_show = 0;
+			//spotLightCount = 0;
+
 		}
-		//printf("\nLa luz 0 esta en %f, %f, %f \n Y apunta a %f, %f, %f", spotLights[0].getPos().x, spotLights[0].getPos().y, spotLights[0].getPos().z, spotLights[0].getDir().x, spotLights[0].getDir().y, spotLights[0].getDir().z);
-	}
-	else {
-		//spotLightCount = 0;
+		//printf(" \n %d", contador_show);
 
-	}
-	//printf(" \n %d", contador_show);
+		if (mainWindow.getLuzLampara() == 1 && !banderaLamparaPrendida && !banderaShowLuces) {
+			spotLights[0] = arrSpotLigths[0];
+			spotLightCount = 1;
+			banderaLamparaPrendida = true;
+		}
 
-	if (mainWindow.getLuzLampara() == 1 && !banderaLamparaPrendida && !banderaShowLuces ) {
-		spotLights[0] = arrSpotLigths[0];
-		spotLightCount = 1;
-		banderaLamparaPrendida = true;
-	}
+		if (banderaLamparaPrendida && mainWindow.getLuzLampara() == 0) {
+			spotLightCount = 0;
+			banderaLamparaPrendida = false;
+		}
 
-	if (banderaLamparaPrendida && mainWindow.getLuzLampara() == 0) {
-		spotLightCount = 0;
-		banderaLamparaPrendida = false;
-	}
+		if (mainWindow.getShowLuces() == 1 && !banderaLamparaPrendida && !banderaShowLuces) {
+			banderaShowLuces = true;
+		}
+		if (banderaShowLuces && mainWindow.getShowLuces() == 0) {
+			banderaShowLuces = false;
+		}
 
-	if (mainWindow.getShowLuces() == 1 && !banderaLamparaPrendida && !banderaShowLuces) {
-		banderaShowLuces = true;
-	}
-	if (banderaShowLuces && mainWindow.getShowLuces() == 0) {
-		banderaShowLuces = false;
-	}
+		//printf("la camara piso: %f | %f | %f \n", pos)
+		//printf(" \n %d", contadorSkybox);
 
-	//printf("la camara piso: %f | %f | %f \n", pos)
-	//printf(" \n %d", contadorSkybox);
+		shaderList[0].UseShader();
+		uniformModel = shaderList[0].GetModelLocation();
+		uniformProjection = shaderList[0].GetProjectionLocation();
+		uniformView = shaderList[0].GetViewLocation();
+		uniformEyePosition = shaderList[0].GetEyePositionLocation();
+		uniformColor = shaderList[0].getColorLocation();
 
-	shaderList[0].UseShader();
-	uniformModel = shaderList[0].GetModelLocation();
-	uniformProjection = shaderList[0].GetProjectionLocation();
-	uniformView = shaderList[0].GetViewLocation();
-	uniformEyePosition = shaderList[0].GetEyePositionLocation();
-	uniformColor = shaderList[0].getColorLocation();
+		//información en el shader de intensidad especular y brillo
+		uniformSpecularIntensity = shaderList[0].GetSpecularIntensityLocation();
+		uniformShininess = shaderList[0].GetShininessLocation();
 
-	//información en el shader de intensidad especular y brillo
-	uniformSpecularIntensity = shaderList[0].GetSpecularIntensityLocation();
-	uniformShininess = shaderList[0].GetShininessLocation();
+		glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projection));
+		glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(camera.calculateViewMatrix()));
+		glUniform3f(uniformEyePosition, camera.getCameraPosition().x, camera.getCameraPosition().y, camera.getCameraPosition().z);
 
-	glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projection));
-	glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(camera.calculateViewMatrix()));
-	glUniform3f(uniformEyePosition, camera.getCameraPosition().x, camera.getCameraPosition().y, camera.getCameraPosition().z);
+		// luz ligada a la cámara de tipo flash
+		//glm::vec3 lowerLight = camera.getCameraPosition();
+		//lowerLight.y -= 0.3f;
+		// spotLights[0].SetFlash(lowerLight, camera.getCameraDirection());
 
-	// luz ligada a la cámara de tipo flash
-	//glm::vec3 lowerLight = camera.getCameraPosition();
-	//lowerLight.y -= 0.3f;
-	// spotLights[0].SetFlash(lowerLight, camera.getCameraDirection());
-
-	//información al shader de fuentes de iluminación
-	shaderList[0].SetDirectionalLight(&mainLight);
-	shaderList[0].SetPointLights(pointLights, pointLightCount);
-	shaderList[0].SetSpotLights(spotLights, spotLightCount);
+		//información al shader de fuentes de iluminación
+		shaderList[0].SetDirectionalLight(&mainLight);
+		shaderList[0].SetPointLights(pointLights, pointLightCount);
+		shaderList[0].SetSpotLights(spotLights, spotLightCount);
 
 
 		glm::mat4 model(1.0);
@@ -2118,7 +2142,7 @@ Model Ruedita_M;*/
 		model = glm::translate(model, glm::vec3(-12.6f, 0.0f, 12.6f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Pasto_M.RenderModel();
-    
+
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(-12.6f, 0.0f, -12.6f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
@@ -2201,7 +2225,7 @@ Model Ruedita_M;*/
 
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 12.6f));
-		model = glm::rotate(model, 90*toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(1.0f, 0.3f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Camino_M.RenderModel();
@@ -2257,7 +2281,7 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Camino_M.RenderModel();
 		//
-	
+
 		//BORDE EXT
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(-37.8f, 0.0f, 0.0f));
@@ -2397,7 +2421,7 @@ Model Ruedita_M;*/
 
 		//Cortadora_M.RenderModel();
 		//Blackhawk_M.RenderModel();
-	
+
 
 		//CORTADORA DE ARBOLES
 		//Se hace una jerarquizaciÃ³n partiendo del cuerpo de la cortadora
@@ -2472,7 +2496,7 @@ Model Ruedita_M;*/
 		model = glm::translate(model, glm::vec3(0.0f, 10.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
 		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
-		model = glm::rotate(model, giroHojas* toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::rotate(model, giroHojas * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
@@ -2544,7 +2568,7 @@ Model Ruedita_M;*/
 		arbol_H.RenderModel();
 
 		/////////////////////////////////////////////////////////////////////////////
-		
+
 		model = cortadora_aux;
 		model = glm::translate(model, glm::vec3(17.0f, 0.0f, 0.0f));
 		model = glm::rotate(model, -giraHacha * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
@@ -2578,7 +2602,7 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
-	
+
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(0.0f, 1.0f, 10.0));
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
@@ -2589,7 +2613,7 @@ Model Ruedita_M;*/
 
 		//PErsonaje LORAX jeraquizado//////////////////////////////////////
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(pos_per.x, pos_per.y, pos_per.z-3.5));
+		model = glm::translate(model, glm::vec3(pos_per.x, pos_per.y, pos_per.z - 3.5));
 		//model = glm::translate(model, glm::vec3(5,5,5));
 		avatar_aux = model;
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
@@ -2603,7 +2627,7 @@ Model Ruedita_M;*/
 		model = glm::translate(model, glm::vec3(0, 0.5, 0));
 		model = glm::rotate(model, 30 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 
-		model = glm::translate(model, glm::vec3(0,0.5,0));
+		model = glm::translate(model, glm::vec3(0, 0.5, 0));
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
@@ -3396,6 +3420,7 @@ Model Ruedita_M;*/
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Hojas_q_caen.RenderModel();
 		
+
 		//árbol rosa
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(-22.0f, -1.0f, -12.0f));
@@ -3463,7 +3488,7 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
-		
+
 		////árbol amarillo
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(-21.0f, -1.0f, -21.0f));
@@ -5854,7 +5879,7 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
-		
+
 		//X POSITIVAS///////////////////
 				//z POSITIVAS
 
@@ -7377,7 +7402,7 @@ Model Ruedita_M;*/
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(26.0f, -1.0f, 4.0f));
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, -1.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(3.0f,3.0f, 3.0f));
+		model = glm::scale(model, glm::vec3(3.0f, 3.0f, 3.0f));
 
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
@@ -7472,8 +7497,8 @@ Model Ruedita_M;*/
 			giroSimios = 0.0f;
 		}
 		giroSimios += 0.1;
-		
-		
+
+
 		//pivote
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(0.0f, -0.7f, 0.0f));
@@ -7481,10 +7506,10 @@ Model Ruedita_M;*/
 		model = glm::scale(model, glm::vec3(0.3f, 0.3f, 0.3f));
 		modelaux = model;
 		//r*sin(giroSimios)
-		
+
 		//rojo
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(6.0f*(sin((giroSimios+90.0f)*toRadians)), abs(sin((giroSimios*0.5f))), 6.0f * (cos((giroSimios+90.0f) * toRadians))));
+		model = glm::translate(model, glm::vec3(6.0f * (sin((giroSimios + 90.0f) * toRadians)), abs(sin((giroSimios * 0.5f))), 6.0f * (cos((giroSimios + 90.0f) * toRadians))));
 		model = glm::rotate(model, (giroSimios + 0.0f) * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		simios_aux = model;
 		color = glm::vec3(0.9058f, 0.298f, 0.2352f);
@@ -7548,7 +7573,7 @@ Model Ruedita_M;*/
 
 		//naranja
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(6.0f * (sin((giroSimios + 135.0f) * toRadians)), abs(sin((giroSimios * 0.5f)+90.0f)), 6.0f * (cos((giroSimios + 135.0f) * toRadians))));
+		model = glm::translate(model, glm::vec3(6.0f * (sin((giroSimios + 135.0f) * toRadians)), abs(sin((giroSimios * 0.5f) + 90.0f)), 6.0f * (cos((giroSimios + 135.0f) * toRadians))));
 		model = glm::rotate(model, (giroSimios + 45.0f) * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		simios_aux = model;
 		color = glm::vec3(0.9019f, 0.4941f, 0.1333f);
@@ -7564,7 +7589,7 @@ Model Ruedita_M;*/
 
 		//verde
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(6.0f * (sin((giroSimios + 225.0f) * toRadians)), abs(sin((giroSimios * 0.5f)+90.0f)), 6.0f * (cos((giroSimios + 225.0f) * toRadians))));
+		model = glm::translate(model, glm::vec3(6.0f * (sin((giroSimios + 225.0f) * toRadians)), abs(sin((giroSimios * 0.5f) + 90.0f)), 6.0f * (cos((giroSimios + 225.0f) * toRadians))));
 		model = glm::rotate(model, (giroSimios + 135.0f) * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		simios_aux = model;
 		color = glm::vec3(0.1529f, 0.6823f, 0.3764f);
@@ -7580,7 +7605,7 @@ Model Ruedita_M;*/
 
 		//azul
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(6.0f * (sin((giroSimios + 315.0f) * toRadians)), abs(sin((giroSimios * 0.5f)+90.0f)), 6.0f * (cos((giroSimios + 315.0f) * toRadians))));
+		model = glm::translate(model, glm::vec3(6.0f * (sin((giroSimios + 315.0f) * toRadians)), abs(sin((giroSimios * 0.5f) + 90.0f)), 6.0f * (cos((giroSimios + 315.0f) * toRadians))));
 		model = glm::rotate(model, (giroSimios + 225.0f) * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		simios_aux = model;
 		color = glm::vec3(0.1215f, 0.4392f, 0.7764f);
@@ -7596,7 +7621,7 @@ Model Ruedita_M;*/
 
 		//rosa
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(6.0f * (sin((giroSimios + 45.0f) * toRadians)), abs(sin((giroSimios * 0.5f)+90.0f)), 6.0f * (cos((giroSimios + 45.0f) * toRadians))));
+		model = glm::translate(model, glm::vec3(6.0f * (sin((giroSimios + 45.0f) * toRadians)), abs(sin((giroSimios * 0.5f) + 90.0f)), 6.0f * (cos((giroSimios + 45.0f) * toRadians))));
 		model = glm::rotate(model, (giroSimios + 315.0f) * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		simios_aux = model;
 		color = glm::vec3(0.9372f, 0.2491f, 0.9176f);
@@ -7615,13 +7640,14 @@ Model Ruedita_M;*/
 			if (giroArma <= 60.0f) {
 				giroArma += 1.0;
 			}
-		}else{
+		}
+		else {
 			if (giroArma >= 50.0f) {
 				giroArma = 0;
 			}
 		}
-		
-		
+
+
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(0.0f, 0.5f, 30.0f));
 		modelaux = model;
@@ -7630,7 +7656,7 @@ Model Ruedita_M;*/
 
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(1.0f, 0.1f, 0.0087f));
-		model = glm::rotate(model,giroArma*toRadians,glm::vec3(0.0f,0.0f,-1.0f));
+		model = glm::rotate(model, giroArma * toRadians, glm::vec3(0.0f, 0.0f, -1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		LanzaderaKND_M.RenderModel();
 
@@ -7640,9 +7666,9 @@ Model Ruedita_M;*/
 			model = glm::translate(model, glm::vec3((10.0f * sin(giroArma * toRadians)) - 0.5f, (10.0f * cos(giroArma * toRadians)) - 8.8f, 30.2f));
 		}
 		else {
-			
+
 			model = glm::translate(model, glm::vec3((10.0f * sin(giroArma * toRadians)) - 0.5f, -1.0f, 30.2f));
-			model = glm::rotate(model,giroArma*toRadians,glm::vec3(0.0f,0.0f,1.0f));
+			model = glm::rotate(model, giroArma * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
 		}
 		model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f));
 
@@ -7656,6 +7682,20 @@ Model Ruedita_M;*/
 		modelaux = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Fuente_M.RenderModel();
+
+		//TOROIDE
+
+		color = glm::vec3(1.0f, 0.0f, 0.0f);
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(0.0f, 0.5f, 10.0f));
+		model = glm::scale(model, glm::vec3(0.3f, 0.3f, 0.3f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));//FALSE ES PARA QUE NO SEA TRANSPUESTA
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		//Usamos una textura lisa 
+		caminoTexture.UseTexture(); 
+		//RENDER
+		toro.render();
 
 
 		glUseProgram(0);
