@@ -4158,7 +4158,6 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
-		arbol_H.RenderModel();
 		model = arbol_aux;
 		model = glm::translate(model, glm::vec3(0.0f, 10.0f - tira_hojas, 0.0f));
 		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
@@ -4365,7 +4364,14 @@ Model Ruedita_M;*/
 		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		arbol_H.RenderModel();
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-30.0f, -1.0f, 28.0f));
+		model = glm::scale(model, glm::vec3(0.75f, 0.75f, 0.75f));
+		model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Hojas_Piso_M.RenderModel();
 
 		//árbol amarillo
 		model = glm::mat4(1.0);
@@ -4408,6 +4414,13 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
+		model = arbol_aux;
+		model = glm::translate(model, glm::vec3(0.0f, 10.0f - tira_hojas, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		model = glm::rotate(model, sacude_hojas * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Hojas_q_caen.RenderModel();
 
 		//árbol amarillo
 		model = glm::mat4(1.0);
@@ -4496,6 +4509,13 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
+		model = arbol_aux;
+		model = glm::translate(model, glm::vec3(0.0f, 10.0f - tira_hojas, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		model = glm::rotate(model, sacude_hojas * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Hojas_q_caen.RenderModel();
 
 		//árbol amarillo
 		model = glm::mat4(1.0);
@@ -4541,7 +4561,9 @@ Model Ruedita_M;*/
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
 		//Hojas tiradas 
-		model = arbol_aux;
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-30.0f, -1.0f, 12.0f));
+		model = glm::scale(model, glm::vec3(0.65f, 0.65f, 0.65f));
 		model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
 		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
@@ -4572,7 +4594,13 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
-
+		model = arbol_aux;
+		model = glm::translate(model, glm::vec3(0.0f, 10.0f - tira_hojas, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		model = glm::rotate(model, sacude_hojas * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Hojas_q_caen.RenderModel();
 
 		//árbol rosa
 		model = glm::mat4(1.0);
@@ -4596,7 +4624,9 @@ Model Ruedita_M;*/
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
 		//Hojas tiradas 
-		model = arbol_aux;
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-30.0f, -1.0f, 8.0f));
+		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
 		model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
 		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
@@ -4672,7 +4702,9 @@ Model Ruedita_M;*/
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
 		//Hojas tiradas 
-		model = arbol_aux;
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-28.0f, -1.0f, 15.0f));
+		model = glm::scale(model, glm::vec3(0.90f, 0.90f, 0.90f));
 		model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
 		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
@@ -4702,6 +4734,13 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
+		model = arbol_aux;
+		model = glm::translate(model, glm::vec3(0.0f, 10.0f - tira_hojas, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		model = glm::rotate(model, sacude_hojas * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Hojas_q_caen.RenderModel();
 
 		//árbol rosa
 		model = glm::mat4(1.0);
@@ -4812,6 +4851,13 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
+		model = arbol_aux;
+		model = glm::translate(model, glm::vec3(0.0f, 10.0f - tira_hojas, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		model = glm::rotate(model, sacude_hojas * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Hojas_q_caen.RenderModel();
 
 		//árbol amarillo
 		model = glm::mat4(1.0);
@@ -4879,6 +4925,13 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
+		model = arbol_aux;
+		model = glm::translate(model, glm::vec3(0.0f, 10.0f - tira_hojas, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		model = glm::rotate(model, sacude_hojas * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Hojas_q_caen.RenderModel();
 
 
 		/////////////////////	 prueba //////
@@ -4992,7 +5045,9 @@ Model Ruedita_M;*/
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
 		//Hojas tiradas 
-		model = arbol_aux;
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-22.0f, -1.0f, 12.0f));
+		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
 		model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
 		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
@@ -5046,7 +5101,9 @@ Model Ruedita_M;*/
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
 		//Hojas tiradas 
-		model = arbol_aux;
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-21.0f, -1.0f, 18.0f));
+		model = glm::scale(model, glm::vec3(0.9f, 0.9f, 0.9f));
 		model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
 		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
@@ -5076,6 +5133,13 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
+		model = arbol_aux;
+		model = glm::translate(model, glm::vec3(0.0f, 10.0f - tira_hojas, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		model = glm::rotate(model, sacude_hojas * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Hojas_q_caen.RenderModel();
 
 		//árbol rojo
 		model = glm::mat4(1.0);
@@ -5164,6 +5228,15 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
+		//Hojas tiradas 
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-18.0f, -1.0f, 10.0f));
+		model = glm::scale(model, glm::vec3(0.6f, 0.6f, 0.6f));
+		model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Hojas_Piso_M.RenderModel();
 
 		//árbol rojo
 		model = glm::mat4(1.0);
@@ -5186,6 +5259,13 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
+		model = arbol_aux;
+		model = glm::translate(model, glm::vec3(0.0f, 10.0f - tira_hojas, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		model = glm::rotate(model, sacude_hojas * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Hojas_q_caen.RenderModel();
 
 		//árbol rosa
 		model = glm::mat4(1.0);
@@ -5261,6 +5341,15 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
+		//Hojas tiradas 
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-18.0f, -1.0f, 22.0f));
+		model = glm::scale(model, glm::vec3(0.9f, 0.9f, 0.9f));
+		model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Hojas_Piso_M.RenderModel();
 
 		////árbol amarillo
 		model = glm::mat4(1.0);
@@ -5283,7 +5372,13 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
-
+		model = arbol_aux;
+		model = glm::translate(model, glm::vec3(0.0f, 10.0f - tira_hojas, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		model = glm::rotate(model, sacude_hojas * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Hojas_q_caen.RenderModel();
 
 
 		//árbol rosa
@@ -5354,7 +5449,9 @@ Model Ruedita_M;*/
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
 		//Hojas tiradas 
-		model = arbol_aux;
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-16.0f, -1.0f, 7.0f));
+		model = glm::scale(model, glm::vec3(0.76f, 0.76f, 0.76f));
 		model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
 		//model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
@@ -5385,6 +5482,13 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
+		model = arbol_aux;
+		model = glm::translate(model, glm::vec3(0.0f, 10.0f - tira_hojas, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		model = glm::rotate(model, sacude_hojas * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Hojas_q_caen.RenderModel();
 
 		////árbol amarillo
 		model = glm::mat4(1.0);
@@ -5473,7 +5577,15 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
-
+		//Hojas tiradas 
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-16.0f, -1.0f, 23.0f));
+		model = glm::scale(model, glm::vec3(0.73f, 0.73f, 0.73f));
+		model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Hojas_Piso_M.RenderModel();
 
 		//árbol rosa
 		model = glm::mat4(1.0);
@@ -5496,6 +5608,13 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
+		model = arbol_aux;
+		model = glm::translate(model, glm::vec3(0.0f, 10.0f - tira_hojas, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		model = glm::rotate(model, sacude_hojas * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Hojas_q_caen.RenderModel();
 
 		//árbol rojo
 		model = glm::mat4(1.0);
@@ -5565,7 +5684,13 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
-
+		model = arbol_aux;
+		model = glm::translate(model, glm::vec3(0.0f, 10.0f - tira_hojas, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		model = glm::rotate(model, sacude_hojas * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Hojas_q_caen.RenderModel();
 
 
 		//árbol rosa
@@ -5589,6 +5714,15 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
+		//Hojas tiradas 
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-13.0f, -1.0f, 15.0f));
+		model = glm::scale(model, glm::vec3(0.82f, 0.82f, 0.82f));
+		model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Hojas_Piso_M.RenderModel();
 
 		//árbol rojo
 		model = glm::mat4(1.0);
@@ -5702,6 +5836,13 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
+		model = arbol_aux;
+		model = glm::translate(model, glm::vec3(0.0f, 10.0f - tira_hojas, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		model = glm::rotate(model, sacude_hojas * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Hojas_q_caen.RenderModel();
 
 		//
 				//árbol rosa
@@ -5769,6 +5910,15 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
+		//Hojas tiradas 
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-10.0f, -1.0f, 15.0f));
+		model = glm::scale(model, glm::vec3(0.72f, 0.72f, 0.72f));
+		model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Hojas_Piso_M.RenderModel();
 
 		////árbol amarillo
 		model = glm::mat4(1.0);
@@ -5813,6 +5963,13 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
+		model = arbol_aux;
+		model = glm::translate(model, glm::vec3(0.0f, 10.0f - tira_hojas, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		model = glm::rotate(model, sacude_hojas * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Hojas_q_caen.RenderModel();
 
 		////árbol amarillo
 		model = glm::mat4(1.0);
@@ -5857,6 +6014,15 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
+		//Hojas tiradas 
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-10.0f, -1.0f, 26.0f));
+		model = glm::scale(model, glm::vec3(0.48f, 0.48f, 0.48f));
+		model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Hojas_Piso_M.RenderModel();
 
 		//árbol rosa
 		model = glm::mat4(1.0);
@@ -5902,6 +6068,13 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
+		model = arbol_aux;
+		model = glm::translate(model, glm::vec3(0.0f, 10.0f - tira_hojas, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		model = glm::rotate(model, sacude_hojas * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Hojas_q_caen.RenderModel();
 
 		//árbol rosa
 		model = glm::mat4(1.0);
@@ -6010,6 +6183,13 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
+		model = arbol_aux;
+		model = glm::translate(model, glm::vec3(0.0f, 10.0f - tira_hojas, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		model = glm::rotate(model, sacude_hojas * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Hojas_q_caen.RenderModel();
 
 		//árbol rojo
 		model = glm::mat4(1.0);
@@ -6054,6 +6234,15 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
+		//Hojas tiradas 
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(30.0f, -1.0f, 16.0f));
+		model = glm::scale(model, glm::vec3(0.95f, 0.95f, 0.95f));
+		model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Hojas_Piso_M.RenderModel();
 
 		//árbol amarillo
 		model = glm::mat4(1.0);
@@ -6119,6 +6308,13 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
+		model = arbol_aux;
+		model = glm::translate(model, glm::vec3(0.0f, 10.0f - tira_hojas, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		model = glm::rotate(model, sacude_hojas * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Hojas_q_caen.RenderModel();
 
 		//árbol rosa
 		model = glm::mat4(1.0);
@@ -6141,6 +6337,15 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
+		//Hojas tiradas 
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(30.0f, -1.0f, 8.0f));
+		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Hojas_Piso_M.RenderModel();
 
 		//árbol amarillo
 		model = glm::mat4(1.0);
@@ -6207,6 +6412,15 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
+		//Hojas tiradas 
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(23.0f, -1.0f, 16.0f));
+		model = glm::scale(model, glm::vec3(0.46f, 0.46f, 0.46f));
+		model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Hojas_Piso_M.RenderModel();
 
 		//árbol rojo
 		model = glm::mat4(1.0);
@@ -6251,6 +6465,13 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
+		model = arbol_aux;
+		model = glm::translate(model, glm::vec3(0.0f, 10.0f - tira_hojas, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		model = glm::rotate(model, sacude_hojas * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Hojas_q_caen.RenderModel();
 
 		//árbol rojo
 		model = glm::mat4(1.0);
@@ -6406,7 +6627,15 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
-
+		//Hojas tiradas 
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(23.0f, -1.0f, 16.0f));
+		model = glm::scale(model, glm::vec3(0.46f, 0.46f, 0.46f));
+		model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Hojas_Piso_M.RenderModel();
 
 		//árbol rojo
 		model = glm::mat4(1.0);
@@ -6517,6 +6746,15 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
+		//Hojas tiradas 
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(20.0f, -1.0f, 15.0f));
+		model = glm::scale(model, glm::vec3(0.8f, 0.8f, 0.8f));
+		model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Hojas_Piso_M.RenderModel();
 
 		//árbol rojo
 		model = glm::mat4(1.0);
@@ -6539,6 +6777,13 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
+		model = arbol_aux;
+		model = glm::translate(model, glm::vec3(0.0f, 10.0f - tira_hojas, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		model = glm::rotate(model, sacude_hojas * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Hojas_q_caen.RenderModel();
 
 		////árbol amarillo
 		model = glm::mat4(1.0);
@@ -6649,6 +6894,13 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
+		model = arbol_aux;
+		model = glm::translate(model, glm::vec3(0.0f, 10.0f - tira_hojas, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		model = glm::rotate(model, sacude_hojas * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Hojas_q_caen.RenderModel();
 
 		//árbol rojo
 		model = glm::mat4(1.0);
@@ -6737,6 +6989,15 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
+		//Hojas tiradas 
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(18.0f, -1.0f, 22.0f));
+		model = glm::scale(model, glm::vec3(0.9f, 0.9f, 0.9f));
+		model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Hojas_Piso_M.RenderModel();
 
 		////árbol amarillo
 		model = glm::mat4(1.0);
@@ -6783,6 +7044,13 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
+		model = arbol_aux;
+		model = glm::translate(model, glm::vec3(0.0f, 10.0f - tira_hojas, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		model = glm::rotate(model, sacude_hojas * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Hojas_q_caen.RenderModel();
 
 		//árbol rosa
 		model = glm::mat4(1.0);
@@ -6805,6 +7073,15 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
+		//Hojas tiradas 
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(19.0f, -1.0f, 31.0f));
+		model = glm::scale(model, glm::vec3(0.85f, 0.85f, 0.85f));
+		model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Hojas_Piso_M.RenderModel();
 
 		/////////////
 
@@ -6875,6 +7152,15 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
+		//Hojas tiradas 
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(17.0f, -1.0f, 14.0f));
+		model = glm::scale(model, glm::vec3(0.78f, 0.78f, 0.78f));
+		model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Hojas_Piso_M.RenderModel();
 
 		//árbol rosa
 		model = glm::mat4(1.0);
@@ -6897,6 +7183,13 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
+		model = arbol_aux;
+		model = glm::translate(model, glm::vec3(0.0f, 10.0f - tira_hojas, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		model = glm::rotate(model, sacude_hojas * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Hojas_q_caen.RenderModel();
 
 		//árbol rojo
 		model = glm::mat4(1.0);
@@ -6941,6 +7234,15 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
+		//Hojas tiradas 
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(16.0f, -1.0f, 23.0f));
+		model = glm::scale(model, glm::vec3(0.73f, 0.73f, 0.73f));
+		model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Hojas_Piso_M.RenderModel();
 
 
 		//árbol rosa
@@ -7011,6 +7313,13 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
+		model = arbol_aux;
+		model = glm::translate(model, glm::vec3(0.0f, 10.0f - tira_hojas, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		model = glm::rotate(model, sacude_hojas * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Hojas_q_caen.RenderModel();
 
 		////árbol amarillo
 		model = glm::mat4(1.0);
@@ -7057,6 +7366,15 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
+		//Hojas tiradas 
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(13.0f, -1.0f, 15.0f));
+		model = glm::scale(model, glm::vec3(0.82f, 0.82f, 0.82f));
+		model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Hojas_Piso_M.RenderModel();
 
 		//árbol rojo
 		model = glm::mat4(1.0);
@@ -7101,6 +7419,13 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
+		model = arbol_aux;
+		model = glm::translate(model, glm::vec3(0.0f, 10.0f - tira_hojas, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		model = glm::rotate(model, sacude_hojas * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Hojas_q_caen.RenderModel();
 
 		//árbol rosa
 		model = glm::mat4(1.0);
@@ -7215,6 +7540,15 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
+		//Hojas tiradas 
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(8.0f, -1.0f, 12.0f));
+		model = glm::scale(model, glm::vec3(0.91f, 0.91f, 0.91f));
+		model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Hojas_Piso_M.RenderModel();
 
 		//árbol rosa
 		model = glm::mat4(1.0);
@@ -7237,6 +7571,13 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
+		model = arbol_aux;
+		model = glm::translate(model, glm::vec3(0.0f, 10.0f - tira_hojas, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		model = glm::rotate(model, sacude_hojas * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Hojas_q_caen.RenderModel();
 
 		////árbol amarillo
 		model = glm::mat4(1.0);
@@ -7303,6 +7644,15 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
+		//Hojas tiradas 
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(10.0f, -1.0f, 25.0f));
+		model = glm::scale(model, glm::vec3(0.87f, 0.87f, 0.87f));
+		model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Hojas_Piso_M.RenderModel();
 
 		//árbol rojo
 		model = glm::mat4(1.0);
@@ -7325,6 +7675,13 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
+		model = arbol_aux;
+		model = glm::translate(model, glm::vec3(0.0f, 10.0f - tira_hojas, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		model = glm::rotate(model, sacude_hojas * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Hojas_q_caen.RenderModel();
 
 		//árbol rosa
 		model = glm::mat4(1.0);
@@ -7347,6 +7704,22 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		arbol_H.RenderModel();
+		model = arbol_aux;
+		model = glm::translate(model, glm::vec3(0.0f, 10.0f - tira_hojas, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		model = glm::rotate(model, sacude_hojas * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Hojas_q_caen.RenderModel();
+		//Hojas tiradas 
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(9.0f, -1.0f, 31.0f));
+		model = glm::scale(model, glm::vec3(0.94f, 0.94f, 0.94f));
+		model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Hojas_Piso_M.RenderModel();
 
 
 
