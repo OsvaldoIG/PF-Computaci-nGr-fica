@@ -66,6 +66,7 @@ void MeshColor::CreateMeshColor(GLfloat* vertices, unsigned int numOfVertices)
 
 }
 
+
 void Mesh::RenderMesh()
 {
 	glBindVertexArray(VAO);

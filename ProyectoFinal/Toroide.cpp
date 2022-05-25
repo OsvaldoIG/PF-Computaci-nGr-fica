@@ -66,8 +66,9 @@ void Toroide::init() {
 void Toroide::load() {
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
+	
 	glGenBuffers(1, &EBO);
-
+	
 	glBindVertexArray(VAO);
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);

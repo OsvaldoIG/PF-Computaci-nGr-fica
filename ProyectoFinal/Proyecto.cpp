@@ -22,8 +22,10 @@ PrÃ¡ctica 5: Carga de Modelos
 //MUSICA
 #include <irrKlang.h>
 
-//TOROIDE
+//TOROIDES
 #include "Toroide.h"
+
+#include "Toroide_f.h"
 
 #include "Window.h"
 #include "Mesh.h"
@@ -121,6 +123,8 @@ Texture cuatroTexture;
 Texture caminoTexture;
 Texture loraxTexture;
 Texture fogataTexture;
+
+Texture salvavidasTexture;
 
 Texture prueba;
 
@@ -988,6 +992,9 @@ void CrearEscenarioShow()
 }
 
 Toroide toro = Toroide(3.0f, 1.0f, 0.5f);
+//float raInt, float raExt, int reExt, int reInt
+Toroide_f toroide = Toroide_f(1.0f,3.0f, 20,20);
+
 using namespace irrklang;
 
 int main()
@@ -1003,6 +1010,11 @@ int main()
 
 	toro.init();
 	toro.load();
+
+	
+
+	toroide.Crear_Toroide_f();
+	toroide.load();
 
 	//camera = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 5.0f, 0.5f);
 	cameraP = Camera(glm::vec3(0.0f, 2.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, 0.0f, 0.1f, 0.5f);
@@ -1043,6 +1055,9 @@ int main()
 
 	fogataTexture = Texture("Textures/Fogata.png");
 	fogataTexture.LoadTexture();
+
+	salvavidasTexture = Texture("Textures/salvavidas.png");
+	salvavidasTexture.LoadTexture();
 
 
 
@@ -1656,7 +1671,7 @@ Model Ruedita_M;*/
 		}
 		printf(" \n %d", contadorSkybox);
 		//HABILITACION DE AIRE
-		if (contadorSkybox %1000 == 0) {
+		if (contadorSkybox %2000 == 0) {
 			bandera_aire = true;
 		}
 
@@ -8317,7 +8332,7 @@ Model Ruedita_M;*/
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Fuente_M.RenderModel();
 
-		//TOROIDE
+		//TOROIDES
 
 		color = glm::vec3(1.0f, 0.0f, 0.0f);
 		model = glm::mat4(1.0f);
@@ -8330,6 +8345,18 @@ Model Ruedita_M;*/
 		caminoTexture.UseTexture(); 
 		//RENDER
 		toro.render();
+
+
+		//RENDER
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(pos_per.x, pos_per.y-0.85, pos_per.z - 3.5));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.3f, 0.3f, 0.3f));
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		salvavidasTexture.UseTexture();
+		toroide.render();
 
 
 		glUseProgram(0);
